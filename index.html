@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Innerve 11 — Infinity Castle, Prizes, Testimonials, Sponsors</title>
+  <meta name="description" content="Selected sections from the Innerve 11 hackathon site (Demon Slayer fan build): Infinity Castle, prize pool, testimonials, past sponsors and footer." />
+  <meta name="theme-color" content="#0b0a0c" />
+  <link rel="icon" href="assets/logos/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Shippori+Mincho+B1:wght@800&family=Yuji+Syuku&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="flash" id="flash" aria-hidden="true"></div>
+
+<main id="smooth">
+  <section class="castle" id="castle" data-tone="dark" data-name="Infinity Castle">
+    <div class="castle__stage">
+      <canvas id="castleGL" aria-label="A 3D flythrough of the Infinity Castle"></canvas>
+      <div class="castle__vig"></div>
+      <div class="castle__copy">
+        <div class="castle__kicker">無限城 · Mugen-jō</div>
+        <h2 class="castle__title"><span class="mask"><span>Infinity</span></span><span class="mask"><span>Castle.</span></span></h2>
+        <p class="castle__sub">Every room is a problem statement. Six Upper Moons stand between you and dawn.</p>
+      </div>
+      <div class="castle__cap" id="castleCap"><b>上弦の陸</b><span>Upper Six · Daki</span></div>
+      <div class="castle__end">
+        <div class="castle__kicker">The doors open on</div>
+        <div class="castle__bounty">The Bounty</div>
+      </div>
+      <div class="castle__bar"><i id="castleBar"></i></div>
+    </div>
+  </section>
+
+  <section class="prizes" id="prizes" data-tone="dark" data-name="The Bounty">
+    <div class="prizes__pin">
+      <div class="eyebrow">Prize pool</div>
+      <div class="prizes__big"><span class="rs">₹</span><span id="poolNum">0</span><span class="lacs">Lacs+</span></div>
+      <p class="prizes__note">Cash, goodies, certificates and a few surprises for those who survive the night.</p>
+    </div>
+    <div class="wrap">
+      <div class="pcards" id="pcards"></div>
+    </div>
+  </section>
+
+  <section class="voices paper" id="voices" data-tone="light" data-name="Survivors">
+    <div class="wrap">
+      <div class="eyebrow">Testimonials</div>
+      <h2 class="sec-title">Words from the <em>survivors.</em></h2>
+      <div class="vgrid" id="vgrid"></div>
+    </div>
+  </section>
+
+  <section class="allies paper" id="allies" data-tone="light" data-name="Allies">
+    <div class="wrap">
+      <div class="eyebrow">Past sponsors</div>
+      <h2 class="sec-title">Allies of the <em>corps.</em></h2>
+      <div class="agrid" id="agrid"></div>
+    </div>
+  </section>
+
+    <footer class="foot">
+      <div class="foot__brand">
+        <div class="foot__word">INNERVE <b>11</b></div>
+        <p>India's largest student‑driven hackathon.<br />Organised by the OSS Club, Army Institute of Technology, Pune.</p>
+      </div>
+      <div class="foot__col">
+        <h4>Venue</h4>
+        <p>Army Institute of Technology<br />Dighi Hills, Pune 411015</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Army+Institute+of+Technology+Pune" target="_blank" rel="noopener">Open in Maps ↗</a>
+      </div>
+      <div class="foot__col">
+        <h4>Navigate</h4>
+        <a href="#tracks" data-scroll>Tracks</a><a href="#prizes" data-scroll>Prizes</a><a href="#timeline" data-scroll>Timeline</a><a href="#faq" data-scroll>FAQ</a>
+      </div>
+      <div class="foot__base">
+        <span>© 2026 Innerve · OSS Club AIT</span>
+        <span>A fan‑made tribute theme. Not affiliated with Demon Slayer, Koyoharu Gotouge or Ufotable. · psst… type <b>hinokami</b></span>
+        <a href="#top" data-scroll>Back to the night ↑</a>
+      </div>
+    </footer>
+</main>
+
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="data.js"></script>
+<script src="main.js"></script>
+<script type="module" src="castle.js"></script>
+</body>
+</html>
