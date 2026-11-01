@@ -1,4 +1,4 @@
-# Innerve 11 — section extracts (private)
+# Innerve 11 — section extracts
 
 Selected sections lifted from the Demon Slayer fan build of the Innerve 11 hackathon site
 (source: https://github.com/siddharthpathania/innerve-11). Kept private per that repo's
