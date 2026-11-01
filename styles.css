@@ -256,10 +256,10 @@ body[data-tone="red"] .nav__mark { background: var(--ink); }
 .allies { padding: clamp(60px, 8vw, 110px) 0 clamp(80px, 10vw, 150px); }
 .agrid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; gap: 12px; margin-top: clamp(32px, 5vw, 60px); }
 .atile { position: relative; background: #f7f2e9; border: 1px solid rgba(11,10,12,.15); display: flex; align-items: center; justify-content: center; padding: 34px 24px 20px; overflow: hidden; transition: background .4s, border-color .4s; }
-.atile--xl { grid-column: span 2; grid-row: span 2; background: var(--red); border-color: var(--red); }
+.atile--xl { grid-column: span 2; grid-row: span 2; }
 .atile--l { grid-column: span 2; }
 .atile__tier { position: absolute; left: 14px; top: 12px; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; opacity: .6; }
-.atile--xl .atile__tier { color: var(--paper); opacity: .9; }
+.atile--xl:hover .atile__tier { color: var(--paper); opacity: .9; }
 .atile img { max-height: 54px; max-width: 76%; object-fit: contain; transition: transform .4s, background .4s, padding .4s; }
 .atile--xl img { max-height: 110px; background: var(--paper); padding: 18px 24px; }
 .atile:hover { background: var(--red); border-color: var(--red); }
