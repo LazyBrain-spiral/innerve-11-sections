@@ -260,9 +260,11 @@ body[data-tone="red"] .nav__mark { background: var(--ink); }
 .atile--l { grid-column: span 2; }
 .atile__tier { position: absolute; left: 14px; top: 12px; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; opacity: .6; }
 .atile--xl .atile__tier { color: var(--paper); opacity: .9; }
-.atile img { max-height: 54px; max-width: 76%; object-fit: contain; transition: transform .4s; }
+.atile img { max-height: 54px; max-width: 76%; object-fit: contain; transition: transform .4s, background .4s, padding .4s; }
 .atile--xl img { max-height: 110px; background: var(--paper); padding: 18px 24px; }
-.atile:hover { border-color: var(--red); }
+.atile:hover { background: var(--red); border-color: var(--red); }
+.atile:not(.atile--xl):hover .atile__tier { color: var(--paper); opacity: .9; }
+.atile:not(.atile--xl):hover img { background: var(--paper); padding: 10px 16px; }
 .atile:hover img { transform: scale(1.06); }
 
 /* ===== FAQ ===== */
