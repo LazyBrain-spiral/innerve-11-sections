@@ -140,34 +140,55 @@ for (let y = -8, k = 0; y > -80; y -= 9, k++) {
   byMat.forEach((geos, mat) => world.add(new THREE.Mesh(mergeGeometries(geos, false), mat)));
 }
 
-/* ---------- floating rooms in every orientation (instanced) ---------- */
+/* ---------- floating rooms in every orientation (instanced) ----------
+   Rooms never sit inside the camera tube (rejection-sampled against the flight path) and the
+   "shift" re-places them with a smooth tween instead of popping them in and out. */
 const rooms = new THREE.Group(); scene.add(rooms);
 rooms.position.set(0, -40, -105);
 const rnd = (a, b) => a + Math.random() * (b - a);
-const dummy = new THREE.Object3D();
 const roomMats = [M.shoji, M.wood, M.tatami, M.beam, M.red];
 const perMat = mobile ? 22 : 44;
-const placeRoom = (inst, i, scale) => {
-  const ang = rnd(0, Math.PI * 2), r = rnd(12, 70);
-  dummy.position.set(Math.cos(ang) * r, rnd(-80, 80), Math.sin(ang) * r * 1.8);
-  dummy.rotation.set(rnd(-.6, .6) + (Math.random() < .25 ? Math.PI / 2 : 0), rnd(0, Math.PI), rnd(-.6, .6) + (Math.random() < .2 ? Math.PI : 0));
-  if (scale) dummy.scale.set(rnd(2, 10), rnd(.4, 7), rnd(2, 12)); else dummy.scale.set(1, 1, 1);
-  dummy.updateMatrix(); inst.setMatrixAt(i, dummy.matrix);
-};
-const instanced = [];
 const boxGeo = new THREE.BoxGeometry(1, 1, 1);
-roomMats.forEach((mat, k) => {
-  const n = k === 0 ? perMat * 2 : perMat;
-  const inst = new THREE.InstancedMesh(boxGeo, mat, n);
-  for (let i = 0; i < n; i++) placeRoom(inst, i, true);
-  inst.userData.scaled = true; rooms.add(inst); instanced.push(inst);
-});
+const instanced = [];
+const dummy = new THREE.Object3D();
+const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
+let tubePts = null; // filled once the camera path exists (below)
+const clearOfTube = (px, py, pz, radius) => {
+  if (!tubePts) return true;
+  const wx = px + rooms.position.x, wy = py + rooms.position.y, wz = pz + rooms.position.z;
+  const need = (radius + 8) * (radius + 8);
+  for (let i = 0; i < tubePts.length; i++) {
+    const p = tubePts[i], dx = p.x - wx, dy = p.y - wy, dz = p.z - wz;
+    if (dx * dx + dy * dy + dz * dz < need) return false;
+  }
+  return true;
+};
+// per-instance transform: current + target (position, quaternion, scale)
+const makeSlot = (scaled) => {
+  const t = { p: new THREE.Vector3(), q: new THREE.Quaternion(), s: new THREE.Vector3(1, 1, 1) };
+  for (let tries = 0; tries < 40; tries++) {
+    const ang = rnd(0, Math.PI * 2), r = rnd(12, 70);
+    t.p.set(Math.cos(ang) * r, rnd(-80, 80), Math.sin(ang) * r * 1.8);
+    t.q.setFromEuler(new THREE.Euler(rnd(-.6, .6) + (Math.random() < .25 ? Math.PI / 2 : 0), rnd(0, Math.PI), rnd(-.6, .6) + (Math.random() < .2 ? Math.PI : 0)));
+    if (scaled) t.s.set(rnd(2, 10), rnd(.4, 7), rnd(2, 12)); else t.s.set(1, 1, 1);
+    if (clearOfTube(t.p.x, t.p.y, t.p.z, scaled ? t.s.length() * .5 : 5)) return t;
+  }
+  t.s.set(0, 0, 0); return t; // nowhere safe: leave it out
+};
+const writeSlot = (inst, i, p, q, sc) => { dummy.position.copy(p); dummy.quaternion.copy(q); dummy.scale.copy(sc); dummy.updateMatrix(); inst.setMatrixAt(i, dummy.matrix); };
+const addInst = (inst, scaled) => {
+  inst.userData.scaled = scaled;
+  inst.userData.cur = []; inst.userData.from = []; inst.userData.to = [];
+  for (let i = 0; i < inst.count; i++) { const t = makeSlot(scaled); inst.userData.cur.push(t); inst.userData.from.push(null); inst.userData.to.push(null); writeSlot(inst, i, t.p, t.q, t.s); }
+  inst.instanceMatrix.needsUpdate = true;
+  inst.frustumCulled = false;
+  rooms.add(inst); instanced.push(inst);
+};
+roomMats.forEach((mat, k) => addInst(new THREE.InstancedMesh(boxGeo, mat, k === 0 ? perMat * 2 : perMat), true));
 { // staircases: one merged flight, instanced
   const steps = [];
   for (let k = 0; k < 10; k++) { const g = new THREE.BoxGeometry(2.4, .3, .9); g.translate(0, k * .45, -k * .8); steps.push(g); }
-  const stairs = new THREE.InstancedMesh(mergeGeometries(steps), M.wood, 22);
-  for (let i = 0; i < 22; i++) placeRoom(stairs, i, false);
-  rooms.add(stairs); instanced.push(stairs);
+  addInst(new THREE.InstancedMesh(mergeGeometries(steps), M.wood, 22), false);
 }
 
 /* ---------- camera path ---------- */
@@ -177,6 +198,9 @@ const path = new THREE.CatmullRomCurve3([
   new THREE.Vector3(0, -70, -104), new THREE.Vector3(0, -78.6, -110), new THREE.Vector3(0, -79.6, -124),
   new THREE.Vector3(0, -79.6, -170), new THREE.Vector3(0, -79.6, -203)
 ], false, "centripetal");
+tubePts = path.getSpacedPoints(160);
+// instances were placed before the path existed: re-seat any that sit inside the tube
+instanced.forEach((inst) => { for (let i = 0; i < inst.count; i++) { const c = inst.userData.cur[i]; if (!clearOfTube(c.p.x, c.p.y, c.p.z, inst.userData.scaled ? c.s.length() * .5 : 5)) { const t = makeSlot(inst.userData.scaled); inst.userData.cur[i] = t; writeSlot(inst, i, t.p, t.q, t.s); } } inst.instanceMatrix.needsUpdate = true; });
 
 /* ---------- Upper Moons — inflated 2.5D figures that turn and lunge ---------- */
 const demons = [];
@@ -218,6 +242,63 @@ const doorL = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 6), M.shoji); doorL.po
 const doorR = doorL.clone(); doorR.position.x = 1.6; scene.add(doorR);
 const df = box(7.4, .5, .5, M.red); df.position.set(0, DY + 3.2, DOOR_Z); scene.add(df);
 
+/* ---------- the three Nights: hanging gate plaques on the way down ----------
+   Dates come straight from the Innerve 11 timeline:
+   15 Nov 2026 12:00 AM IST registration starts, 31 Dec 2026 11:59 PM IST registration ends,
+   08 Jan 2027 shortlisted teams announced, then 30 Jan 2027 hackathon begins and
+   31 Jan 2027 results (the last two are in the upstream data.js timeline). */
+const NIGHTS = [
+  { k: "壱", n: "01", day: "15 NOV", yr: "2026", what: "Registration starts", at: "12:00 AM IST", z: -12, fy: FLOOR_A },
+  { k: "弐", n: "02", day: "31 DEC", yr: "2026", what: "Registration ends", at: "11:59 PM IST", z: -62, fy: FLOOR_A },
+  { k: "参", n: "03", day: "08 JAN", yr: "2027", what: "Shortlisted teams announced", at: "", z: -124, fy: FLOOR_B },
+  { k: "肆", n: "04", day: "30 JAN", yr: "2027", what: "Hackathon begins", at: "24-hour coding marathon", z: -148, fy: FLOOR_B },
+  { k: "伍", n: "05", day: "31 JAN", yr: "2027", what: "Results announced", at: "", z: -178, fy: FLOOR_B }
+];
+const drawPlaque = (n) => (g, w, h) => {
+  const bg = g.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, "#1a080c"); bg.addColorStop(1, "#0d0407");
+  g.fillStyle = bg; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#c8102e"; g.lineWidth = 14; g.strokeRect(7, 7, w - 14, h - 14);
+  g.strokeStyle = "rgba(214,166,64,.8)"; g.lineWidth = 3; g.strokeRect(26, 26, w - 52, h - 52);
+  g.textBaseline = "alphabetic";
+  g.textAlign = "left"; g.fillStyle = "#ff3b57";
+  g.font = "800 64px 'Shippori Mincho B1', serif"; g.fillText(n.k, 62, 112);
+  g.fillStyle = "#ffb36b"; g.font = "600 30px Inter, sans-serif";
+  g.fillText(("Night " + n.n).toUpperCase().split("").join(" "), 138, 104);
+  g.fillStyle = "#efe8dc"; g.font = "400 168px Anton, Impact, sans-serif"; g.fillText(n.day, 58, 288);
+  const dw = g.measureText(n.day).width;
+  g.fillStyle = "#ff6a80"; g.font = "400 62px Anton, Impact, sans-serif"; g.fillText(n.yr, 58 + dw + 22, 288);
+  g.fillStyle = "#ff2a48"; g.font = "400 58px Anton, Impact, sans-serif"; g.fillText(n.what.toUpperCase(), 62, 372);
+  if (n.at) { g.fillStyle = "rgba(239,232,220,.8)"; g.font = "600 28px Inter, sans-serif"; g.fillText(n.at, 62, 428); }
+};
+const plaques = NIGHTS.map((n) => {
+  const tex = canvasTex(1024, 512, drawPlaque(n)); tex.anisotropy = 8;
+  const mat = new THREE.MeshBasicMaterial({ map: tex, color: new THREE.Color(.92, .92, .92), toneMapped: false, fog: true });
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 2.6), mat);
+  const y = n.fy + 4.35;
+  m.position.set(0, y, n.z + .05); scene.add(m);
+  [-2.3, 2.3].forEach((x) => { const c = box(.07, 1.1, .07, M.beam); c.position.set(x, y + 1.85, n.z); scene.add(c); });
+  const rim = box(5.5, .14, .2, M.red); rim.position.set(0, y - 1.35, n.z); scene.add(rim);
+  const rim2 = box(5.5, .14, .2, M.red); rim2.position.set(0, y + 1.35, n.z); scene.add(rim2);
+  n.pos = new THREE.Vector3(0, y, n.z); n.tex = tex; return m;
+});
+// fonts load after the first paint: redraw the plaques once they are in
+if (document.fonts && document.fonts.load) {
+  Promise.all(["168px Anton", "64px 'Shippori Mincho B1'", "600 30px Inter"].map((f) => document.fonts.load(f, "壱15 NOVJAN"))).then(() => NIGHTS.forEach((n) => {
+    const c = n.tex.image, g = c.getContext("2d"); g.clearRect(0, 0, c.width, c.height); drawPlaque(n)(g, c.width, c.height); n.tex.needsUpdate = true;
+  })).catch(() => {});
+}
+// where on the scroll (0..1) the camera passes each gate: invert the same easing the camera uses
+const progressAt = (pt) => {
+  let bu = 0, bd = 1e9;
+  for (let i = 0; i <= 600; i++) { const u = i / 600, d = path.getPointAt(u).distanceTo(pt); if (d < bd) { bd = d; bu = u; } }
+  let lo = 0, hi = .93;
+  for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; if (THREE.MathUtils.smoothstep(mid, 0, .93) < bu) lo = mid; else hi = mid; }
+  return (lo + hi) / 2;
+};
+NIGHTS.forEach((n) => { n.p = progressAt(n.pos); });
+state.nights = NIGHTS.map(({ k, n, day, yr, what, at, p }) => ({ k, n, day, yr, what, at, p }));
+window.dispatchEvent(new CustomEvent("castle-gates", { detail: state.nights }));
+
 /* ---------- dust ---------- */
 const dustN = mobile ? 700 : 1500, dust = new Float32Array(dustN * 3);
 for (let i = 0; i < dustN; i++) { dust[i * 3] = rnd(-24, 24); dust[i * 3 + 1] = rnd(-95, 15); dust[i * 3 + 2] = rnd(-225, 12); }
@@ -226,16 +307,35 @@ const dustMat = new THREE.PointsMaterial({ color: "#ffb36b", size: .08, transpar
 scene.add(new THREE.Points(dg, dustMat));
 
 /* ---------- biwa shifts: the castle rearranges itself ---------- */
-const SHIFTS = [.18, .42, .66].map((at) => ({ at, armed: true }));
+let SHIFTS = NIGHTS.map((n) => ({ at: n.p + .01, armed: true }));
 let lastShift = 0, shiftKick = 0;
-const shift = (dir) => {
+let shiftT = 1; // 0..1 while rooms glide to their new places
+const shift = () => {
   window.SFX && window.SFX.play("biwa");
-  const g = window.gsap;
-  const z = rooms.rotation.z + dir * Math.PI / 2, y = rooms.rotation.y + dir * .6;
-  if (g) g.to(rooms.rotation, { z, y, duration: .55, ease: "expo.out" }); else rooms.rotation.set(rooms.rotation.x, y, z);
-  instanced.forEach((inst) => { for (let i = 0; i < inst.count; i++) if (Math.random() < .3) placeRoom(inst, i, inst.userData.scaled); inst.instanceMatrix.needsUpdate = true; });
-  shiftKick = 1;
+  instanced.forEach((inst) => {
+    const u = inst.userData;
+    for (let i = 0; i < inst.count; i++) {
+      u.from[i] = { p: u.cur[i].p.clone(), q: u.cur[i].q.clone(), s: u.cur[i].s.clone() };
+      u.to[i] = Math.random() < .3 ? makeSlot(u.scaled) : u.cur[i];
+      u.to[i] = { p: u.to[i].p.clone(), q: u.to[i].q.clone(), s: u.to[i].s.clone() };
+    }
+  });
+  shiftT = 0; shiftKick = 1;
   window.dispatchEvent(new CustomEvent("castle-shift"));
+};
+const glideRooms = (dt) => {
+  if (shiftT >= 1) return;
+  shiftT = Math.min(1, shiftT + dt / 1.1);
+  const e = 1 - Math.pow(1 - shiftT, 3);
+  instanced.forEach((inst) => {
+    const u = inst.userData;
+    for (let i = 0; i < inst.count; i++) {
+      const f = u.from[i], t = u.to[i], c = u.cur[i];
+      c.p.lerpVectors(f.p, t.p, e); c.q.slerpQuaternions(f.q, t.q, e); c.s.lerpVectors(f.s, t.s, e);
+      writeSlot(inst, i, c.p, c.q, c.s);
+    }
+    inst.instanceMatrix.needsUpdate = true;
+  });
 };
 
 /* ---------- loop ---------- */
@@ -249,13 +349,13 @@ resize(); addEventListener("resize", resize);
 
 const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
 addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; });
-let pendingMoon = -1, pendingAt = 0;
-let visible = false, smooth = 0, moon = -1, ft = 1 / 60, frames = 0;
+let pendingMoon = -1, pendingAt = 0, pendingNight = -1, pendingNightAt = 0, curNight = -1;
+let visible = false, smooth = 0, moon = -1, ft = 1 / 60, frames = -60;
 new IntersectionObserver(([e]) => { visible = e.isIntersecting; state.visible = visible; }, { rootMargin: "0px" }).observe(host);
 
 const clock = new THREE.Clock();
 const UP = new THREE.Vector3(0, 1, 0), UP_SHAFT = new THREE.Vector3(0, 0, -1), Z = new THREE.Vector3(0, 0, 1);
-const fwd = new THREE.Vector3(), up = new THREE.Vector3(), tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3(), m4 = new THREE.Matrix4();
+const fwdS = new THREE.Vector3(0, 0, -1), fwd = new THREE.Vector3(), up = new THREE.Vector3(), tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3(), m4 = new THREE.Matrix4();
 const qRoll = new THREE.Quaternion(), qLook = new THREE.Quaternion();
 const smoothstep = THREE.MathUtils.smoothstep;
 
@@ -264,19 +364,19 @@ const frame = () => {
   const dt = Math.min(clock.getDelta(), .05);
   if (!visible) return;
   const t = clock.elapsedTime, lv = level();
-  smooth += (state.progress - smooth) * (reduced ? 1 : 1 - Math.exp(-dt * 6));
+  smooth += (state.progress - smooth) * (reduced ? 1 : 1 - Math.exp(-dt * 8));
   // adaptive resolution: keep the flythrough fluid on any GPU
-  ft = ft * .92 + dt * .08; frames++;
-  if (frames > 40) {
-    if (ft > .021 && dpr > .6) { dpr = Math.max(.6, dpr * .85); renderer.setPixelRatio(dpr); resize(); frames = 0; }
-    else if (ft < .0135 && dpr < DPR_MAX) { dpr = Math.min(DPR_MAX, dpr * 1.08); renderer.setPixelRatio(dpr); resize(); frames = 0; }
+  ft = ft * .95 + dt * .05; frames++;
+  if (frames > 150 && !document.hidden) {
+    if (ft > .026 && dpr > .75) { dpr = Math.max(.75, dpr * .9); renderer.setPixelRatio(dpr); resize(); frames = 0; }
+    else if (ft < .012 && dpr < DPR_MAX) { dpr = Math.min(DPR_MAX, dpr * 1.05); renderer.setPixelRatio(dpr); resize(); frames = 0; }
   }
   const p = smooth;
 
   // biwa shifts when crossing thresholds (either direction)
   // each shift fires once going forward; it re-arms only after you scroll well back before it
   SHIFTS.forEach((s) => {
-    if (s.armed && p >= s.at && performance.now() - lastShift > 1500) { s.armed = false; lastShift = performance.now(); shift(1); }
+    if (s.armed && p >= s.at && performance.now() - lastShift > 1500) { s.armed = false; lastShift = performance.now(); shift(); }
     else if (!s.armed && p < s.at - .06) s.armed = true;
   });
   shiftKick *= .92;
@@ -286,24 +386,25 @@ const frame = () => {
   const pos = path.getPointAt(u);
   const ahead = path.getPointAt(Math.min(u + .015, 1));
   fwd.subVectors(ahead, pos).normalize();
+  fwdS.lerp(fwd, 1 - Math.exp(-dt * 5)).normalize(); fwd.copy(fwdS); // low-pass the look direction: no whip at the shaft entry
   const vert = smoothstep(Math.abs(fwd.y), .5, .95);
   up.copy(UP).lerp(UP_SHAFT, vert).normalize();
-  mouse.sx += (mouse.x - mouse.sx) * .05; mouse.sy += (mouse.y - mouse.sy) * .05;
+  const kM = 1 - Math.exp(-dt * 3); mouse.sx += (mouse.x - mouse.sx) * kM; mouse.sy += (mouse.y - mouse.sy) * kM;
   camera.position.copy(pos);
-  camera.position.x += Math.sin(p * 11) * .5 + mouse.sx * 1.4;
+  camera.position.x += Math.sin(p * 11) * .35 + mouse.sx * 1.2;
   camera.position.y += (Math.sin(p * 15) * .2 - mouse.sy * .8) * (1 - vert);
   tmp.copy(camera.position).add(fwd);
   m4.lookAt(camera.position, tmp, up); qLook.setFromRotationMatrix(m4);
-  const roll = Math.sin(p * Math.PI * 2.4) * .2 + vert * Math.sin(t * .8) * .5 + shiftKick * .25;
+  const roll = Math.sin(p * Math.PI * 2.4) * .1 + vert * Math.sin(t * .8) * .16 + shiftKick * .1;
   qRoll.setFromAxisAngle(Z, roll);
   camera.quaternion.copy(qLook).multiply(qRoll);
   camera.rotateY(-mouse.sx * .22); camera.rotateX(-mouse.sy * .12);
   const baseFov = camera.aspect < .8 ? 80 : 64;
-  camera.fov += (baseFov + vert * 14 + shiftKick * 12 - camera.fov) * .1; camera.updateProjectionMatrix();
+  camera.fov += (baseFov + vert * 10 + shiftKick * 6 - camera.fov) * (1 - Math.exp(-dt * 6)); camera.updateProjectionMatrix();
   camLight.position.copy(camera.position).addScaledVector(fwd, 3);
 
   // world motion
-  rooms.rotation.x += dt * .012;
+  glideRooms(dt);
   M.lantern.emissiveIntensity = 2 + Math.sin(t * 9) * .25 + Math.sin(t * 23) * .15 + lv * 1.5;
   M.shoji.emissiveIntensity = M.shojiTall.emissiveIntensity = .42 + lv * .3 + shiftKick * .35;
   dustMat.size = .08 + lv * .12;
@@ -331,10 +432,19 @@ const frame = () => {
     d.aura.scale.setScalar(1 + d.lunge * .4 + Math.sin(t * 2 + d.i) * .04);
     if (dist < 24 && dist < nd) { nd = dist; near = d.i; }
   });
+  if (p > .86) near = -1;
   if (near !== pendingMoon) { pendingMoon = near; pendingAt = performance.now(); }
   if (pendingMoon !== moon && performance.now() - pendingAt > 350) { moon = pendingMoon; window.dispatchEvent(new CustomEvent("castle-moon", { detail: moon })); }
   if (near >= 0) { demonLight.position.copy(demons.find((d) => d.i === near).g.position).add(tmp2.set(0, 1, 2)); demonLight.intensity += (9 - demonLight.intensity) * .1; }
   else demonLight.intensity *= .9;
+
+  // which Night gate are we at?
+  let night = -1;
+  for (let i = 0; i < NIGHTS.length; i++) { if (camera.position.distanceTo(NIGHTS[i].pos) < (i === 0 ? 11 : 13) && p < .86) night = i; }
+  if (night !== pendingNight) { pendingNight = night; pendingNightAt = performance.now(); }
+  if (pendingNight !== curNight && performance.now() - pendingNightAt > 200) { curNight = pendingNight; window.dispatchEvent(new CustomEvent("castle-night", { detail: curNight })); }
+  // gate plaques sway a hair
+  plaques.forEach((m, i) => { m.rotation.z = Math.sin(t * .9 + i * 2) * .008; });
 
   // doors
   const open = smoothstep(p, .88, .985);

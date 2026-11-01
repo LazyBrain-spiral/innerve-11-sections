@@ -71,6 +71,7 @@
 
   /* ================= ANIMATED PATH ================= */
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true }); // mobile address-bar resizes were re-laying out the pinned castle mid-scroll
   const SECTIONS = $$("main > section"); // grab before pinning wraps them in spacers
 
   // Smooth scroll
@@ -104,6 +105,23 @@
     if (performance.now() - lastMoonSfx > 900) { lastMoonSfx = performance.now(); SFX.play(idx === 6 ? "biwa" : "koto"); }
   });
   window.addEventListener("castle-shift", () => flash(.22));
+
+  /* ----- the three Nights (timeline milestones) shown over the flythrough ----- */
+  const nightEl = $("#castleNight"), ticksEl = $("#castleTicks");
+  let NIGHTS = null;
+  const setGates = (list) => {
+    NIGHTS = list;
+    ticksEl.innerHTML = list.map((n) => `<i style="left:${(n.p * 100).toFixed(2)}%"><b>${n.k}</b></i>`).join("");
+  };
+  if (window.CASTLE && window.CASTLE.nights) setGates(window.CASTLE.nights);
+  window.addEventListener("castle-gates", (e) => setGates(e.detail));
+  window.addEventListener("castle-night", (e) => {
+    const i = e.detail;
+    if (i < 0 || !NIGHTS) { gsap.to(nightEl, { opacity: 0, y: 14, duration: .35, overwrite: true }); return; }
+    const n = NIGHTS[i];
+    nightEl.innerHTML = `<span class="castle__nk">${n.k} · Night ${n.n}</span><b>${n.day} <em>${n.yr}</em></b><span class="castle__nw">${n.what}</span>${n.at ? `<span class="castle__nt">${n.at}</span>` : ""}`;
+    gsap.fromTo(nightEl, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out", overwrite: true });
+  });
   const castleTl = gsap.timeline({
     scrollTrigger: {
       trigger: "#castle", start: "top top", end: "+=320%", pin: true, scrub: true, anticipatePin: 1,
@@ -160,4 +178,5 @@
   document.body.dataset.tone = "dark";
 
   window.addEventListener("load", () => ScrollTrigger.refresh());
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
 })();

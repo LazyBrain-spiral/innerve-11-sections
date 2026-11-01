@@ -628,3 +628,15 @@ body[data-tone="light"] .rush line { stroke: var(--ink); }
   .breath__strike { height: 56vh; right: -14vw; bottom: -3vh; }
   .breath__face { opacity: .45; }
 }
+
+/* ===== castle: the three Nights ===== */
+.castle__night { position: absolute; left: var(--gut); bottom: 14vh; z-index: 2; opacity: 0; pointer-events: none; max-width: min(560px, 62vw); text-shadow: 0 4px 30px rgba(0,0,0,.8); }
+.castle__night b { display: block; font-family: var(--f-display); font-weight: 400; text-transform: uppercase; font-size: clamp(44px, 7vw, 108px); line-height: .9; color: var(--paper); }
+.castle__night b em { font-style: normal; font-size: .42em; color: #ff6a80; margin-left: .15em; }
+.castle__nk { display: block; font-family: var(--f-kanji); font-size: clamp(14px, 1.6vw, 20px); letter-spacing: .2em; color: #ffb36b; margin-bottom: 8px; }
+.castle__nw { display: block; margin-top: 10px; font-family: var(--f-display); font-size: clamp(20px, 2.4vw, 34px); letter-spacing: .02em; text-transform: uppercase; color: #ff2a48; }
+.castle__nt { display: block; margin-top: 4px; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; font-weight: 600; opacity: .85; }
+.castle__ticks { position: absolute; inset: 0; pointer-events: none; }
+.castle__ticks i { position: absolute; top: -5px; width: 2px; height: 12px; background: #ffb36b; transform: translateX(-1px); }
+.castle__ticks i b { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); font-family: var(--f-kanji); font-weight: 400; font-size: 13px; color: #ffb36b; }
+@media (max-width: 640px) { .castle__night { bottom: 22vh; max-width: 58vw; } .castle__night b { font-size: clamp(38px, 12vw, 56px); } .castle__nw { font-size: 18px; } }
