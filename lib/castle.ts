@@ -1,15 +1,23 @@
+// @ts-nocheck
 /* Innerve 11 — Infinity Castle (無限城) v2.
-   A corridor → a vertical drop through a shoji shaft → a lower hall → the doors.
-   main.js pins #castle and writes window.CASTLE.progress (0..1). This file renders,
-   fires biwa "shifts" that rearrange the castle, and emits `castle-moon` events. */
+   Ported verbatim from the static build's castle.js. Behavior frozen; the only
+   changes are npm imports, a start/dispose lifecycle, and gsap from the bundle
+   instead of a CDN global. The scroll driver (lib/driver.ts) pins #castle and
+   writes window.CASTLE.progress (0..1). This renders, fires biwa "shifts" that
+   rearrange the castle, and emits `castle-moon` / `castle-night` / `castle-gates`
+   / `castle-shift` events consumed by the React HUD. */
 import * as THREE from "three";
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
-import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
-import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { gsap } from "gsap";
 
-const host = document.getElementById("castleGL");
+export function startCastle(host: HTMLCanvasElement): () => void {
+  let disposed = false;
+  let rafId = 0;
+
 const state = (window.CASTLE = window.CASTLE || { progress: 0 });
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const mobile = innerWidth < 700;
@@ -348,10 +356,12 @@ const resize = () => {
 resize(); addEventListener("resize", resize);
 
 const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
-addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; });
+const onPointer = (e) => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; };
+addEventListener("pointermove", onPointer);
 let pendingMoon = -1, pendingAt = 0, pendingNight = -1, pendingNightAt = 0, curNight = -1;
 let visible = false, smooth = 0, moon = -1, ft = 1 / 60, frames = -60;
-new IntersectionObserver(([e]) => { visible = e.isIntersecting; state.visible = visible; }, { rootMargin: "0px" }).observe(host);
+const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; state.visible = visible; }, { rootMargin: "0px" });
+io.observe(host);
 
 const clock = new THREE.Clock();
 const UP = new THREE.Vector3(0, 1, 0), UP_SHAFT = new THREE.Vector3(0, 0, -1), Z = new THREE.Vector3(0, 0, 1);
@@ -360,7 +370,8 @@ const qRoll = new THREE.Quaternion(), qLook = new THREE.Quaternion();
 const smoothstep = THREE.MathUtils.smoothstep;
 
 const frame = () => {
-  requestAnimationFrame(frame);
+  if (disposed) return;
+  rafId = requestAnimationFrame(frame);
   const dt = Math.min(clock.getDelta(), .05);
   if (!visible) return;
   const t = clock.elapsedTime, lv = level();
@@ -424,7 +435,7 @@ const frame = () => {
       d.g.quaternion.copy(camera.quaternion); d.g.rotateY(d.turn * .5);
       d.flat.material.opacity = o;
     }
-    if (!d.lunged && dist < 9) { d.lunged = true; window.SFX && window.SFX.play("whoosh"); if (window.gsap) window.gsap.timeline().to(d, { lunge: 1, duration: .22, ease: "power3.out" }).to(d, { lunge: 0, duration: .9, ease: "power2.inOut" }); }
+    if (!d.lunged && dist < 9) { d.lunged = true; window.SFX && window.SFX.play("whoosh"); gsap.timeline().to(d, { lunge: 1, duration: .22, ease: "power3.out" }).to(d, { lunge: 0, duration: .9, ease: "power2.inOut" }); }
     if (dist > 45) d.lunged = false;
     tmp.copy(camera.position).sub(d.g.position).normalize();
     d.g.position.set(d.x0, d.y0 + Math.sin(t * 1.4 + d.i) * .08, d.g.position.z).addScaledVector(tmp, d.lunge * 1.6);
@@ -455,4 +466,14 @@ const frame = () => {
   renderer.toneMappingExposure = 1 + shiftKick * .35;
   composer.render();
 };
-frame();
+rafId = requestAnimationFrame(frame);
+
+  return () => {
+    disposed = true;
+    cancelAnimationFrame(rafId);
+    removeEventListener("resize", resize);
+    removeEventListener("pointermove", onPointer);
+    io.disconnect();
+    renderer.dispose();
+  };
+}

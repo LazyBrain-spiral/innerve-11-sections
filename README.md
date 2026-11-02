@@ -1,38 +1,44 @@
-# Innerve 11 — section extracts
+# Innerve 11 — Sections (Next.js + Tailwind)
 
-Selected sections lifted from the Demon Slayer fan build of the Innerve 11 hackathon site
-(source: https://github.com/siddharthpathania/innerve-11). Kept private per that repo's
-README, which notes it contains official Demon Slayer artwork and must not be published.
+Selected sections from the Innerve 11 hackathon site (Demon Slayer fan build):
+Infinity Castle 3D flythrough, prize pool, testimonials, past sponsors and footer.
 
-Included sections, in page order:
+Migrated from the original static HTML/CSS/JS build to **Next.js (App Router) + Tailwind CSS**.
+The pre-migration static build is preserved on the `legacy-static` branch for rollback.
 
-- **Infinity Castle** — 3D flythrough (three.js + bloom), driven by scroll (`castle.js`)
-- **Prize pool** — the animated ₹12 Lacs+ counter plus the prize cards
-- **Testimonials** — "Words from the survivors"
-- **Past sponsors** — "Allies of the corps"
-- **Footer**
+## Stack
 
-## Run
+- Next.js 15 + React 19 + TypeScript
+- Tailwind CSS 3 (all styling migrated from the hand-written stylesheet; the only
+  remaining custom CSS is a small `@layer` for pseudo-element effects: paper grain,
+  the footer ichimatsu strip, the page vignette, and split-text spans)
+- Three.js 0.160 (Infinity Castle flythrough, `lib/castle.ts` — behavior-frozen port
+  of the original `castle.js`, wrapped in a start/dispose lifecycle)
+- GSAP + ScrollTrigger + Lenis (scroll choreography, `lib/driver.ts` — faithful port
+  of the original `main.js`)
 
-Static site, no build step. GSAP, Lenis and three.js load from CDNs.
+## Structure
 
-```sh
-npx http-server -p 8000 -c-1
-# open http://localhost:8000
+- `app/` — App Router shell (`layout.tsx` fonts/metadata, `page.tsx`, `globals.css`)
+- `components/Site.tsx` — page markup (all Tailwind) + castle HUD as React state
+  (moon captions, Night gate cards, progress ticks; previously `innerHTML` swaps)
+- `lib/data.ts` — content (prizes, testimonials, sponsors, timeline)
+- `lib/driver.ts` — scroll driver: pinning, counters, reveals, tilt, Lenis
+- `lib/castle.ts` — WebGL flythrough (Three.js)
+- `public/assets/` — images and logos
+
+## Develop
+
+```bash
+npm install
+npm run dev
 ```
 
-## Files
+## Production
 
-| File | What it does |
-|---|---|
-| `index.html` / `styles.css` | Trimmed page with only the sections above; stylesheet unchanged |
-| `data.js` | All content (prizes, testimonials, sponsors); edit here |
-| `main.js` | Trimmed driver: content rendering, castle/prize scroll scenes, reveals |
-| `castle.js` | 3D Infinity Castle flythrough, unchanged |
-| `assets/logos/` | Sponsor logos and favicon used by the kept sections |
+```bash
+npm run build
+npm start
+```
 
-Removed from the original: loader/gate, hero, fall, breathing interlude, about, tracks,
-frames gallery, timeline, mini-game, FAQ, register finale, and all audio (music/SFX,
-`audio.js`/`music.js`/`forms.js`/`game.js`/`crazy.js`/`fx.js`) plus character artwork.
-Note: the footer's "Navigate" links (`#tracks`, `#timeline`, `#faq`, `#top`) point at
-sections that are not part of this extract and are inert here.
+Not affiliated with Demon Slayer, Koyoharu Gotouge or Ufotable.
