@@ -110,7 +110,7 @@ export default function Site() {
             <div className="arrival__grain pointer-events-none absolute inset-0 z-[6]" aria-hidden="true" />
             <div className="arrival__halo absolute left-[56%] top-[-2%] aspect-square w-[clamp(320px,40vw,560px)] -translate-x-1/2 rounded-full bg-[#17120e]/[.055] max-[640px]:left-1/2 max-[640px]:top-[4%] max-[640px]:w-[300px]" aria-hidden="true" />
             <div className="arrival__ring pointer-events-none absolute left-1/2 top-[64%] aspect-square w-[86vmin] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#17120e]/[.16] max-[640px]:top-[62%] max-[640px]:w-[118vmin]" aria-hidden="true" />
-            <div className="arrival__sun absolute left-[46%] top-[5%] aspect-square w-[clamp(220px,28vw,350px)] -translate-x-1/2 max-[640px]:left-1/2 max-[640px]:top-[6%] max-[640px]:w-[210px]" aria-hidden="true">
+            <div className="arrival__sun absolute left-1/2 top-[7%] aspect-square w-[clamp(260px,32vw,420px)] -translate-x-1/2 max-[640px]:top-[6%] max-[640px]:w-[230px]" aria-hidden="true">
               <svg className="arrival__sunArt block h-full w-full" viewBox="0 0 440 440" aria-hidden="true">
                 <defs>
                   <filter id="sunRough" x="-20%" y="-20%" width="140%" height="140%">
@@ -152,115 +152,139 @@ export default function Site() {
                 <path d="M112 30 Q115 26 118 30 Q121 26 124 30" strokeWidth="1.6" />
               </svg>
             </div>
-            <svg className="arrival__castle absolute bottom-0 left-[55%] h-[44%] w-[min(1000px,155vw)] -translate-x-1/2 max-[640px]:left-1/2 max-[640px]:h-[38%] max-[640px]:w-[200vw]" viewBox="0 0 900 520" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-              <path d="M0 520 L0 480 Q150 444 300 454 Q430 462 520 446 Q700 426 900 474 L900 520 Z" fill="#17120e" opacity=".22" />
-              <path d="M0 520 L0 502 Q220 478 420 488 Q620 496 900 496 L900 520 Z" fill="#17120e" opacity=".45" />
-              <g fill="#17120e">
-                {/* central keep */}
-                <rect x="444" y="58" width="12" height="42" />
-                <path d="M450 44 L457 60 L443 60 Z" />
-                <path d="M398 110 Q450 78 502 110 L488 124 L412 124 Z" />
-                <rect x="416" y="124" width="68" height="46" />
-                <path d="M368 178 Q450 144 532 178 L513 193 L387 193 Z" />
-                <rect x="393" y="193" width="114" height="54" />
-                <path d="M334 256 Q450 216 566 256 L543 273 L357 273 Z" />
-                <rect x="363" y="273" width="174" height="62" />
-                <path d="M296 346 Q450 302 604 346 L576 365 L324 365 Z" />
-                <rect x="330" y="365" width="240" height="72" />
-                <rect x="300" y="437" width="300" height="46" />
-                <rect x="268" y="483" width="364" height="37" />
-                {/* left tower */}
-                <rect x="258" y="252" width="10" height="26" />
-                <path d="M238 252 Q263 236 288 252 L279 262 L247 262 Z" />
-                <path d="M204 302 Q263 274 322 302 L306 317 L220 317 Z" />
-                <rect x="230" y="317" width="66" height="120" />
-                <rect x="294" y="372" width="40" height="14" />
-                {/* right tower */}
-                <rect x="642" y="288" width="9" height="24" />
-                <path d="M624 288 Q646.5 274 669 288 L661 297 L632 297 Z" />
-                <path d="M588 332 Q647 304 706 332 L690 347 L604 347 Z" />
-                <rect x="614" y="347" width="66" height="90" />
-                <rect x="570" y="380" width="44" height="13" />
-                {/* far pavilions */}
-                <path d="M128 404 Q175 382 222 404 L208 417 L142 417 Z" />
-                <rect x="150" y="417" width="50" height="66" />
-                <path d="M722 414 Q766 394 810 414 L797 426 L735 426 Z" />
-                <rect x="742" y="426" width="48" height="57" />
-                {/* vermilion roof-ridge accents */}
-                <g fill="none" stroke="#dc4f45" strokeWidth="2.2" opacity=".85" strokeLinecap="round">
-                  <path d="M404 108 Q450 82 496 108" />
-                  <path d="M374 176 Q450 149 526 176" />
-                  <path d="M341 254 Q450 219 559 254" />
-                  <path d="M304 343 Q450 305 596 343" />
-                  <path d="M210 300 Q263 277 316 300" />
-                  <path d="M594 330 Q647 307 700 330" />
-                </g>
-                {/* hanging lanterns */}
-                <g fill="#ff6a4d" className="arrival__wglow">
-                  <rect x="408" y="118" width="5" height="8" rx="2" />
-                  <rect x="488" y="118" width="5" height="8" rx="2" />
-                  <rect x="380" y="186" width="5" height="8" rx="2" />
-                  <rect x="516" y="186" width="5" height="8" rx="2" />
-                  <rect x="348" y="265" width="5" height="9" rx="2" />
-                  <rect x="548" y="265" width="5" height="9" rx="2" />
-                </g>
-              </g>
-              {/* lit windows — ivory */}
-              <g fill="#f2ebe3">
-                <rect x="436" y="136" width="7" height="13" opacity=".85" />
-                <rect x="458" y="136" width="7" height="13" opacity=".55" />
-                <rect x="414" y="206" width="7" height="13" opacity=".7" />
-                <rect x="446" y="206" width="7" height="13" opacity=".9" />
-                <rect x="482" y="206" width="7" height="13" opacity=".5" />
-                <rect x="386" y="288" width="8" height="14" opacity=".8" />
-                <rect x="418" y="288" width="8" height="14" opacity=".55" />
-                <rect x="474" y="288" width="8" height="14" opacity=".85" />
-                <rect x="506" y="288" width="8" height="14" opacity=".6" />
-                <rect x="352" y="382" width="8" height="14" opacity=".75" />
-                <rect x="392" y="382" width="8" height="14" opacity=".5" />
-                <rect x="500" y="382" width="8" height="14" opacity=".8" />
-                <rect x="540" y="382" width="8" height="14" opacity=".55" />
-                <rect x="252" y="334" width="7" height="13" opacity=".7" />
-                <rect x="636" y="362" width="7" height="12" opacity=".65" />
-                <rect x="166" y="434" width="7" height="12" opacity=".6" />
-                <rect x="758" y="440" width="7" height="11" opacity=".55" />
-              </g>
-              {/* lit windows — vermilion glow */}
-              <g fill="#ff6a4d" className="arrival__wglow">
-                <rect x="446" y="136" width="7" height="13" />
-                <rect x="446" y="288" width="8" height="14" />
-                <rect x="432" y="382" width="8" height="14" />
-                <rect x="446" y="452" width="9" height="15" />
-                <rect x="268" y="334" width="7" height="13" />
-                <rect x="652" y="362" width="7" height="12" />
-              </g>
-            <g fill="none" stroke="#17120e" strokeWidth="7" strokeLinecap="round"><path d="M401 108 Q392 102 381 90" /><path d="M371 176 Q362 170 351 158" /><path d="M337 254 Q328 248 317 236" /><path d="M299 344 Q290 338 279 326" /><path d="M207 300 Q198 294 187 282" /><path d="M591 330 Q582 324 571 312" /><path d="M131 402 Q122 396 111 384" /><path d="M725 412 Q716 406 705 394" /><path d="M499 108 Q508 102 519 90" /><path d="M529 176 Q538 170 549 158" /><path d="M563 254 Q572 248 583 236" /><path d="M601 344 Q610 338 621 326" /><path d="M319 300 Q328 294 339 282" /><path d="M703 330 Q712 324 723 312" /><path d="M219 402 Q228 396 239 384" /><path d="M807 412 Q816 406 827 394" /></g>
-              <g fill="#0b0705" opacity=".55"><rect x="412" y="124" width="76" height="7" /><rect x="387" y="193" width="126" height="7" /><rect x="357" y="273" width="186" height="8" /><rect x="324" y="365" width="252" height="8" /><rect x="220" y="317" width="86" height="7" /><rect x="604" y="347" width="86" height="7" /><rect x="142" y="417" width="58" height="6" /><rect x="735" y="426" width="62" height="6" /></g>
-              <g fill="#f2ebe3" opacity=".55"><ellipse cx="450" cy="70" rx="7" ry="2.2" /><ellipse cx="450" cy="79" rx="6" ry="2" /><ellipse cx="450" cy="87" rx="5" ry="1.8" /><circle cx="450" cy="50" r="2.5" /></g>
-              <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".12"><path d="M402 117 Q450 92 498 117" /><path d="M376 185 Q450 158 524 185" /><path d="M343 263 Q450 231 557 263" /><path d="M306 353 Q450 318 594 353" /></g>
-              <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".14"><path d="M410 201 V240" /><path d="M490 201 V240" /><path d="M384 281 V326" /><path d="M516 281 V326" /><path d="M352 374 V428" /><path d="M548 374 V428" /><path d="M324 445 V476" /><path d="M372 445 V476" /><path d="M528 445 V476" /><path d="M576 445 V476" /></g>
-              <g fill="#dc4f45" opacity=".9"><rect x="352" y="273" width="6" height="26" /><rect x="542" y="273" width="6" height="26" /></g>
-              <path d="M432 520 L432 478 Q450 464 468 478 L468 520 Z" fill="#0b0705" />
-              <path d="M441 520 L441 486 Q450 478 459 486 L459 520 Z" fill="#ff6a4d" className="arrival__wglow" />
-              <g fill="none" stroke="#f2ebe3" strokeWidth="1.6" opacity=".1"><path d="M280 496 H620" /><path d="M292 508 H608" /></g>
-            </svg>
-            <div className="arrival__mist arrival__mist--c pointer-events-none absolute bottom-[10%] left-[6%] h-[28%] w-[88%]" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--c h-full w-full" /></div>
+                        <div className="arrival__mist arrival__mist--c pointer-events-none absolute bottom-[10%] left-[6%] h-[28%] w-[88%]" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--c h-full w-full" /></div>
             <div className="arrival__mist arrival__mist--l pointer-events-none absolute bottom-[3%] left-[-12%] h-[42%] w-[72%]" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--l h-full w-full" /></div>
             <div className="arrival__mist arrival__mist--r pointer-events-none absolute bottom-[1%] right-[-12%] h-[48%] w-[72%] max-[640px]:hidden" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--r h-full w-full" /></div>
 
-            <svg className="arrival__cloud arrival__cloud--a pointer-events-none absolute bottom-[21%] left-[-8%] h-[15%] w-[76%] max-[640px]:hidden" viewBox="0 0 800 150" preserveAspectRatio="none" aria-hidden="true">
-                <defs><filter id="cloudSoft" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="1.7"/></filter></defs>
-                <path d="M0 62.0 Q30.8 54.4 61.5 59.1 Q92.3 42.3 123.1 56.4 Q153.8 32.1 184.6 54.0 Q215.4 23.8 246.2 52.1 Q276.9 17.6 307.7 50.8 Q338.5 13.9 369.2 50.1 Q400.0 12.6 430.8 50.1 Q461.5 13.9 492.3 50.8 Q523.1 17.6 553.8 52.1 Q584.6 23.8 615.4 54.0 Q646.2 32.1 676.9 56.4 Q707.7 42.3 738.5 59.1 Q769.2 54.4 800.0 62.0 L800 66.0 Q755.6 80.0 711.1 82.8 Q666.7 99.6 622.2 94.0 Q577.8 113.7 533.3 101.6 Q488.9 122.4 444.4 105.5 Q400.0 125.4 355.6 105.5 Q311.1 122.4 266.7 101.6 Q222.2 113.7 177.8 94.0 Q133.3 99.6 88.9 82.8 Q44.4 80.0 0.0 66.0 Z" fill="#f7f2e8" opacity=".9" filter="url(#cloudSoft)" />
-                <path d="M0 62.0 Q30.8 54.4 61.5 59.1 Q92.3 42.3 123.1 56.4 Q153.8 32.1 184.6 54.0 Q215.4 23.8 246.2 52.1 Q276.9 17.6 307.7 50.8 Q338.5 13.9 369.2 50.1 Q400.0 12.6 430.8 50.1 Q461.5 13.9 492.3 50.8 Q523.1 17.6 553.8 52.1 Q584.6 23.8 615.4 54.0 Q646.2 32.1 676.9 56.4 Q707.7 42.3 738.5 59.1 Q769.2 54.4 800.0 62.0 L800 66.0 Q755.6 80.0 711.1 82.8 Q666.7 99.6 622.2 94.0 Q577.8 113.7 533.3 101.6 Q488.9 122.4 444.4 105.5 Q400.0 125.4 355.6 105.5 Q311.1 122.4 266.7 101.6 Q222.2 113.7 177.8 94.0 Q133.3 99.6 88.9 82.8 Q44.4 80.0 0.0 66.0 Z" fill="none" stroke="#d9cfbf" strokeWidth="2.4" opacity=".5" />
+                                                <div className="arrival__cloudWrap arrival__cloudWrap--a pointer-events-none absolute bottom-[15%] left-[-6%] w-[46%] max-[640px]:hidden" aria-hidden="true">
+              <svg className="block h-auto w-full" viewBox="0 0 640 160" aria-hidden="true">
+                <defs><filter id="cloudSoft" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="1.1" /></filter></defs>
+                <path d="M28 150 L596 150 Q618 150 620 130 Q622 108 598 102 Q576 96 568 110 Q562 122 574 124 Q584 126 590 116 Q596 104 584 94 Q566 78 536 92 Q524 58 472 60 Q432 62 426 88 Q402 44 342 52 Q294 58 290 88 Q264 56 216 68 Q174 78 170 102 Q132 82 98 100 Q62 110 46 128 Q26 138 28 150 Z" fill="#f7f2e8" filter="url(#cloudSoft)" opacity=".96" />
+                <path d="M92 116 Q168 76 252 92 Q336 106 420 76 Q488 54 552 92" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".55" />
+                <path d="M150 128 Q220 102 290 112 Q360 122 430 100" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".4" />
               </svg>
-                        <svg className="arrival__cloud arrival__cloud--b pointer-events-none absolute bottom-[41%] right-[-10%] h-[9%] w-[54%] max-[640px]:hidden" viewBox="0 0 800 150" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0 70.0 Q26.7 64.8 53.3 67.5 Q80.0 56.3 106.7 65.1 Q133.3 48.9 160.0 62.9 Q186.7 42.6 213.3 61.1 Q240.0 37.6 266.7 59.6 Q293.3 33.8 320.0 58.6 Q346.7 31.6 373.3 58.1 Q400.0 30.8 426.7 58.1 Q453.3 31.6 480.0 58.6 Q506.7 33.8 533.3 59.6 Q560.0 37.6 586.7 61.1 Q613.3 42.6 640.0 62.9 Q666.7 48.9 693.3 65.1 Q720.0 56.3 746.7 67.5 Q773.3 64.8 800.0 70.0 L800 74.0 Q763.6 81.8 727.3 82.9 Q690.9 92.7 654.5 88.9 Q618.2 101.1 581.8 93.3 Q545.5 107.1 509.1 96.3 Q472.7 110.8 436.4 97.8 Q400.0 112.1 363.6 97.8 Q327.3 110.8 290.9 96.3 Q254.5 107.1 218.2 93.3 Q181.8 101.1 145.5 88.9 Q109.1 92.7 72.7 82.9 Q36.4 81.8 0.0 74.0 Z" fill="#f7f2e8" opacity=".75" filter="url(#cloudSoft)" />
-                <path d="M0 70.0 Q26.7 64.8 53.3 67.5 Q80.0 56.3 106.7 65.1 Q133.3 48.9 160.0 62.9 Q186.7 42.6 213.3 61.1 Q240.0 37.6 266.7 59.6 Q293.3 33.8 320.0 58.6 Q346.7 31.6 373.3 58.1 Q400.0 30.8 426.7 58.1 Q453.3 31.6 480.0 58.6 Q506.7 33.8 533.3 59.6 Q560.0 37.6 586.7 61.1 Q613.3 42.6 640.0 62.9 Q666.7 48.9 693.3 65.1 Q720.0 56.3 746.7 67.5 Q773.3 64.8 800.0 70.0 L800 74.0 Q763.6 81.8 727.3 82.9 Q690.9 92.7 654.5 88.9 Q618.2 101.1 581.8 93.3 Q545.5 107.1 509.1 96.3 Q472.7 110.8 436.4 97.8 Q400.0 112.1 363.6 97.8 Q327.3 110.8 290.9 96.3 Q254.5 107.1 218.2 93.3 Q181.8 101.1 145.5 88.9 Q109.1 92.7 72.7 82.9 Q36.4 81.8 0.0 74.0 Z" fill="none" stroke="#d9cfbf" strokeWidth="2.4" opacity=".5" />
+            </div>
+<div className="arrival__castle absolute bottom-[4%] left-[52%] h-[48%] w-[min(1150px,175vw)] -translate-x-1/2 max-[640px]:bottom-[6%] max-[640px]:left-1/2 max-[640px]:h-[40%] max-[640px]:w-[230vw]">
+              <svg className="arrival__castleArt block h-full w-full" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+                <defs>
+                  <filter id="inkRough" x="-6%" y="-6%" width="112%" height="112%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.03" numOctaves="3" seed="7" result="n" />
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" />
+                  </filter>
+                </defs>
+                <ellipse cx="500" cy="692" rx="335" ry="11" fill="#17120e" opacity=".16" />
+                <g filter="url(#inkRough)">
+                  <g fill="#17120e">
+                    {/* stone plinth, battered walls */}
+                    <path d="M212 700 L244 596 Q250 578 268 576 L732 576 Q750 578 756 596 L788 700 Z" />
+                    {/* keep walls, tapering tiers */}
+                    <path d="M330 578 L342 468 L658 468 L670 578 Z" />
+                    <path d="M372 470 L382 372 L618 372 L628 470 Z" />
+                    <path d="M412 374 L420 282 L580 282 L588 374 Z" />
+                    <path d="M446 284 L452 200 L548 200 L554 284 Z" />
+                    <path d="M472 202 L476 142 L524 142 L528 202 Z" />
+                    {/* roofs: hand-drawn curves, raised eave tips */}
+                    <path d="M196 604 Q262 560 340 552 Q420 544 500 540 Q580 544 660 552 Q738 560 804 604 Q740 592 664 588 Q580 584 500 583 Q420 584 336 588 Q260 592 196 604 Z" />
+                    <path d="M254 480 Q322 442 388 434 Q444 428 500 425 Q556 428 612 434 Q678 442 746 480 Q676 468 606 463 Q550 460 500 459 Q450 460 394 463 Q324 468 254 480 Z" />
+                    <path d="M306 384 Q366 352 420 345 Q460 340 500 338 Q540 340 580 345 Q634 352 694 384 Q632 373 574 369 Q536 366 500 365 Q464 366 426 369 Q368 373 306 384 Z" />
+                    <path d="M352 294 Q400 268 444 261 Q472 257 500 256 Q528 257 556 261 Q600 268 648 294 Q598 285 552 282 Q525 280 500 279 Q475 280 448 282 Q402 285 352 294 Z" />
+                    <path d="M398 212 Q436 190 468 184 Q484 181 500 180 Q516 181 532 184 Q564 190 602 212 Q562 204 530 201 Q514 199 500 199 Q486 199 470 201 Q438 204 398 212 Z" />
+                    {/* eave-corner flicks */}
+                    <path d="M196 604 Q186 596 178 582 Q192 588 202 590 Z" />
+                    <path d="M804 604 Q814 596 822 582 Q808 588 798 590 Z" />
+                    <path d="M254 480 Q245 472 238 460 Q251 466 260 468 Z" />
+                    <path d="M746 480 Q755 472 762 460 Q749 466 740 468 Z" />
+                    <path d="M306 384 Q298 377 292 366 Q304 371 312 373 Z" />
+                    <path d="M694 384 Q702 377 708 366 Q696 371 688 373 Z" />
+                    <path d="M352 294 Q345 287 340 277 Q351 282 358 284 Z" />
+                    <path d="M648 294 Q655 287 660 277 Q649 282 642 284 Z" />
+                    <path d="M398 212 Q392 206 388 197 Q398 201 404 203 Z" />
+                    <path d="M602 212 Q608 206 612 197 Q602 201 596 203 Z" />
+                    {/* sorin spire */}
+                    <rect x="497" y="94" width="6" height="88" />
+                    <circle cx="500" cy="88" r="7" />
+                    <path d="M486 128 Q500 121 514 128 Q500 133 486 128 Z" />
+                    <path d="M488 142 Q500 136 512 142 Q500 147 488 142 Z" />
+                    <path d="M490 155 Q500 150 510 155 Q500 160 490 155 Z" />
+                    {/* flanking towers */}
+                    <path d="M236 700 L244 640 L316 640 L322 700 Z" />
+                    <path d="M210 646 Q252 622 282 618 Q312 622 344 646 Q310 638 280 637 Q248 638 210 646 Z" />
+                    <rect x="274" y="592" width="5" height="28" />
+                    <circle cx="276" cy="588" r="4.5" />
+                    <path d="M678 700 L686 632 L760 632 L768 700 Z" />
+                    <path d="M650 638 Q696 612 724 609 Q752 612 792 638 Q756 629 724 628 Q690 629 650 638 Z" />
+                    <rect x="720" y="584" width="5" height="27" />
+                    <circle cx="722" cy="580" r="4.5" />
+                  </g>
+                  {/* roof ridge accents, vermilion: restraint, top roofs only */}
+                  <g fill="none" stroke="#dc4f45" strokeWidth="3" strokeLinecap="round" opacity=".9">
+                    <path d="M404 208 Q452 185 500 183 Q548 185 596 208" />
+                    <path d="M360 290 Q430 261 500 259 Q570 261 640 290" />
+                  </g>
+                  {/* ivory windows, hand-placed, varied */}
+                  <g fill="#f2ebe3">
+                    <rect x="486" y="152" width="9" height="20" rx="1.5" opacity=".9" />
+                    <rect x="505" y="152" width="9" height="20" rx="1.5" opacity=".55" />
+                    <rect x="466" y="216" width="10" height="22" rx="1.5" opacity=".8" />
+                    <rect x="495" y="216" width="10" height="22" rx="1.5" opacity=".5" />
+                    <rect x="524" y="216" width="10" height="22" rx="1.5" opacity=".85" />
+                    <rect x="438" y="300" width="10" height="22" rx="1.5" opacity=".7" />
+                    <rect x="470" y="300" width="10" height="22" rx="1.5" opacity=".9" />
+                    <rect x="520" y="300" width="10" height="22" rx="1.5" opacity=".55" />
+                    <rect x="552" y="300" width="10" height="22" rx="1.5" opacity=".8" />
+                    <rect x="402" y="394" width="11" height="24" rx="1.5" opacity=".75" />
+                    <rect x="440" y="394" width="11" height="24" rx="1.5" opacity=".5" />
+                    <rect x="496" y="394" width="11" height="24" rx="1.5" opacity=".9" />
+                    <rect x="550" y="394" width="11" height="24" rx="1.5" opacity=".6" />
+                    <rect x="588" y="394" width="11" height="24" rx="1.5" opacity=".85" />
+                    <rect x="356" y="492" width="12" height="26" rx="1.5" opacity=".7" />
+                    <rect x="400" y="492" width="12" height="26" rx="1.5" opacity=".9" />
+                    <rect x="466" y="492" width="12" height="26" rx="1.5" opacity=".5" />
+                    <rect x="522" y="492" width="12" height="26" rx="1.5" opacity=".85" />
+                    <rect x="588" y="492" width="12" height="26" rx="1.5" opacity=".6" />
+                    <rect x="632" y="492" width="12" height="26" rx="1.5" opacity=".8" />
+                    <rect x="258" y="656" width="10" height="22" rx="1.5" opacity=".75" />
+                    <rect x="286" y="656" width="10" height="22" rx="1.5" opacity=".5" />
+                    <rect x="700" y="650" width="10" height="22" rx="1.5" opacity=".8" />
+                    <rect x="730" y="650" width="10" height="22" rx="1.5" opacity=".55" />
+                  </g>
+                  {/* warm vermilion glow windows + gate */}
+                  <g fill="#ff6a4d" className="arrival__wglow">
+                    <rect x="486" y="216" width="10" height="22" rx="1.5" />
+                    <rect x="492" y="394" width="11" height="24" rx="1.5" opacity="0" />
+                    <rect x="484" y="492" width="12" height="26" rx="1.5" />
+                    <path d="M478 700 L478 640 Q500 622 522 640 L522 700 Z" opacity=".95" />
+                  </g>
+                  {/* gate arch frame */}
+                  <path d="M470 700 L470 636 Q500 612 530 636 L530 700 L522 700 L522 640 Q500 622 478 640 L478 700 Z" fill="#0b0705" />
+                  {/* stone courses on plinth */}
+                  <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".14" strokeLinecap="round">
+                    <path d="M238 620 Q500 606 762 620" />
+                    <path d="M228 656 Q500 642 772 656" />
+                    <path d="M220 684 Q500 672 780 684" />
+                  </g>
+                  {/* bracket lines under roofs */}
+                  <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".12" strokeLinecap="round">
+                    <path d="M420 472 L420 490 M460 469 L460 488 M500 468 L500 487 M540 469 L540 488 M580 472 L580 490" />
+                    <path d="M448 378 L448 394 M500 374 L500 390 M552 378 L552 394" />
+                    <path d="M472 288 L472 302 M500 286 L500 300 M528 288 L528 302" />
+                  </g>
+                </g>
               </svg>
-                        <svg className="arrival__cloud arrival__cloud--c pointer-events-none absolute bottom-[32%] left-[28%] h-[7%] w-[46%] opacity-80 max-[640px]:bottom-[27%] max-[640px]:left-[-12%] max-[640px]:h-[10%] max-[640px]:w-[124%]" viewBox="0 0 800 150" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0 72.0 Q44.4 64.5 88.9 67.9 Q133.3 52.8 177.8 64.3 Q222.2 43.8 266.7 61.6 Q311.1 38.1 355.6 60.2 Q400.0 36.2 444.4 60.2 Q488.9 38.1 533.3 61.6 Q577.8 43.8 622.2 64.3 Q666.7 52.8 711.1 67.9 Q755.6 64.5 800.0 72.0 L800 76.0 Q733.3 86.3 666.7 86.6 Q600.0 99.0 533.3 92.2 Q466.7 105.5 400.0 94.0 Q333.3 105.5 266.7 92.2 Q200.0 99.0 133.3 86.6 Q66.7 86.3 0.0 76.0 Z" fill="#f7f2e8" opacity=".8" filter="url(#cloudSoft)" />
-                <path d="M0 72.0 Q44.4 64.5 88.9 67.9 Q133.3 52.8 177.8 64.3 Q222.2 43.8 266.7 61.6 Q311.1 38.1 355.6 60.2 Q400.0 36.2 444.4 60.2 Q488.9 38.1 533.3 61.6 Q577.8 43.8 622.2 64.3 Q666.7 52.8 711.1 67.9 Q755.6 64.5 800.0 72.0 L800 76.0 Q733.3 86.3 666.7 86.6 Q600.0 99.0 533.3 92.2 Q466.7 105.5 400.0 94.0 Q333.3 105.5 266.7 92.2 Q200.0 99.0 133.3 86.6 Q66.7 86.3 0.0 76.0 Z" fill="none" stroke="#d9cfbf" strokeWidth="2.4" opacity=".5" />
+            </div>
+            <div className="arrival__cloudWrap arrival__cloudWrap--b pointer-events-none absolute bottom-[35%] right-[-4%] w-[30%] max-[640px]:bottom-[44%] max-[640px]:right-[-16%] max-[640px]:w-[58%]" aria-hidden="true">
+              <svg className="block h-auto w-full" viewBox="0 0 480 130" aria-hidden="true">
+                <path d="M22 122 L430 122 Q452 122 454 104 Q456 86 434 80 Q414 74 406 86 Q400 96 410 100 Q420 102 426 92 Q430 80 416 70 Q396 58 372 70 Q362 42 318 44 Q284 46 280 70 Q258 38 212 48 Q176 56 172 80 Q138 62 106 78 Q74 88 60 104 Q42 112 22 122 Z" fill="#f7f2e8" filter="url(#cloudSoft)" opacity=".9" />
+                <path d="M70 96 Q140 62 210 76 Q282 90 350 62 Q392 46 424 72" fill="none" stroke="#ddd2c0" strokeWidth="2.2" strokeLinecap="round" opacity=".5" />
               </svg>
+            </div>
+            <div className="arrival__cloudWrap arrival__cloudWrap--c pointer-events-none absolute bottom-[-1%] left-[16%] z-[6] w-[58%] max-[640px]:left-[-10%] max-[640px]:w-[112%]" aria-hidden="true">
+              <svg className="block h-auto w-full" viewBox="0 0 900 150" aria-hidden="true">
+                <path d="M30 150 L846 150 Q874 150 876 128 Q878 106 852 100 Q828 94 819 110 Q813 123 826 125 Q837 127 843 115 Q849 101 834 90 Q812 74 780 90 Q768 58 712 62 Q668 66 662 92 Q636 50 570 58 Q518 64 512 94 Q482 56 420 66 Q368 74 362 102 Q330 70 270 80 Q220 88 214 112 Q176 92 134 106 Q92 118 64 136 Q40 142 30 150 Z" fill="#f7f2e8" filter="url(#cloudSoft)" opacity=".98" />
+                <path d="M110 122 Q210 84 310 100 Q410 116 500 86 Q590 60 688 90 Q748 106 810 88" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".5" />
+                <path d="M190 136 Q270 114 350 122 Q430 130 510 112" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".36" />
+              </svg>
+            </div>
             <div className="arrival__petals pointer-events-none absolute inset-0 z-[3]" aria-hidden="true">
               <svg className="arrival__petal absolute left-[24%] top-[6%] h-[11px] w-[11px]" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#e59a93" /></svg>
               <svg className="arrival__petal absolute left-[68%] top-[3%] h-[9px] w-[9px]" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#d97a6f" /></svg>
@@ -340,7 +364,7 @@ export default function Site() {
               <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Upper Moons</span>
               <span className="h-14 w-px bg-ink/35" />
             </div>
-            <div className="arrival__copy absolute inset-x-0 top-[19%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
+            <div className="arrival__copy absolute inset-x-0 top-[16.5%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
               <div className="arrival__kicker mb-3 flex items-center gap-4 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-ink/80">
                 <span className="h-px w-10 bg-ink/40" aria-hidden="true" />開幕 · The curtain rises<span className="h-px w-10 bg-ink/40" aria-hidden="true" />
               </div>
