@@ -237,9 +237,6 @@ export function initDriver(): () => void {
     gsap.globalTimeline.getChildren(true, true, false).forEach((t) => {
       if (!(t as unknown as { scrollTrigger?: unknown }).scrollTrigger) t.progress(1);
     });
-    ScrollTrigger.getAll().forEach((st) => {
-      if (st.isActive && st.animation) st.animation.progress(1);
-    });
     ScrollTrigger.refresh();
   }, 4000);
   cleanups.push(() => window.clearTimeout(watchdog));
