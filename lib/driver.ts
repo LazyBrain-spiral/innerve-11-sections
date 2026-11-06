@@ -206,6 +206,19 @@ export function initDriver(): () => void {
   });
   document.body.dataset.tone = "dark";
 
+  /* fail-visible watchdog: if a slow first compile / stalled GPU init froze the
+     ticker mid-entrance, settle non-scroll tweens and re-measure triggers */
+  const watchdog = window.setTimeout(() => {
+    gsap.globalTimeline.getChildren(true, true, false).forEach((t) => {
+      if (!(t as unknown as { scrollTrigger?: unknown }).scrollTrigger) t.progress(1);
+    });
+    ScrollTrigger.getAll().forEach((st) => {
+      if (st.isActive && st.animation) st.animation.progress(1);
+    });
+    ScrollTrigger.refresh();
+  }, 4000);
+  cleanups.push(() => window.clearTimeout(watchdog));
+
   const onLoad = () => ScrollTrigger.refresh();
   window.addEventListener("load", onLoad);
   cleanups.push(() => window.removeEventListener("load", onLoad));
