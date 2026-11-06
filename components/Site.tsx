@@ -104,60 +104,93 @@ export default function Site() {
       <div id="flash" aria-hidden="true" className="pointer-events-none fixed inset-0 z-[58] bg-white opacity-0" />
 
       <main id="smooth">
-        {/* ===== ARRIVAL (battlefield-arrival hero: layered parallax, no pin) ===== */}
-        <section id="arrival" data-tone="dark" data-name="Arrival" className="arrival relative overflow-hidden bg-ink">
+        {/* ===== ARRIVAL (ivory/vermilion poster hero: layered parallax, no pin) ===== */}
+        <section id="arrival" data-tone="light" data-name="Arrival" className="arrival relative overflow-hidden bg-[#f2ebe3] text-ink">
           <div className="arrival__stage svh relative overflow-hidden">
-            <div className="arrival__sky absolute inset-0 bg-[linear-gradient(180deg,#040308_0%,#0e060d_42%,#260a13_72%,#3a0e19_100%)]" />
-            <div className="arrival__stars absolute inset-0" aria-hidden="true" />
-            <div className="arrival__moon absolute left-1/2 top-[16%] aspect-square w-[clamp(150px,22vw,280px)] -translate-x-1/2 rounded-full max-[640px]:top-[12%]" aria-hidden="true" />
-            <svg className="arrival__castle absolute bottom-0 left-1/2 h-[62%] w-[min(720px,120vw)] -translate-x-1/2" viewBox="0 0 600 400" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-              <path d="M0 400 L0 352 Q140 306 300 316 Q460 306 600 356 L600 400 Z" fill="#070409" />
-              <g fill="#0c0611">
-                <rect x="232" y="326" width="136" height="74" />
-                <rect x="200" y="352" width="44" height="48" />
-                <rect x="360" y="356" width="48" height="44" />
-                <rect x="250" y="276" width="100" height="58" />
-                <rect x="266" y="230" width="68" height="54" />
-                <rect x="278" y="190" width="44" height="48" />
-                <rect x="289" y="152" width="22" height="46" />
-                <rect x="296" y="128" width="8" height="28" />
+            <div className="arrival__grain pointer-events-none absolute inset-0" aria-hidden="true" />
+            <div className="arrival__sun absolute left-1/2 top-[12%] aspect-square w-[clamp(210px,30vw,390px)] -translate-x-1/2 rounded-full max-[640px]:top-[9%]" aria-hidden="true" />
+            <svg className="arrival__birds absolute left-[55%] top-[19%] w-[110px] max-[640px]:left-[60%] max-[640px]:top-[15%] max-[640px]:w-[80px]" viewBox="0 0 120 40" fill="none" stroke="#17120e" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M2 12 Q8 4 14 12 Q20 4 26 12" />
+              <path d="M46 26 Q51 19 56 26 Q61 19 66 26" />
+              <path d="M84 8 Q90 1 96 8 Q102 1 108 8" />
+            </svg>
+            <svg className="arrival__castle absolute bottom-0 left-1/2 h-[60%] w-[min(760px,130vw)] -translate-x-1/2" viewBox="0 0 600 400" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+              <path d="M0 400 L0 356 Q140 312 300 320 Q460 312 600 358 L600 400 Z" fill="#17120e" opacity=".28" />
+              <g fill="#17120e">
+                <rect x="228" y="330" width="144" height="70" />
+                <path d="M216 330 L300 306 L384 330 Z" />
+                <rect x="196" y="356" width="48" height="44" />
+                <path d="M186 356 L220 338 L254 356 Z" />
+                <rect x="360" y="360" width="52" height="40" />
+                <path d="M350 360 L386 343 L422 360 Z" />
+                <rect x="250" y="278" width="100" height="56" />
+                <path d="M240 278 L300 256 L360 278 Z" />
+                <rect x="266" y="232" width="68" height="50" />
+                <path d="M258 232 L300 214 L342 232 Z" />
+                <rect x="279" y="192" width="42" height="44" />
+                <path d="M272 192 L300 177 L328 192 Z" />
+                <rect x="290" y="152" width="20" height="42" />
+                <path d="M284 152 L300 140 L316 152 Z" />
+                <rect x="297" y="122" width="6" height="24" />
               </g>
-              <g fill="#ffb36b">
-                <rect x="262" y="292" width="7" height="12" opacity=".85" />
-                <rect x="286" y="292" width="7" height="12" opacity=".5" />
-                <rect x="318" y="292" width="7" height="12" opacity=".8" />
-                <rect x="248" y="344" width="8" height="13" opacity=".65" />
-                <rect x="292" y="344" width="8" height="13" opacity=".9" />
-                <rect x="336" y="344" width="8" height="13" opacity=".55" />
-                <rect x="284" y="244" width="6" height="11" opacity=".75" />
-                <rect x="288" y="202" width="6" height="10" opacity=".9" />
-                <rect x="296" y="162" width="5" height="9" opacity=".7" />
+              <g fill="#f2ebe3">
+                <rect x="262" y="292" width="7" height="12" opacity=".9" />
+                <rect x="288" y="292" width="7" height="12" opacity=".6" />
+                <rect x="318" y="292" width="7" height="12" opacity=".85" />
+                <rect x="248" y="348" width="8" height="13" opacity=".7" />
+                <rect x="294" y="348" width="8" height="13" opacity=".95" />
+                <rect x="338" y="348" width="8" height="13" opacity=".6" />
+                <rect x="285" y="244" width="6" height="11" opacity=".8" />
+                <rect x="289" y="203" width="6" height="10" opacity=".9" />
+                <rect x="296" y="160" width="5" height="9" opacity=".75" />
               </g>
             </svg>
-            <div className="arrival__mist arrival__mist--l pointer-events-none absolute bottom-[4%] left-[-12%] h-[46%] w-[70%]" aria-hidden="true" />
-            <div className="arrival__mist arrival__mist--r pointer-events-none absolute bottom-[2%] right-[-12%] h-[52%] w-[70%] max-[640px]:hidden" aria-hidden="true" />
-            <svg className="arrival__fore pointer-events-none absolute bottom-[-4%] left-0 h-[46%] w-full" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-              <g fill="#050308">
-                <path d="M60 300 L60 170 L30 170 L66 120 L44 120 L76 70 L108 120 L86 120 L122 170 L92 170 L92 300 Z" />
-                <path d="M170 300 L170 210 L146 210 L176 168 L158 168 L184 126 L210 168 L192 168 L222 210 L198 210 L198 300 Z" />
-                <path d="M1080 300 L1080 180 L1048 180 L1086 128 L1062 128 L1096 76 L1130 128 L1106 128 L1144 180 L1112 180 L1112 300 Z" />
-                <path d="M985 300 L985 222 L962 222 L990 182 L973 182 L997 142 L1021 182 L1004 182 L1032 222 L1009 222 L1009 300 Z" />
-                <path d="M0 300 L1200 300 L1200 286 Q900 268 600 282 Q300 268 0 288 Z" />
+            <div className="arrival__mist arrival__mist--l pointer-events-none absolute bottom-[8%] left-[-10%] h-[34%] w-[68%]" aria-hidden="true" />
+            <div className="arrival__mist arrival__mist--r pointer-events-none absolute bottom-[5%] right-[-10%] h-[40%] w-[68%] max-[640px]:hidden" aria-hidden="true" />
+            <svg className="arrival__branch arrival__branch--r pointer-events-none absolute right-[-2%] top-[-2%] h-[42%] w-[min(380px,44vw)]" viewBox="0 0 300 260" fill="none" aria-hidden="true">
+              <path d="M300 0 Q262 40 238 78 Q214 116 176 142 Q150 158 118 164" stroke="#2a211b" strokeWidth="5" strokeLinecap="round" />
+              <path d="M238 78 Q214 66 188 70" stroke="#2a211b" strokeWidth="3.5" strokeLinecap="round" />
+              <path d="M176 142 Q162 124 140 118" stroke="#2a211b" strokeWidth="3" strokeLinecap="round" />
+              <g className="arrival__blossoms">
+                <circle cx="118" cy="164" r="10" fill="#dc4f45" />
+                <circle cx="138" cy="150" r="8" fill="#e89b93" />
+                <circle cx="152" cy="162" r="9" fill="#dc4f45" opacity=".85" />
+                <circle cx="188" cy="70" r="9" fill="#dc4f45" />
+                <circle cx="206" cy="76" r="7" fill="#e89b93" />
+                <circle cx="140" cy="118" r="8" fill="#e89b93" />
+                <circle cx="238" cy="66" r="7" fill="#dc4f45" opacity=".8" />
+                <circle cx="100" cy="150" r="6" fill="#e89b93" />
               </g>
             </svg>
-            <div className="arrival__copy absolute inset-x-0 top-[30%] z-[2] flex flex-col items-center px-gut text-center max-[640px]:top-[26%]">
-              <div className="arrival__kicker mb-3 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-amber">開幕 · The curtain rises</div>
-              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(72px,14vw,220px)] [text-shadow:0_10px_60px_rgba(0,0,0,.75)]">
+            <svg className="arrival__branch arrival__branch--l pointer-events-none absolute bottom-[4%] left-[-3%] h-[30%] w-[min(300px,36vw)] max-[640px]:hidden" viewBox="0 0 260 200" fill="none" aria-hidden="true">
+              <path d="M0 200 Q40 150 66 118 Q96 82 142 62" stroke="#2a211b" strokeWidth="4.5" strokeLinecap="round" />
+              <g>
+                <circle cx="142" cy="62" r="9" fill="#dc4f45" />
+                <circle cx="124" cy="72" r="7" fill="#e89b93" />
+                <circle cx="152" cy="78" r="7" fill="#dc4f45" opacity=".85" />
+                <circle cx="104" cy="92" r="6" fill="#e89b93" />
+              </g>
+            </svg>
+            <div className="arrival__rail absolute left-gut top-1/2 z-[2] hidden -translate-y-1/2 flex-col items-center gap-4 min-[960px]:flex">
+              <span className="h-2 w-2 rounded-full bg-[#dc4f45]" />
+              <span className="font-kanji text-[26px] tracking-[0.2em] [writing-mode:vertical-rl]">無限城</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Mugen-jō</span>
+              <span className="h-14 w-px bg-ink/35" />
+              <span className="grid h-9 w-9 place-items-center bg-[#dc4f45] font-display text-sm text-[#f2ebe3]">11</span>
+            </div>
+            <div className="arrival__copy absolute inset-x-0 top-[26%] z-[2] flex flex-col items-center px-gut text-center max-[640px]:top-[25%]">
+              <div className="arrival__kicker mb-3 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-ink/80">開幕 · The curtain rises</div>
+              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(72px,14vw,220px)]">
                 <span className="mask block overflow-hidden"><span className="block">Innerve</span></span>
-                <span className="mask block overflow-hidden"><span className="block text-red">11.</span></span>
+                <span className="mask block overflow-hidden"><span className="block text-[#dc4f45]">11.</span></span>
               </h1>
-              <p className="arrival__sub mt-[18px] max-w-[46ch] text-[clamp(14px,1.6vw,18px)] opacity-[.88]">India&apos;s largest student-driven hackathon. Six Upper Moons stand between you and dawn.</p>
-              <a href="#castle" data-scroll className="arrival__cta group mt-8 inline-flex items-center gap-3 border border-amber/60 bg-ink/40 px-7 py-3.5 font-display text-[clamp(15px,1.8vw,20px)] uppercase tracking-[0.12em] text-amber backdrop-blur-[2px] transition-[background,border-color,color,transform] duration-300 hover:border-red hover:bg-red hover:text-paper">
+              <p className="arrival__sub mt-[18px] max-w-[46ch] text-[clamp(14px,1.6vw,18px)] text-ink/75">India&apos;s largest student-driven hackathon. Six Upper Moons stand between you and dawn.</p>
+              <a href="#castle" data-scroll className="arrival__cta group mt-8 inline-flex items-center gap-3 border border-ink/55 bg-[#f2ebe3]/40 px-7 py-3.5 font-display text-[clamp(15px,1.8vw,20px)] uppercase tracking-[0.12em] text-ink backdrop-blur-[2px] transition-[background,border-color,color,transform] duration-300 hover:border-[#dc4f45] hover:bg-[#dc4f45] hover:text-[#f2ebe3]">
                 Enter the castle
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
               </a>
             </div>
-            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-1/2 z-[2] -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.34em] opacity-55">
+            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-1/2 z-[2] -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.34em] text-ink/55">
               Scroll to descend
             </div>
           </div>

@@ -145,17 +145,23 @@ export function initDriver(): () => void {
   });
 
   /* ----- ARRIVAL hero: load-in + layered parallax (no pin, no scroll hijack) ----- */
-  gsap.from(".arrival__title .ch", { yPercent: 110, stagger: 0.035, duration: 0.9, ease: "power4.out", delay: 0.15 });
-  gsap.from(".arrival__kicker, .arrival__sub, .arrival__cta", { opacity: 0, y: 18, duration: 0.8, stagger: 0.09, ease: "power3.out", delay: 0.45 });
+  gsap.from(".arrival__sun", { scale: 0.82, opacity: 0, duration: 1.4, ease: "power3.out" });
+  gsap.from(".arrival__title .ch", { yPercent: 110, stagger: 0.035, duration: 0.9, ease: "power4.out", delay: 0.2 });
+  gsap.from(".arrival__kicker, .arrival__sub, .arrival__cta", { opacity: 0, y: 18, duration: 0.8, stagger: 0.09, ease: "power3.out", delay: 0.5 });
+  gsap.from(".arrival__branch--r", { opacity: 0, x: 40, duration: 1.1, ease: "power3.out", delay: 0.35 });
+  gsap.from(".arrival__branch--l", { opacity: 0, x: -40, duration: 1.1, ease: "power3.out", delay: 0.45 });
+  gsap.from(".arrival__rail", { opacity: 0, y: 20, duration: 0.9, ease: "power3.out", delay: 0.65 });
   gsap.timeline({ scrollTrigger: { trigger: "#arrival", start: "top top", end: "bottom top", scrub: true } })
     .to(".arrival__copy", { yPercent: -34, opacity: 0, ease: "none", duration: 0.5 }, 0)
     .to(".arrival__hint", { opacity: 0, ease: "none", duration: 0.18 }, 0)
-    .to(".arrival__mist--l", { xPercent: -48, opacity: 0, ease: "none", duration: 1 }, 0)
-    .to(".arrival__mist--r", { xPercent: 48, opacity: 0, ease: "none", duration: 1 }, 0)
-    .to(".arrival__stars", { yPercent: 16, ease: "none", duration: 1 }, 0)
-    .to(".arrival__moon", { yPercent: 30, scale: 1.05, ease: "none", duration: 1 }, 0)
-    .to(".arrival__castle", { yPercent: 6, scale: 1.16, ease: "none", transformOrigin: "50% 100%", duration: 1 }, 0)
-    .to(".arrival__fore", { yPercent: 36, ease: "none", duration: 1 }, 0);
+    .to(".arrival__rail", { opacity: 0, ease: "none", duration: 0.4 }, 0)
+    .to(".arrival__mist--l", { xPercent: -52, opacity: 0, ease: "none", duration: 1 }, 0)
+    .to(".arrival__mist--r", { xPercent: 52, opacity: 0, ease: "none", duration: 1 }, 0)
+    .to(".arrival__branch--r", { xPercent: 10, yPercent: -8, ease: "none", duration: 1 }, 0)
+    .to(".arrival__branch--l", { xPercent: -12, yPercent: 14, ease: "none", duration: 1 }, 0)
+    .to(".arrival__birds", { xPercent: 40, yPercent: -30, ease: "none", duration: 1 }, 0)
+    .to(".arrival__sun", { yPercent: 34, scale: 1.05, ease: "none", duration: 1 }, 0)
+    .to(".arrival__castle", { yPercent: 6, scale: 1.16, ease: "none", transformOrigin: "50% 100%", duration: 1 }, 0);
 
   /* ===== non-pinned triggers (created after every pin so positions include pin spacing) ===== */
   $$(".reveal").forEach((el) =>
