@@ -164,7 +164,7 @@ export default function Site() {
                 <path d="M150 128 Q220 102 290 112 Q360 122 430 100" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".4" />
               </svg>
             </div>
-            <div className="arrival__castle absolute bottom-[5%] left-1/2 w-[min(680px,50vw)] -translate-x-1/2 max-[640px]:bottom-[5%] max-[640px]:w-[235vw]">
+            <div className="arrival__castle absolute bottom-[2%] left-1/2 w-[min(900px,68vw)] -translate-x-1/2 max-[640px]:bottom-[5%] max-[640px]:w-[235vw]">
               <svg className="arrival__castleArt block h-auto w-full" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
                 <defs>
                   <filter id="inkRough" x="-6%" y="-6%" width="112%" height="112%">
@@ -271,7 +271,7 @@ export default function Site() {
                 <path d="M70 96 Q140 62 210 76 Q282 90 350 62 Q392 46 424 72" fill="none" stroke="#ddd2c0" strokeWidth="2.2" strokeLinecap="round" opacity=".5" />
               </svg>
             </div>
-            <div className="arrival__cloudWrap arrival__cloudWrap--c pointer-events-none absolute bottom-[-1%] left-[16%] z-[6] w-[58%] max-[640px]:left-[-10%] max-[640px]:w-[112%]" aria-hidden="true">
+            <div className="arrival__cloudWrap arrival__cloudWrap--c pointer-events-none absolute bottom-[-3%] left-[16%] z-[1] w-[58%] max-[640px]:left-[-10%] max-[640px]:w-[112%]" aria-hidden="true">
               <svg className="block h-auto w-full" viewBox="0 0 900 150" aria-hidden="true">
                 <path d="M30 150 L846 150 Q874 150 876 128 Q878 106 852 100 Q828 94 819 110 Q813 123 826 125 Q837 127 843 115 Q849 101 834 90 Q812 74 780 90 Q768 58 712 62 Q668 66 662 92 Q636 50 570 58 Q518 64 512 94 Q482 56 420 66 Q368 74 362 102 Q330 70 270 80 Q220 88 214 112 Q176 92 134 106 Q92 118 64 136 Q40 142 30 150 Z" fill="#f7f2e8" filter="url(#cloudSoft)" opacity=".98" />
                 <path d="M110 122 Q210 84 310 100 Q410 116 500 86 Q590 60 688 90 Q748 106 810 88" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".5" />
@@ -357,11 +357,11 @@ export default function Site() {
               <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Upper Moons</span>
               <span className="h-14 w-px bg-ink/35" />
             </div>
-            <div className="arrival__copy absolute inset-x-0 top-[16.5%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
+            <div className="arrival__copy absolute inset-x-0 top-[11%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
               <div className="arrival__kicker mb-3 flex items-center gap-4 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-ink/80">
                 <span className="h-px w-10 bg-ink/40" aria-hidden="true" />開幕 · The curtain rises<span className="h-px w-10 bg-ink/40" aria-hidden="true" />
               </div>
-              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(64px,11vw,160px)]">
+              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(60px,8.6vw,128px)]">
                 <span className="mask block overflow-hidden"><span className="block">Innerve</span></span>
                 <span className="mask block overflow-hidden pb-[0.1em] mb-[-0.1em]"><span className="block text-[#f2ebe3] [-webkit-text-stroke:5px_#17120e] [paint-order:stroke_fill]">11.</span></span>
               </h1>
