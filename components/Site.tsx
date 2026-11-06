@@ -173,7 +173,7 @@ export default function Site() {
                   </filter>
                 </defs>
                 <ellipse cx="700" cy="394" rx="640" ry="9" fill="#17120e" opacity=".15" />
-                <g filter="url(#inkRough)">
+                <g>
                   <g fill="#17120e">
                     <path d="M78 400 L84 336 L186 336 L192 400 Z" />
                     <path d="M46 340 Q90 314 134 310 Q176 314 216 340 Q172 330 132 329 Q92 330 46 340 Z" />
@@ -370,10 +370,6 @@ export default function Site() {
                 Enter the castle
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
               </a>
-            </div>
-            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-[6%] z-[6] flex flex-col max-[640px]:left-1/2 max-[640px]:-translate-x-1/2 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#f2ebe3]/75">
-              <span>Scroll to descend</span>
-              <span className="arrival__hintLine block h-8 w-px bg-[#f2ebe3]/50" aria-hidden="true" />
             </div>
           </div>
         </section>
