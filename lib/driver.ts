@@ -234,9 +234,7 @@ export function initDriver(): () => void {
   /* fail-visible watchdog: if a slow first compile / stalled GPU init froze the
      ticker mid-entrance, settle non-scroll tweens and re-measure triggers */
   const watchdog = window.setTimeout(() => {
-    gsap.globalTimeline.getChildren(true, true, false).forEach((t) => {
-      if (!(t as unknown as { scrollTrigger?: unknown }).scrollTrigger) t.progress(1);
-    });
+    enterTl.progress(1); // settle entrance only - never touch scroll-driven timelines
     ScrollTrigger.refresh();
   }, 4000);
   cleanups.push(() => window.clearTimeout(watchdog));
