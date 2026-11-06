@@ -56,7 +56,7 @@ export function initDriver(): () => void {
   const SFX = (window.SFX = window.SFX || { play() {}, start() {}, toggle: () => false, on: false, level: () => 0 });
 
   /* ---------- split text into words/chars ---------- */
-  $$(".castle__title .mask > span, .sec-title, .castle__bounty").forEach(splitChars);
+  $$(".castle__title .mask > span, .arrival__title .mask > span, .sec-title, .castle__bounty").forEach(splitChars);
 
   /* ---------- smooth anchor scrolling (both paths) ---------- */
   const bindAnchors = (lenis: Lenis | null) => {
@@ -143,6 +143,19 @@ export function initDriver(): () => void {
     y: 80, opacity: 0, rotationX: -12, transformPerspective: 900, stagger: 0.1, duration: 1, ease: "power3.out",
     scrollTrigger: { trigger: "#pcards", start: "top 85%" },
   });
+
+  /* ----- ARRIVAL hero: load-in + layered parallax (no pin, no scroll hijack) ----- */
+  gsap.from(".arrival__title .ch", { yPercent: 110, stagger: 0.035, duration: 0.9, ease: "power4.out", delay: 0.15 });
+  gsap.from(".arrival__kicker, .arrival__sub, .arrival__cta", { opacity: 0, y: 18, duration: 0.8, stagger: 0.09, ease: "power3.out", delay: 0.45 });
+  gsap.timeline({ scrollTrigger: { trigger: "#arrival", start: "top top", end: "bottom top", scrub: true } })
+    .to(".arrival__copy", { yPercent: -34, opacity: 0, ease: "none", duration: 0.5 }, 0)
+    .to(".arrival__hint", { opacity: 0, ease: "none", duration: 0.18 }, 0)
+    .to(".arrival__mist--l", { xPercent: -48, opacity: 0, ease: "none", duration: 1 }, 0)
+    .to(".arrival__mist--r", { xPercent: 48, opacity: 0, ease: "none", duration: 1 }, 0)
+    .to(".arrival__stars", { yPercent: 16, ease: "none", duration: 1 }, 0)
+    .to(".arrival__moon", { yPercent: 30, scale: 1.05, ease: "none", duration: 1 }, 0)
+    .to(".arrival__castle", { yPercent: 6, scale: 1.16, ease: "none", transformOrigin: "50% 100%", duration: 1 }, 0)
+    .to(".arrival__fore", { yPercent: 36, ease: "none", duration: 1 }, 0);
 
   /* ===== non-pinned triggers (created after every pin so positions include pin spacing) ===== */
   $$(".reveal").forEach((el) =>

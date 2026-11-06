@@ -104,6 +104,65 @@ export default function Site() {
       <div id="flash" aria-hidden="true" className="pointer-events-none fixed inset-0 z-[58] bg-white opacity-0" />
 
       <main id="smooth">
+        {/* ===== ARRIVAL (battlefield-arrival hero: layered parallax, no pin) ===== */}
+        <section id="arrival" data-tone="dark" data-name="Arrival" className="arrival relative overflow-hidden bg-ink">
+          <div className="arrival__stage svh relative overflow-hidden">
+            <div className="arrival__sky absolute inset-0 bg-[linear-gradient(180deg,#040308_0%,#0e060d_42%,#260a13_72%,#3a0e19_100%)]" />
+            <div className="arrival__stars absolute inset-0" aria-hidden="true" />
+            <div className="arrival__moon absolute left-1/2 top-[16%] aspect-square w-[clamp(150px,22vw,280px)] -translate-x-1/2 rounded-full max-[640px]:top-[12%]" aria-hidden="true" />
+            <svg className="arrival__castle absolute bottom-0 left-1/2 h-[62%] w-[min(720px,120vw)] -translate-x-1/2" viewBox="0 0 600 400" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+              <path d="M0 400 L0 352 Q140 306 300 316 Q460 306 600 356 L600 400 Z" fill="#070409" />
+              <g fill="#0c0611">
+                <rect x="232" y="326" width="136" height="74" />
+                <rect x="200" y="352" width="44" height="48" />
+                <rect x="360" y="356" width="48" height="44" />
+                <rect x="250" y="276" width="100" height="58" />
+                <rect x="266" y="230" width="68" height="54" />
+                <rect x="278" y="190" width="44" height="48" />
+                <rect x="289" y="152" width="22" height="46" />
+                <rect x="296" y="128" width="8" height="28" />
+              </g>
+              <g fill="#ffb36b">
+                <rect x="262" y="292" width="7" height="12" opacity=".85" />
+                <rect x="286" y="292" width="7" height="12" opacity=".5" />
+                <rect x="318" y="292" width="7" height="12" opacity=".8" />
+                <rect x="248" y="344" width="8" height="13" opacity=".65" />
+                <rect x="292" y="344" width="8" height="13" opacity=".9" />
+                <rect x="336" y="344" width="8" height="13" opacity=".55" />
+                <rect x="284" y="244" width="6" height="11" opacity=".75" />
+                <rect x="288" y="202" width="6" height="10" opacity=".9" />
+                <rect x="296" y="162" width="5" height="9" opacity=".7" />
+              </g>
+            </svg>
+            <div className="arrival__mist arrival__mist--l pointer-events-none absolute bottom-[4%] left-[-12%] h-[46%] w-[70%]" aria-hidden="true" />
+            <div className="arrival__mist arrival__mist--r pointer-events-none absolute bottom-[2%] right-[-12%] h-[52%] w-[70%] max-[640px]:hidden" aria-hidden="true" />
+            <svg className="arrival__fore pointer-events-none absolute bottom-[-4%] left-0 h-[46%] w-full" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+              <g fill="#050308">
+                <path d="M60 300 L60 170 L30 170 L66 120 L44 120 L76 70 L108 120 L86 120 L122 170 L92 170 L92 300 Z" />
+                <path d="M170 300 L170 210 L146 210 L176 168 L158 168 L184 126 L210 168 L192 168 L222 210 L198 210 L198 300 Z" />
+                <path d="M1080 300 L1080 180 L1048 180 L1086 128 L1062 128 L1096 76 L1130 128 L1106 128 L1144 180 L1112 180 L1112 300 Z" />
+                <path d="M985 300 L985 222 L962 222 L990 182 L973 182 L997 142 L1021 182 L1004 182 L1032 222 L1009 222 L1009 300 Z" />
+                <path d="M0 300 L1200 300 L1200 286 Q900 268 600 282 Q300 268 0 288 Z" />
+              </g>
+            </svg>
+            <div className="arrival__copy absolute inset-x-0 top-[30%] z-[2] flex flex-col items-center px-gut text-center max-[640px]:top-[26%]">
+              <div className="arrival__kicker mb-3 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-amber">開幕 · The curtain rises</div>
+              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(72px,14vw,220px)] [text-shadow:0_10px_60px_rgba(0,0,0,.75)]">
+                <span className="mask block overflow-hidden"><span className="block">Innerve</span></span>
+                <span className="mask block overflow-hidden"><span className="block text-red">11.</span></span>
+              </h1>
+              <p className="arrival__sub mt-[18px] max-w-[46ch] text-[clamp(14px,1.6vw,18px)] opacity-[.88]">India&apos;s largest student-driven hackathon. Six Upper Moons stand between you and dawn.</p>
+              <a href="#castle" data-scroll className="arrival__cta group mt-8 inline-flex items-center gap-3 border border-amber/60 bg-ink/40 px-7 py-3.5 font-display text-[clamp(15px,1.8vw,20px)] uppercase tracking-[0.12em] text-amber backdrop-blur-[2px] transition-[background,border-color,color,transform] duration-300 hover:border-red hover:bg-red hover:text-paper">
+                Enter the castle
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
+              </a>
+            </div>
+            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-1/2 z-[2] -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.34em] opacity-55">
+              Scroll to descend
+            </div>
+          </div>
+        </section>
+
         {/* ===== INFINITY CASTLE ===== */}
         <section id="castle" data-tone="dark" data-name="Infinity Castle" className="castle relative bg-[#0c0508]">
           <div className="castle__stage svh relative overflow-hidden">
