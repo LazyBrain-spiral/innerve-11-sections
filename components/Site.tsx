@@ -164,8 +164,8 @@ export default function Site() {
                 <path d="M150 128 Q220 102 290 112 Q360 122 430 100" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".4" />
               </svg>
             </div>
-            <div className="arrival__castle absolute bottom-[2%] left-1/2 w-[min(900px,68vw)] -translate-x-1/2 max-[640px]:bottom-[5%] max-[640px]:w-[235vw]">
-              <svg className="arrival__castleArt block h-auto w-full" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <div className="arrival__castle absolute bottom-[1%] left-1/2 w-[min(980px,72vw)] -translate-x-1/2 max-[640px]:bottom-[5%] max-[640px]:w-[235vw]">
+              <svg className="arrival__castleArt block h-auto w-full overflow-visible" viewBox="130 60 1140 340" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
                 <defs>
                   <filter id="inkRough" x="-6%" y="-6%" width="112%" height="112%">
                     <feTurbulence type="fractalNoise" baseFrequency="0.02 0.032" numOctaves="3" seed="7" result="n" />
