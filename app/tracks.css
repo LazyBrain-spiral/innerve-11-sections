@@ -67,15 +67,6 @@
   letter-spacing: -0.01em;
 }
 
-.ivt .mask {
-  display: block;
-  overflow: hidden;
-}
-
-.ivt .mask > span {
-  display: block;
-}
-
 /* paper sections with grain */
 .ivt .paper {
   background: var(--paper);
@@ -111,7 +102,7 @@
   position: relative;
   border-bottom: 1px solid rgba(11, 10, 12, 0.25);
   overflow: hidden;
-  cursor: pointer;
+  cursor: default;
 }
 
 .ivt .trow__bg {
@@ -249,106 +240,6 @@
 
 .ivt .trow.is-on .trow__meta {
   opacity: 0;
-}
-
-.ivt .trow:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: -2px;
-}
-
-.ivt .tracks__hint {
-  margin-top: 18px;
-  font-size: 12px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.6;
-}
-
-.ivt .tracks__hint span {
-  display: inline-block;
-  animation: ivt-bob 1.4s ease-in-out infinite;
-  color: var(--red);
-}
-
-@keyframes ivt-bob {
-  50% {
-    transform: translateY(4px);
-  }
-}
-
-/* ===== Breathing forms =====
-   z-index raised above the app's fixed body vignette (z-59) so the cut-in
-   plays at full strength, exactly like it did on the static page. */
-.ivt .forms {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 61;
-  pointer-events: none;
-}
-
-.ivt .slam {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  visibility: hidden;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ivt .slam__wash {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    80% 70% at 50% 50%,
-    rgba(11, 10, 12, 0.86),
-    rgba(11, 10, 12, 0.97)
-  );
-}
-
-.ivt .slam__k {
-  position: relative;
-  font-family: var(--f-brush);
-  font-size: min(62vh, 60vw);
-  line-height: 1;
-  color: var(--slam, #fff);
-  text-shadow: 0 0 60px var(--slam, #fff), 0 0 140px var(--slam, #fff);
-  opacity: 0.9;
-}
-
-.ivt .slam__txt {
-  position: absolute;
-  left: var(--gut);
-  bottom: 12vh;
-  color: var(--paper);
-}
-
-.ivt .slam__line {
-  font-size: 12px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.ivt .slam__jp {
-  font-family: var(--f-kanji);
-  font-size: clamp(26px, 4vw, 54px);
-  letter-spacing: 0.06em;
-  text-transform: none;
-  margin: 8px 0;
-}
-
-.ivt .slam__en {
-  font-family: var(--f-display);
-  font-size: clamp(22px, 3vw, 40px);
-  letter-spacing: 0.02em;
-  font-weight: 400;
-  color: var(--slam, #fff);
 }
 
 .ivt .pattern-defs {
