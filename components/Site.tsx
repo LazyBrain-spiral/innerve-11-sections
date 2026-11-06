@@ -164,110 +164,103 @@ export default function Site() {
                 <path d="M150 128 Q220 102 290 112 Q360 122 430 100" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".4" />
               </svg>
             </div>
-<div className="arrival__castle absolute bottom-[4%] left-[52%] h-[48%] w-[min(1150px,175vw)] -translate-x-1/2 max-[640px]:bottom-[6%] max-[640px]:left-1/2 max-[640px]:h-[40%] max-[640px]:w-[230vw]">
-              <svg className="arrival__castleArt block h-full w-full" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <div className="arrival__castle absolute bottom-[5%] left-1/2 w-[min(680px,50vw)] -translate-x-1/2 max-[640px]:bottom-[5%] max-[640px]:w-[235vw]">
+              <svg className="arrival__castleArt block h-auto w-full" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
                 <defs>
                   <filter id="inkRough" x="-6%" y="-6%" width="112%" height="112%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.03" numOctaves="3" seed="7" result="n" />
-                    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" />
+                    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.032" numOctaves="3" seed="7" result="n" />
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="4" />
                   </filter>
                 </defs>
-                <ellipse cx="500" cy="692" rx="335" ry="11" fill="#17120e" opacity=".16" />
+                <ellipse cx="700" cy="394" rx="640" ry="9" fill="#17120e" opacity=".15" />
                 <g filter="url(#inkRough)">
                   <g fill="#17120e">
-                    {/* stone plinth, battered walls */}
-                    <path d="M212 700 L244 596 Q250 578 268 576 L732 576 Q750 578 756 596 L788 700 Z" />
-                    {/* keep walls, tapering tiers */}
-                    <path d="M330 578 L342 468 L658 468 L670 578 Z" />
-                    <path d="M372 470 L382 372 L618 372 L628 470 Z" />
-                    <path d="M412 374 L420 282 L580 282 L588 374 Z" />
-                    <path d="M446 284 L452 200 L548 200 L554 284 Z" />
-                    <path d="M472 202 L476 142 L524 142 L528 202 Z" />
-                    {/* roofs: hand-drawn curves, raised eave tips */}
-                    <path d="M196 604 Q262 560 340 552 Q420 544 500 540 Q580 544 660 552 Q738 560 804 604 Q740 592 664 588 Q580 584 500 583 Q420 584 336 588 Q260 592 196 604 Z" />
-                    <path d="M254 480 Q322 442 388 434 Q444 428 500 425 Q556 428 612 434 Q678 442 746 480 Q676 468 606 463 Q550 460 500 459 Q450 460 394 463 Q324 468 254 480 Z" />
-                    <path d="M306 384 Q366 352 420 345 Q460 340 500 338 Q540 340 580 345 Q634 352 694 384 Q632 373 574 369 Q536 366 500 365 Q464 366 426 369 Q368 373 306 384 Z" />
-                    <path d="M352 294 Q400 268 444 261 Q472 257 500 256 Q528 257 556 261 Q600 268 648 294 Q598 285 552 282 Q525 280 500 279 Q475 280 448 282 Q402 285 352 294 Z" />
-                    <path d="M398 212 Q436 190 468 184 Q484 181 500 180 Q516 181 532 184 Q564 190 602 212 Q562 204 530 201 Q514 199 500 199 Q486 199 470 201 Q438 204 398 212 Z" />
-                    {/* eave-corner flicks */}
-                    <path d="M196 604 Q186 596 178 582 Q192 588 202 590 Z" />
-                    <path d="M804 604 Q814 596 822 582 Q808 588 798 590 Z" />
-                    <path d="M254 480 Q245 472 238 460 Q251 466 260 468 Z" />
-                    <path d="M746 480 Q755 472 762 460 Q749 466 740 468 Z" />
-                    <path d="M306 384 Q298 377 292 366 Q304 371 312 373 Z" />
-                    <path d="M694 384 Q702 377 708 366 Q696 371 688 373 Z" />
-                    <path d="M352 294 Q345 287 340 277 Q351 282 358 284 Z" />
-                    <path d="M648 294 Q655 287 660 277 Q649 282 642 284 Z" />
-                    <path d="M398 212 Q392 206 388 197 Q398 201 404 203 Z" />
-                    <path d="M602 212 Q608 206 612 197 Q602 201 596 203 Z" />
-                    {/* sorin spire */}
-                    <rect x="497" y="94" width="6" height="88" />
-                    <circle cx="500" cy="88" r="7" />
-                    <path d="M486 128 Q500 121 514 128 Q500 133 486 128 Z" />
-                    <path d="M488 142 Q500 136 512 142 Q500 147 488 142 Z" />
-                    <path d="M490 155 Q500 150 510 155 Q500 160 490 155 Z" />
-                    {/* flanking towers */}
-                    <path d="M236 700 L244 640 L316 640 L322 700 Z" />
-                    <path d="M210 646 Q252 622 282 618 Q312 622 344 646 Q310 638 280 637 Q248 638 210 646 Z" />
-                    <rect x="274" y="592" width="5" height="28" />
-                    <circle cx="276" cy="588" r="4.5" />
-                    <path d="M678 700 L686 632 L760 632 L768 700 Z" />
-                    <path d="M650 638 Q696 612 724 609 Q752 612 792 638 Q756 629 724 628 Q690 629 650 638 Z" />
-                    <rect x="720" y="584" width="5" height="27" />
-                    <circle cx="722" cy="580" r="4.5" />
+                    <path d="M78 400 L84 336 L186 336 L192 400 Z" />
+                    <path d="M46 340 Q90 314 134 310 Q176 314 216 340 Q172 330 132 329 Q92 330 46 340 Z" />
+                    <path d="M46 340 Q38 333 32 322 Q44 327 52 329 Z" />
+                    <path d="M216 340 Q224 333 230 322 Q218 327 210 329 Z" />
+                    <path d="M258 400 L266 322 L356 322 L364 400 Z" />
+                    <path d="M226 328 Q272 302 312 298 Q352 302 396 328 Q350 317 311 316 Q270 317 226 328 Z" />
+                    <path d="M226 328 Q218 321 212 310 Q224 315 232 317 Z" />
+                    <path d="M396 328 Q404 321 410 310 Q398 315 390 317 Z" />
+                    <path d="M276 322 L282 262 L340 262 L346 322 Z" />
+                    <path d="M246 268 Q284 246 312 243 Q342 246 376 268 Q340 259 311 258 Q282 259 246 268 Z" />
+                    <path d="M246 268 Q239 262 234 252 Q244 256 251 258 Z" />
+                    <path d="M376 268 Q383 262 388 252 Q378 256 371 258 Z" />
+                    <rect x="308" y="222" width="5" height="24" />
+                    <circle cx="310" cy="218" r="4" />
+                    <path d="M380 400 L384 356 L556 356 L560 400 Z" />
+                    <path d="M364 360 Q430 340 470 338 Q512 340 572 360 Q512 351 470 350 Q428 351 364 360 Z" />
+                    <path d="M596 400 L606 348 L794 348 L804 400 Z" />
+                    <path d="M552 354 Q620 326 700 322 Q780 326 848 354 Q774 343 700 342 Q626 343 552 354 Z" />
+                    <path d="M552 354 Q542 346 534 333 Q548 339 558 341 Z" />
+                    <path d="M848 354 Q858 346 866 333 Q852 339 842 341 Z" />
+                    <path d="M626 348 L634 280 L766 280 L774 348 Z" />
+                    <path d="M588 286 Q644 260 700 256 Q756 260 812 286 Q754 275 700 274 Q646 275 588 286 Z" />
+                    <path d="M588 286 Q580 279 573 268 Q585 273 593 275 Z" />
+                    <path d="M812 286 Q820 279 827 268 Q815 273 807 275 Z" />
+                    <path d="M650 280 L656 218 L744 218 L750 280 Z" />
+                    <path d="M616 224 Q658 202 700 199 Q742 202 784 224 Q740 214 700 213 Q660 214 616 224 Z" />
+                    <path d="M616 224 Q609 218 603 208 Q613 212 620 214 Z" />
+                    <path d="M784 224 Q791 218 797 208 Q787 212 780 214 Z" />
+                    <path d="M670 218 L675 164 L725 164 L730 218 Z" />
+                    <path d="M642 170 Q672 152 700 150 Q728 152 758 170 Q726 162 700 161 Q674 162 642 170 Z" />
+                    <path d="M642 170 Q636 165 631 156 Q640 160 646 161 Z" />
+                    <path d="M758 170 Q764 165 769 156 Q760 160 754 161 Z" />
+                    <rect x="697" y="100" width="6" height="52" />
+                    <circle cx="700" cy="94" r="6.5" />
+                    <path d="M687 126 Q700 120 713 126 Q700 131 687 126 Z" />
+                    <path d="M689 138 Q700 133 711 138 Q700 143 689 138 Z" />
+                    <path d="M812 400 L816 368 L1006 368 L1010 400 Z" />
+                    <path d="M798 372 Q870 352 910 351 Q952 352 1024 372 Q952 362 910 362 Q868 362 798 372 Z" />
+                    <path d="M1036 400 L1044 334 L1198 334 L1206 400 Z" />
+                    <path d="M1002 340 Q1062 312 1121 309 Q1180 312 1240 340 Q1178 329 1121 328 Q1064 329 1002 340 Z" />
+                    <path d="M1002 340 Q993 332 986 320 Q999 326 1008 328 Z" />
+                    <path d="M1240 340 Q1249 332 1256 320 Q1243 326 1234 328 Z" />
+                    <path d="M1062 334 L1068 266 L1174 266 L1180 334 Z" />
+                    <path d="M1028 272 Q1076 248 1121 245 Q1166 248 1214 272 Q1164 261 1121 260 Q1078 261 1028 272 Z" />
+                    <path d="M1028 272 Q1020 265 1014 254 Q1026 259 1034 261 Z" />
+                    <path d="M1214 272 Q1222 265 1228 254 Q1216 259 1208 261 Z" />
+                    <path d="M1084 266 L1089 208 L1153 208 L1158 266 Z" />
+                    <path d="M1052 214 Q1088 194 1121 192 Q1154 194 1190 214 Q1152 205 1121 204 Q1090 205 1052 214 Z" />
+                    <path d="M1052 214 Q1045 208 1040 198 Q1050 202 1057 204 Z" />
+                    <path d="M1190 214 Q1197 208 1202 198 Q1192 202 1185 204 Z" />
+                    <rect x="1118" y="166" width="5" height="28" />
+                    <circle cx="1120" cy="162" r="4.5" />
+                    <path d="M1266 400 L1272 344 L1370 344 L1376 400 Z" />
+                    <path d="M1236 350 Q1282 326 1321 323 Q1360 326 1400 348 L1400 356 Q1358 339 1319 338 Q1280 339 1236 350 Z" />
+                    <path d="M1236 350 Q1228 343 1222 332 Q1234 337 1242 339 Z" />
                   </g>
-                  {/* roof ridge accents, vermilion: restraint, top roofs only */}
                   <g fill="none" stroke="#dc4f45" strokeWidth="3" strokeLinecap="round" opacity=".9">
-                    <path d="M404 208 Q452 185 500 183 Q548 185 596 208" />
-                    <path d="M360 290 Q430 261 500 259 Q570 261 640 290" />
+                    <path d="M596 282 Q648 260 700 258 Q752 260 804 282" />
+                    <path d="M624 220 Q662 202 700 201 Q738 202 776 220" />
+                    <path d="M1060 210 Q1092 194 1121 193 Q1150 194 1182 210" />
                   </g>
-                  {/* ivory windows, hand-placed, varied */}
                   <g fill="#f2ebe3">
-                    <rect x="486" y="152" width="9" height="20" rx="1.5" opacity=".9" />
-                    <rect x="505" y="152" width="9" height="20" rx="1.5" opacity=".55" />
-                    <rect x="466" y="216" width="10" height="22" rx="1.5" opacity=".8" />
-                    <rect x="495" y="216" width="10" height="22" rx="1.5" opacity=".5" />
-                    <rect x="524" y="216" width="10" height="22" rx="1.5" opacity=".85" />
-                    <rect x="438" y="300" width="10" height="22" rx="1.5" opacity=".7" />
-                    <rect x="470" y="300" width="10" height="22" rx="1.5" opacity=".9" />
-                    <rect x="520" y="300" width="10" height="22" rx="1.5" opacity=".55" />
-                    <rect x="552" y="300" width="10" height="22" rx="1.5" opacity=".8" />
-                    <rect x="402" y="394" width="11" height="24" rx="1.5" opacity=".75" />
-                    <rect x="440" y="394" width="11" height="24" rx="1.5" opacity=".5" />
-                    <rect x="496" y="394" width="11" height="24" rx="1.5" opacity=".9" />
-                    <rect x="550" y="394" width="11" height="24" rx="1.5" opacity=".6" />
-                    <rect x="588" y="394" width="11" height="24" rx="1.5" opacity=".85" />
-                    <rect x="356" y="492" width="12" height="26" rx="1.5" opacity=".7" />
-                    <rect x="400" y="492" width="12" height="26" rx="1.5" opacity=".9" />
-                    <rect x="466" y="492" width="12" height="26" rx="1.5" opacity=".5" />
-                    <rect x="522" y="492" width="12" height="26" rx="1.5" opacity=".85" />
-                    <rect x="588" y="492" width="12" height="26" rx="1.5" opacity=".6" />
-                    <rect x="632" y="492" width="12" height="26" rx="1.5" opacity=".8" />
-                    <rect x="258" y="656" width="10" height="22" rx="1.5" opacity=".75" />
-                    <rect x="286" y="656" width="10" height="22" rx="1.5" opacity=".5" />
-                    <rect x="700" y="650" width="10" height="22" rx="1.5" opacity=".8" />
-                    <rect x="730" y="650" width="10" height="22" rx="1.5" opacity=".55" />
+                    <rect x="690" y="172" width="8" height="18" rx="1.5" opacity=".9" /><rect x="706" y="172" width="8" height="18" rx="1.5" opacity=".55" />
+                    <rect x="672" y="230" width="9" height="19" rx="1.5" opacity=".8" /><rect x="696" y="230" width="9" height="19" rx="1.5" opacity=".5" /><rect x="720" y="230" width="9" height="19" rx="1.5" opacity=".85" />
+                    <rect x="648" y="292" width="9" height="20" rx="1.5" opacity=".7" /><rect x="676" y="292" width="9" height="20" rx="1.5" opacity=".9" /><rect x="718" y="292" width="9" height="20" rx="1.5" opacity=".55" /><rect x="744" y="292" width="9" height="20" rx="1.5" opacity=".8" />
+                    <rect x="622" y="360" width="10" height="22" rx="1.5" opacity=".75" /><rect x="656" y="360" width="10" height="22" rx="1.5" opacity=".5" /><rect x="700" y="360" width="10" height="22" rx="1.5" opacity=".9" /><rect x="744" y="360" width="10" height="22" rx="1.5" opacity=".6" /><rect x="776" y="360" width="10" height="22" rx="1.5" opacity=".85" />
+                    <rect x="290" y="272" width="8" height="18" rx="1.5" opacity=".8" /><rect x="318" y="272" width="8" height="18" rx="1.5" opacity=".55" />
+                    <rect x="282" y="334" width="9" height="20" rx="1.5" opacity=".75" /><rect x="316" y="334" width="9" height="20" rx="1.5" opacity=".5" /><rect x="340" y="334" width="9" height="20" rx="1.5" opacity=".8" />
+                    <rect x="110" y="348" width="8" height="18" rx="1.5" opacity=".7" /><rect x="140" y="348" width="8" height="18" rx="1.5" opacity=".5" />
+                    <rect x="410" y="366" width="8" height="18" rx="1.5" opacity=".6" /><rect x="450" y="366" width="8" height="18" rx="1.5" opacity=".8" /><rect x="500" y="366" width="8" height="18" rx="1.5" opacity=".55" />
+                    <rect x="1104" y="216" width="8" height="18" rx="1.5" opacity=".85" /><rect x="1128" y="216" width="8" height="18" rx="1.5" opacity=".55" />
+                    <rect x="1088" y="278" width="9" height="19" rx="1.5" opacity=".75" /><rect x="1116" y="278" width="9" height="19" rx="1.5" opacity=".9" /><rect x="1146" y="278" width="9" height="19" rx="1.5" opacity=".5" />
+                    <rect x="1066" y="346" width="9" height="20" rx="1.5" opacity=".7" /><rect x="1104" y="346" width="9" height="20" rx="1.5" opacity=".85" /><rect x="1140" y="346" width="9" height="20" rx="1.5" opacity=".55" /><rect x="1172" y="346" width="9" height="20" rx="1.5" opacity=".8" />
+                    <rect x="1296" y="356" width="8" height="18" rx="1.5" opacity=".65" /><rect x="1326" y="356" width="8" height="18" rx="1.5" opacity=".5" />
+                    <rect x="850" y="374" width="8" height="18" rx="1.5" opacity=".6" /><rect x="900" y="374" width="8" height="18" rx="1.5" opacity=".8" /><rect x="950" y="374" width="8" height="18" rx="1.5" opacity=".55" />
                   </g>
-                  {/* warm vermilion glow windows + gate */}
                   <g fill="#ff6a4d" className="arrival__wglow">
-                    <rect x="486" y="216" width="10" height="22" rx="1.5" />
-                    <rect x="492" y="394" width="11" height="24" rx="1.5" opacity="0" />
-                    <rect x="484" y="492" width="12" height="26" rx="1.5" />
-                    <path d="M478 700 L478 640 Q500 622 522 640 L522 700 Z" opacity=".95" />
+                    <rect x="684" y="230" width="9" height="19" rx="1.5" />
+                    <rect x="690" y="360" width="10" height="22" rx="1.5" />
+                    <rect x="304" y="334" width="9" height="20" rx="1.5" />
+                    <rect x="1128" y="346" width="9" height="20" rx="1.5" />
+                    <path d="M684 400 L684 366 Q700 354 716 366 L716 400 Z" opacity=".95" />
                   </g>
-                  {/* gate arch frame */}
-                  <path d="M470 700 L470 636 Q500 612 530 636 L530 700 L522 700 L522 640 Q500 622 478 640 L478 700 Z" fill="#0b0705" />
-                  {/* stone courses on plinth */}
-                  <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".14" strokeLinecap="round">
-                    <path d="M238 620 Q500 606 762 620" />
-                    <path d="M228 656 Q500 642 772 656" />
-                    <path d="M220 684 Q500 672 780 684" />
-                  </g>
-                  {/* bracket lines under roofs */}
-                  <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".12" strokeLinecap="round">
-                    <path d="M420 472 L420 490 M460 469 L460 488 M500 468 L500 487 M540 469 L540 488 M580 472 L580 490" />
-                    <path d="M448 378 L448 394 M500 374 L500 390 M552 378 L552 394" />
-                    <path d="M472 288 L472 302 M500 286 L500 300 M528 288 L528 302" />
+                  <path d="M678 400 L678 362 Q700 346 722 362 L722 400 L716 400 L716 366 Q700 354 684 366 L684 400 Z" fill="#0b0705" />
+                  <g fill="none" stroke="#f2ebe3" strokeWidth="2" opacity=".13" strokeLinecap="round">
+                    <path d="M86 372 Q134 364 190 372" /><path d="M262 372 Q310 364 360 372" /><path d="M1044 380 Q1120 370 1200 380" /><path d="M1270 380 Q1320 372 1372 380" />
                   </g>
                 </g>
               </svg>
@@ -370,7 +363,7 @@ export default function Site() {
               </div>
               <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(64px,11vw,160px)]">
                 <span className="mask block overflow-hidden"><span className="block">Innerve</span></span>
-                <span className="mask block overflow-hidden"><span className="block text-[#dc4f45] [-webkit-text-stroke:5px_#f2ebe3] [paint-order:stroke_fill]">11.</span></span>
+                <span className="mask block overflow-hidden pb-[0.1em] mb-[-0.1em]"><span className="block text-[#f2ebe3] [-webkit-text-stroke:5px_#17120e] [paint-order:stroke_fill]">11.</span></span>
               </h1>
               <p className="arrival__sub mt-[16px] max-w-[46ch] text-[clamp(14px,1.6vw,18px)] text-ink/75">India&apos;s largest student-driven hackathon. Six Upper Moons stand between you and dawn.</p>
               <a href="#castle" data-scroll className="arrival__cta group mt-7 inline-flex items-center gap-3 border border-ink/55 bg-[#f2ebe3]/40 px-7 py-3.5 font-display text-[clamp(15px,1.8vw,20px)] uppercase tracking-[0.12em] text-ink backdrop-blur-[2px] transition-[background,border-color,color,transform] duration-300 hover:border-[#dc4f45] hover:bg-[#dc4f45] hover:text-[#f2ebe3]">
