@@ -160,7 +160,7 @@ export default function Site() {
               <svg className="block h-auto w-full" viewBox="0 0 640 160" aria-hidden="true">
                 <defs><filter id="cloudSoft" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="1.1" /></filter></defs>
                 <path d="M28 150 L596 150 Q618 150 620 130 Q622 108 598 102 Q576 96 568 110 Q562 122 574 124 Q584 126 590 116 Q596 104 584 94 Q566 78 536 92 Q524 58 472 60 Q432 62 426 88 Q402 44 342 52 Q294 58 290 88 Q264 56 216 68 Q174 78 170 102 Q132 82 98 100 Q62 110 46 128 Q26 138 28 150 Z" fill="#f7f2e8" filter="url(#cloudSoft)" opacity=".96" />
-                <path d="M92 116 Q168 76 252 92 Q336 106 420 76 Q488 54 552 92" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".55" />
+                <path d="M44 128 C26 128 22 106 40 102 C54 99 58 116 46 118 C38 119 36 110 42 109" fill="none" stroke="#d9cfbf" strokeWidth="2.2" strokeLinecap="round" opacity=".7" /><path d="M92 116 Q168 76 252 92 Q336 106 420 76 Q488 54 552 92" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".55" />
                 <path d="M150 128 Q220 102 290 112 Q360 122 430 100" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".4" />
               </svg>
             </div>
@@ -274,7 +274,7 @@ export default function Site() {
             <div className="arrival__cloudWrap arrival__cloudWrap--c pointer-events-none absolute bottom-[-3%] left-[16%] z-[1] w-[58%] max-[640px]:left-[-10%] max-[640px]:w-[112%]" aria-hidden="true">
               <svg className="block h-auto w-full" viewBox="0 0 900 150" aria-hidden="true">
                 <path d="M30 150 L846 150 Q874 150 876 128 Q878 106 852 100 Q828 94 819 110 Q813 123 826 125 Q837 127 843 115 Q849 101 834 90 Q812 74 780 90 Q768 58 712 62 Q668 66 662 92 Q636 50 570 58 Q518 64 512 94 Q482 56 420 66 Q368 74 362 102 Q330 70 270 80 Q220 88 214 112 Q176 92 134 106 Q92 118 64 136 Q40 142 30 150 Z" fill="#f7f2e8" filter="url(#cloudSoft)" opacity=".98" />
-                <path d="M110 122 Q210 84 310 100 Q410 116 500 86 Q590 60 688 90 Q748 106 810 88" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".5" />
+                <path d="M60 140 C40 140 36 116 56 112 C72 109 76 128 62 130 C52 131 50 120 58 119" fill="none" stroke="#d9cfbf" strokeWidth="2.4" strokeLinecap="round" opacity=".7" /><path d="M110 122 Q210 84 310 100 Q410 116 500 86 Q590 60 688 90 Q748 106 810 88" fill="none" stroke="#ddd2c0" strokeWidth="2.5" strokeLinecap="round" opacity=".5" />
                 <path d="M190 136 Q270 114 350 122 Q430 130 510 112" fill="none" stroke="#ddd2c0" strokeWidth="2" strokeLinecap="round" opacity=".36" />
               </svg>
             </div>
@@ -371,7 +371,7 @@ export default function Site() {
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
               </a>
             </div>
-            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-1/2 z-[6] flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#f2ebe3]/75">
+            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-[6%] z-[6] flex flex-col max-[640px]:left-1/2 max-[640px]:-translate-x-1/2 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#f2ebe3]/75">
               <span>Scroll to descend</span>
               <span className="arrival__hintLine block h-8 w-px bg-[#f2ebe3]/50" aria-hidden="true" />
             </div>

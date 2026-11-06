@@ -149,7 +149,7 @@
   @keyframes arrival-cloudb { 50% { transform: translate(22px, -9px); } }
   @keyframes arrival-cloudc { 50% { transform: translate(30px, -5px); } }
   /* the castle itself floats - it is the Infinity Castle */
-  .arrival__castleArt { animation: arrival-castlefloat 6.5s ease-in-out infinite; }
+  .arrival__castleArt { will-change: transform; animation: arrival-castlefloat 6.5s ease-in-out infinite; }
   @keyframes arrival-castlefloat { 50% { transform: translateY(-10px); } }
   /* drifting cherry petals */
   .arrival__petal { animation: arrival-petal 11s linear infinite; opacity: .9; }
