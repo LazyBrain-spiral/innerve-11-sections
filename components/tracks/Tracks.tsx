@@ -99,7 +99,19 @@ export default function Tracks() {
               </div>
               <div className="trow__in">
                 <span className="trow__num">{pad(index + 1)}</span>
-                <h3 className="trow__name">{track.name}</h3>
+                <div className="trow__title">
+                  <h3 className="trow__name">{track.name}</h3>
+                  <div className="trow__hashira" aria-hidden="true">
+                    <span className="trow__hname">{track.hashira}</span>
+                    <span className="trow__hstyle">
+                      {[...track.style].map((ch, i) => (
+                        <span key={i} className={ch === " " ? "sp" : undefined}>
+                          {ch === " " ? "\u00a0" : ch}
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                </div>
                 <p className="trow__meta">
                   <b>
                     {track.style} · {track.hashira}
