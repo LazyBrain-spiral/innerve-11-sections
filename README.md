@@ -1,7 +1,8 @@
 # Innerve 11 — Sections (Next.js + Tailwind)
 
 Selected sections from the Innerve 11 hackathon site (Demon Slayer fan build):
-Infinity Castle 3D flythrough, prize pool, testimonials, past sponsors and footer.
+breathing-style tracks, Infinity Castle 3D flythrough, prize pool, testimonials,
+past sponsors and footer.
 
 Migrated from the original static HTML/CSS/JS build to **Next.js (App Router) + Tailwind CSS**.
 The pre-migration static build is preserved on the `legacy-static` branch for rollback.
@@ -22,6 +23,11 @@ The pre-migration static build is preserved on the `legacy-static` branch for ro
 - `app/` — App Router shell (`layout.tsx` fonts/metadata, `page.tsx`, `globals.css`)
 - `components/Site.tsx` — page markup (all Tailwind) + castle HUD as React state
   (moon captions, Night gate cards, progress ticks; previously `innerHTML` swaps)
+- `components/tracks/` — Tracks section (`Tracks.tsx`, `PatternDefs.tsx`), faithful
+  port of the static build's track list, hover art and breathing cut-in
+- `app/tracks.css` — original Tracks/slam styles, scoped under `.ivt`
+- `lib/tracks.ts` — nine track entries (content from `data.js`)
+- `lib/breathing-fx.ts` — canvas particle storm ported from `forms.js`
 - `lib/data.ts` — content (prizes, testimonials, sponsors, timeline)
 - `lib/driver.ts` — scroll driver: pinning, counters, reveals, tilt, Lenis
 - `lib/castle.ts` — WebGL flythrough (Three.js)

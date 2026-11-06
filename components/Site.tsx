@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { INNERVE } from "@/lib/data";
 import { initDriver } from "@/lib/driver";
+import Tracks from "@/components/tracks/Tracks";
 
 /* Upper Moon captions, in flythrough order (mirrors lib/castle.ts) */
 const MOONS: [string, string][] = [
@@ -104,6 +105,9 @@ export default function Site() {
       <div id="flash" aria-hidden="true" className="pointer-events-none fixed inset-0 z-[58] bg-white opacity-0" />
 
       <main id="smooth">
+        {/* ===== TRACKS ===== */}
+        <Tracks />
+
         {/* ===== INFINITY CASTLE ===== */}
         <section id="castle" data-tone="dark" data-name="Infinity Castle" className="castle relative bg-[#0c0508]">
           <div className="castle__stage svh relative overflow-hidden">
