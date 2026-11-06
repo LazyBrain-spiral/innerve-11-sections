@@ -108,9 +108,9 @@ export default function Site() {
         <section id="arrival" data-tone="light" data-name="Arrival" className="arrival relative overflow-hidden bg-[#f2ebe3] text-ink">
           <div className="arrival__stage svh relative overflow-hidden">
             <div className="arrival__grain pointer-events-none absolute inset-0 z-[6]" aria-hidden="true" />
-            <div className="arrival__halo absolute left-[56%] top-[-2%] aspect-square w-[clamp(320px,40vw,560px)] -translate-x-1/2 rounded-full bg-[#17120e]/[.055] max-[640px]:left-1/2 max-[640px]:top-[4%] max-[640px]:w-[300px]" aria-hidden="true" />
+            <div className="arrival__halo absolute left-[56%] top-[-2%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:top-[6%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-[80vw] aspect-square w-[clamp(320px,40vw,560px)] -translate-x-1/2 rounded-full bg-[#17120e]/[.055] max-[640px]:left-1/2 max-[640px]:top-[4%] max-[640px]:w-[300px]" aria-hidden="true" />
             <div className="arrival__ring pointer-events-none absolute left-1/2 top-[64%] aspect-square w-[86vmin] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#17120e]/[.16] max-[640px]:top-[62%] max-[640px]:w-[118vmin]" aria-hidden="true" />
-            <div className="arrival__sun absolute left-1/2 top-[7%] aspect-square w-[clamp(260px,32vw,420px)] -translate-x-1/2 max-[640px]:top-[6%] max-[640px]:w-[230px]" aria-hidden="true">
+            <div className="arrival__sun absolute left-1/2 top-[7%] aspect-square w-[clamp(260px,32vw,420px)] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:top-[12%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:w-[62vw] -translate-x-1/2 max-[640px]:top-[6%] max-[640px]:w-[230px]" aria-hidden="true">
               <svg className="arrival__sunArt block h-full w-full" viewBox="0 0 440 440" aria-hidden="true">
                 <defs>
                   <filter id="sunRough" x="-20%" y="-20%" width="140%" height="140%">
@@ -357,11 +357,11 @@ export default function Site() {
               <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Upper Moons</span>
               <span className="h-14 w-px bg-ink/35" />
             </div>
-            <div className="arrival__copy absolute inset-x-0 top-[11%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
+            <div className="arrival__copy absolute inset-x-0 top-[11%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:top-[19%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
               <div className="arrival__kicker mb-3 flex items-center gap-4 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-ink/80">
                 <span className="h-px w-10 bg-ink/40" aria-hidden="true" />開幕 · The curtain rises<span className="h-px w-10 bg-ink/40" aria-hidden="true" />
               </div>
-              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(60px,8.6vw,128px)]">
+              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(60px,8.6vw,128px)] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:text-[13vw]">
                 <span className="mask block overflow-hidden"><span className="block">Innerve</span></span>
                 <span className="mask block overflow-hidden pb-[0.1em] mb-[-0.1em]"><span className="block text-[#f2ebe3] [-webkit-text-stroke:5px_#17120e] [paint-order:stroke_fill]">11.</span></span>
               </h1>
