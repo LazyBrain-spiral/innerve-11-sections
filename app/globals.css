@@ -140,6 +140,28 @@
     35% { transform: scaleY(1); opacity: 1; }
     100% { transform: scaleY(1) translateY(10px); opacity: 0; }
   }
+
+  /* ukiyo-e cloud bands: slow lateral drift */
+  .arrival__cloud--a { animation: arrival-clouda 26s ease-in-out infinite; }
+  .arrival__cloud--b { animation: arrival-cloudb 32s ease-in-out infinite; }
+  @keyframes arrival-clouda { 50% { transform: translateX(-30px); } }
+  @keyframes arrival-cloudb { 50% { transform: translateX(26px); } }
+  /* drifting cherry petals */
+  .arrival__petal { animation: arrival-petal 11s linear infinite; opacity: .9; }
+  .arrival__petal:nth-child(2) { animation-duration: 13s; animation-delay: -3s; }
+  .arrival__petal:nth-child(3) { animation-duration: 15s; animation-delay: -6s; }
+  .arrival__petal:nth-child(4) { animation-duration: 10s; animation-delay: -2s; }
+  .arrival__petal:nth-child(5) { animation-duration: 14s; animation-delay: -8s; }
+  .arrival__petal:nth-child(6) { animation-duration: 12s; animation-delay: -5s; }
+  .arrival__petal:nth-child(7) { animation-duration: 16s; animation-delay: -9s; }
+  .arrival__petal:nth-child(8) { animation-duration: 11s; animation-delay: -4s; }
+  @keyframes arrival-petal {
+    0% { transform: translate(0, -12px) rotate(0deg); opacity: 0; }
+    12% { opacity: .9; }
+    50% { transform: translate(-38px, 38vh) rotate(170deg); }
+    92% { opacity: .8; }
+    100% { transform: translate(-72px, 72vh) rotate(340deg); opacity: 0; }
+  }
   /* fade the poster's bottom edge into the castle section's night */
   .arrival__stage::after {
     content: "";
