@@ -144,6 +144,7 @@
   /* ukiyo-e cloud bands: slow lateral drift */
   .arrival__cloud--a { animation: arrival-clouda 26s ease-in-out infinite; }
   .arrival__cloud--b { animation: arrival-cloudb 32s ease-in-out infinite; }
+  .arrival__cloud--c { animation: arrival-cloudb 40s ease-in-out infinite reverse; }
   @keyframes arrival-clouda { 50% { transform: translateX(-30px); } }
   @keyframes arrival-cloudb { 50% { transform: translateX(26px); } }
   /* drifting cherry petals */
