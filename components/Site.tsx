@@ -145,7 +145,21 @@ export default function Site() {
 
             {/* Muzan key visual, in front of type and band */}
             <div className="arrival__muzan pointer-events-none absolute bottom-[-1%] left-1/2 z-[4] aspect-[697/1068] h-[88%] -translate-x-1/2 max-[640px]:bottom-[6%] max-[640px]:h-[60%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-[80%]" aria-hidden="true">
-              <img src="/assets/img/chars/muzan.webp" alt="" className="arrival__muzanArt block h-full w-auto max-w-none" />
+              <div className="arrival__muzanArt relative h-full">
+                <img src="/assets/img/chars/muzan.webp" alt="" className="block h-full w-auto max-w-none" />
+                {/* white doodle glasses over the face, like the GLASSES reference */}
+                <svg className="arrival__doodle pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 697 1068" fill="none">
+                  <g transform="rotate(-6 316 181)" stroke="#f8f3ea" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" opacity="0.96">
+                    <path d="M230 182C228 158 248 140 271 141C295 142 312 161 311 185C310 209 291 227 268 226C244 225 232 206 230 182Z" />
+                    <path d="M322 172C321 148 340 130 363 131C387 132 403 151 402 175C401 199 383 217 360 216C336 215 323 196 322 172Z" />
+                    <path d="M311 175C314 166 318 166 321 173" />
+                    <path d="M230 182C212 176 198 172 184 168" />
+                    <path d="M402 172C418 167 432 163 447 160" />
+                    <path d="M242 152L234 140" />
+                    <path d="M255 145L250 132" />
+                  </g>
+                </svg>
+              </div>
             </div>
 
             {/* drifting blood-red petals */}
