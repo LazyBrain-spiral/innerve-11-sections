@@ -18,6 +18,11 @@ export default {
         rose: "#ff6a80",
         blood: "#ff2a48",
         card: "#f7f2e9",
+        haori: "#fbf4e4",
+        ember: "#f6bd33",
+        flame: "#ea6a1c",
+        crimson: "#b8122c",
+        coat: "#2a1b16",
       },
       fontFamily: {
         display: ["Anton", "Impact", "Arial Narrow Bold", "sans-serif"],

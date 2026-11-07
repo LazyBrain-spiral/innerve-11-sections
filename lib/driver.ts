@@ -5,6 +5,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { INNERVE } from "@/lib/data";
 
 declare global {
   interface Window {
@@ -56,7 +57,12 @@ export function initDriver(): () => void {
   const SFX = (window.SFX = window.SFX || { play() {}, start() {}, toggle: () => false, on: false, level: () => 0 });
 
   /* ---------- split text into words/chars ---------- */
-  $$(".castle__title .mask > span, .arrival__title .mask > span, .sec-title, .castle__bounty").forEach(splitChars);
+  // guarded so a StrictMode / Fast Refresh re-run does not split already-split text
+  $$(".castle__title .mask > span, .sec-title, .castle__bounty").forEach((el) => {
+    if (el.dataset.split) return;
+    el.dataset.split = "1";
+    splitChars(el);
+  });
 
   /* ---------- smooth anchor scrolling (both paths) ---------- */
   const bindAnchors = (lenis: Lenis | null) => {
@@ -78,7 +84,7 @@ export function initDriver(): () => void {
   if (!animate) {
     document.documentElement.classList.add("no-anim");
     const poolEl = $("#poolNum");
-    if (poolEl) poolEl.textContent = "12";
+    if (poolEl) poolEl.textContent = String(INNERVE.poolLacs);
     bindAnchors(null);
     return () => cleanups.forEach((fn) => fn());
   }
@@ -141,7 +147,7 @@ export function initDriver(): () => void {
   const poolEl = $("#poolNum");
   gsap.timeline({ scrollTrigger: { trigger: ".prizes__pin", start: "top top", end: "+=70%", pin: true, scrub: 1 } })
     .from(".prizes__big", { scale: 0.6, opacity: 0, duration: 0.3 }, 0)
-    .to(pool, { v: 12, duration: 0.5, ease: "power1.out", onUpdate: () => { if (poolEl) poolEl.textContent = String(Math.round(pool.v)); } }, 0)
+    .to(pool, { v: INNERVE.poolLacs, duration: 0.5, ease: "power1.out", onUpdate: () => { if (poolEl) poolEl.textContent = String(Math.round(pool.v)); } }, 0)
     .call(() => SFX.play("taiko"), [], 0.02)
     .from(".prizes__note, .prizes .eyebrow", { opacity: 0, y: 20, duration: 0.2 }, 0.3)
     .to(".prizes__pin", { opacity: 0.15, scale: 0.92, duration: 0.3 }, 0.7);
@@ -150,33 +156,23 @@ export function initDriver(): () => void {
     scrollTrigger: { trigger: "#pcards", start: "top 85%" },
   });
 
-  /* ----- ARRIVAL hero: load-in + layered parallax (no pin, no scroll hijack) ----- */
-  const enterTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-  enterTl
-    .from(".arrival__moon", { scale: 0.8, opacity: 0, duration: 1.6 }, 0)
-    .from(".arrival__title .ch", { yPercent: 112, stagger: 0.045, duration: 0.9, ease: "power4.out" }, 0.25)
-    .from(".arrival__muzan", { y: 120, opacity: 0, duration: 1.4 }, 0.35)
-    .from(".arrival__mist", { opacity: 0, y: 36, duration: 1.2, stagger: 0.12 }, 0.5)
-    .from(".arrival__tag, .arrival__meta", { opacity: 0, y: 16, duration: 0.8, stagger: 0.08 }, 0.85)
-    .from(".arrival__band > *", { opacity: 0, y: 26, duration: 0.8, stagger: 0.1 }, 0.95)
-    .from(".arrival__rail", { opacity: 0, y: 20, duration: 0.9, stagger: 0.1 }, 1.05)
-    .from(".arrival__frame", { opacity: 0, duration: 1.1 }, 1.15);
-  gsap.timeline({ scrollTrigger: { trigger: "#arrival", start: "top top", end: "bottom top", scrub: true } })
-    .to(".arrival__type", { yPercent: -26, opacity: 0, ease: "none", duration: 0.55 }, 0)
-    .to(".arrival__meta", { opacity: 0, ease: "none", duration: 0.3 }, 0)
-    .to(".arrival__rail", { opacity: 0, ease: "none", duration: 0.4 }, 0)
-    .to(".arrival__frame", { opacity: 0, ease: "none", duration: 0.5 }, 0)
-    .to(".arrival__moon", { yPercent: 30, scale: 1.08, ease: "none", duration: 1 }, 0)
-    .to(".arrival__muzan", { yPercent: 9, ease: "none", duration: 1 }, 0)
-    .to(".arrival__band", { yPercent: 100, ease: "none", duration: 0.8 }, 0.2)
-    .to(".arrival__mist--l", { xPercent: -40, opacity: 0, ease: "none", duration: 1 }, 0)
-    .to(".arrival__mist--r", { xPercent: 40, opacity: 0, ease: "none", duration: 1 }, 0);
-
   /* ===== non-pinned triggers (created after every pin so positions include pin spacing) ===== */
   $$(".reveal").forEach((el) =>
     gsap.from(el, { y: 30, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
   $$(".sec-title").forEach((el) =>
     gsap.from(el.querySelectorAll(".ch"), { yPercent: 100, rotation: 8, opacity: 0, stagger: 0.018, duration: 0.8, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
+
+  /* mixed-type header: heavy sans and italic serif accent slide in from
+     opposite sides and meet in place, scrubbed to scroll */
+  $$(".mix-title").forEach((el) =>
+    gsap.timeline({ defaults: { ease: "power2.out" }, scrollTrigger: { trigger: el, start: "top 92%", end: "top 58%", scrub: true } })
+      .from(el.querySelector(".mix-a"), { x: () => -window.innerWidth * 0.3, opacity: 0 }, 0)
+      .from(el.querySelector(".mix-b"), { x: () => window.innerWidth * 0.3, opacity: 0 }, 0));
+
+  /* ----- TRACKS + TIMELINE ----- */
+  gsap.from(".tcard", { y: 50, opacity: 0, stagger: 0.07, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: "#tgrid", start: "top 85%" } });
+  gsap.from(".tline__rule", { scaleX: 0, duration: 1.4, ease: "power2.inOut", scrollTrigger: { trigger: "#tline", start: "top 85%" } });
+  gsap.from(".tnode", { y: 40, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: "#tline", start: "top 85%" } });
 
   /* ----- VOICES + ALLIES ----- */
   gsap.from(".vcard", { y: 60, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: "#vgrid", start: "top 85%" } });
@@ -215,20 +211,16 @@ export function initDriver(): () => void {
   });
   document.body.dataset.tone = "dark";
 
-  /* fail-visible watchdog: if a slow first compile / stalled GPU init froze the
-     ticker mid-entrance, settle non-scroll tweens and re-measure triggers */
-  const watchdog = window.setTimeout(() => {
-    enterTl.progress(1); // settle entrance only - never touch scroll-driven timelines
-    ScrollTrigger.refresh();
-  }, 4000);
-  cleanups.push(() => window.clearTimeout(watchdog));
+  /* The hero owns the only entrance timeline (and its own watchdog). Here we
+     just re-measure once things settle; scroll-driven timelines are never
+     force-completed. */
+  const settle = window.setTimeout(() => ScrollTrigger.refresh(), 2500);
+  cleanups.push(() => window.clearTimeout(settle));
 
   const onLoad = () => ScrollTrigger.refresh();
   window.addEventListener("load", onLoad);
   cleanups.push(() => window.removeEventListener("load", onLoad));
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
-
-  cleanups.push(() => ScrollTrigger.getAll().forEach((st) => st.kill()));
 
   });
 
