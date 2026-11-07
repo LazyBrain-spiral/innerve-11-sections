@@ -22,7 +22,7 @@
    The stage is CSS-sticky in a 300svh track: 100svh of scroll choreography,
    then #tracks (pulled up 100svh) rises over the stuck stage.
 
-   prefers-reduced-motion: no timelines, no strip, no scramble; the settled
+   prefers-reduced-motion: no timelines, no tapes, no scramble; the settled
    poster renders as-is. */
 
 import { useEffect, useRef } from "react";
@@ -34,9 +34,6 @@ import { scramble } from "@/lib/scramble";
 const WORD = "INNERVE".split("");
 const MID = (WORD.length - 1) / 2;
 
-/* film-strip frames: existing character art only, duotone-tinted in CSS */
-const REEL = ["rengoku.png", "akaza.webp", "daki.webp", "doma.webp", "gyokko.webp", "hantengu.webp", "kokushibo.webp", "nakime.webp"];
-const FRAMES = [...REEL, ...REEL];
 
 /* event facts, all derived from lib/data.ts (or the site's existing copy) */
 const DATES = "30–31 Jan 2027";
@@ -44,6 +41,10 @@ const START = `${INNERVE.eventStart.slice(11, 16)} IST`; // eventStart is +05:30
 const FACTS_L = `24 Hours · ${INNERVE.tracks.length} Tracks`;
 const FACTS_R = `₹${INNERVE.poolLacs}L+ Prize Pool`;
 const REG = INNERVE.timeline[0]; // { date: "15 Nov 2026", title: "Registration Starts" }
+
+/* crossed tapes: event facts on repeat, wiped in by scroll */
+const TAPE = ["Innerve 11", DATES, FACTS_L, FACTS_R, "OSS Club · AIT Pune"];
+const TAPE_RUN = Array.from({ length: 6 }, () => TAPE).flat();
 
 /* hand-drawn scribbles (1440×900 artboard, sliced to cover) */
 const SCRIBBLES = [
@@ -77,7 +78,6 @@ export default function RengokuHero() {
     gsap.registerPlugin(ScrollTrigger);
 
     const stage = el.querySelector<HTMLElement>(".flame__stage")!;
-    const strip = el.querySelector<HTMLElement>(".rz-strip")!;
     const next = el.nextElementSibling as HTMLElement | null;
     const cancels: (() => void)[] = [];
     const decode = (scope: Element) =>
@@ -141,9 +141,12 @@ export default function RengokuHero() {
         // he barely moves and settles into the band
         .to(".rz-art", { scale: 0.94, yPercent: 3 }, 0);
 
-      /* ================= 3. film strip: sweep with a heavier scrub ================= */
-      gsap.timeline({ scrollTrigger: { ...scroll, scrub: 1.1 } })
-        .fromTo(strip, { x: () => -strip.offsetWidth }, { x: () => window.innerWidth * 1.05, ease: "none" });
+      /* ================= 3. crossed tapes: wipe in from opposite sides, text runs ================= */
+      gsap.timeline({ scrollTrigger: { ...scroll, scrub: 1 } })
+        .fromTo(".rz-tapeA", { xPercent: -101 }, { xPercent: 0, duration: 0.42, ease: "power3.out" }, 0.04)
+        .fromTo(".rz-tapeB", { xPercent: 101 }, { xPercent: 0, duration: 0.42, ease: "power3.out" }, 0.12)
+        .fromTo(".rz-runA", { xPercent: 0 }, { xPercent: -18, duration: 1, ease: "none" }, 0)
+        .fromTo(".rz-runB", { xPercent: -18 }, { xPercent: 0, duration: 1, ease: "none" }, 0);
 
       /* ================= 4. curtain: hero dims under the rising panel ================= */
       if (next) {
@@ -180,14 +183,14 @@ export default function RengokuHero() {
   }, []);
 
   return (
-    <section ref={root} id="arrival" data-tone="light" data-name="Arrival" className="flame relative h-[300svh] bg-paper text-ink">
+    <section ref={root} id="arrival" data-tone="light" data-name="Arrival" className="flame relative h-[300svh] bg-haori text-coat">
       <div className="flame__stage sticky top-0 h-svh overflow-hidden">
         {/* ---------- scribbles ---------- */}
         <div className="rz-scribbles pointer-events-none absolute inset-0 z-[1]" aria-hidden="true">
           <div className="h-full w-full" data-depth="10">
-            <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className="h-full w-full overflow-visible" fill="none">
+            <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className="rf-scribbles h-full w-full overflow-visible" fill="none">
               {SCRIBBLES.map((d, i) => (
-                <path key={i} d={d} pathLength={1} strokeDasharray="1" className="rz-path re-scribble" stroke="#dc4f45" strokeWidth="1.6" strokeLinecap="round" strokeOpacity=".55" />
+                <path key={i} d={d} pathLength={1} strokeDasharray="1" className="rz-path re-scribble" stroke="#ea6a1c" strokeWidth="1.6" strokeLinecap="round" strokeOpacity=".6" />
               ))}
             </svg>
           </div>
@@ -195,39 +198,53 @@ export default function RengokuHero() {
 
         {/* ---------- red band (background) ---------- */}
         <div className="flame-band pointer-events-none absolute inset-x-0 bottom-0 z-[1] overflow-hidden" aria-hidden="true">
-          <div className="re-bandBg h-full w-full bg-band" />
+          <div className="re-bandBg relative h-full w-full bg-coat">
+            <div className="rf-glow absolute inset-0 bg-[radial-gradient(38%_75%_at_50%_62%,rgba(234,106,28,.5),rgba(184,18,44,.2)_55%,transparent_80%)]" />
+          </div>
         </div>
 
         {/* ---------- headline + its two under-labels ---------- */}
         <div className="flame-headPos pointer-events-none absolute inset-x-0 z-[2] flex justify-center">
           <div className="rz-head" data-depth="18">
-            <h1 className="flame-head font-body font-extrabold uppercase leading-[0.8] text-red" aria-label="Innerve 11">
+            <h1 className="flame-head font-body font-extrabold uppercase leading-[0.8]" aria-label="Innerve 11">
               <span className="flex overflow-hidden pb-[0.05em]" aria-hidden="true">
                 {WORD.map((c, i) => (
                   <span key={i} className="rz-ch inline-block">
-                    <span className="re-ch inline-block">{c}</span>
+                    <span className="rf-ch inline-block" style={{ animationDelay: `${-i * 0.32}s` }}>
+                      <span className="re-ch flame-letter inline-block">{c}</span>
+                    </span>
                   </span>
                 ))}
               </span>
             </h1>
-            <div className="rz-sub re-label mt-[clamp(6px,1.2svh,14px)] flex items-start justify-between px-[0.4%] text-[clamp(12px,1.15vw,17px)] text-red">
+            <div className="rz-sub re-label mt-[clamp(6px,1.2svh,14px)] flex items-start justify-between px-[0.4%] text-[clamp(12px,1.15vw,17px)] text-crimson">
               <span className="rz-subL block"><Slide className="font-semibold uppercase tracking-[0.08em]">{FACTS_L}</Slide></span>
               <span className="rz-subR block"><Slide className="font-semibold uppercase tracking-[0.08em]">{FACTS_R}</Slide></span>
             </div>
           </div>
         </div>
 
-        {/* ---------- film strip: in front of the type, behind Rengoku ---------- */}
+        {/* ---------- crossed tapes: in front of the type, behind Rengoku ---------- */}
         <div className="flame-stripPos pointer-events-none absolute inset-x-0 z-[3]" aria-hidden="true">
           <div data-depth="30">
-          <div className="rz-strip r-strip flex w-max gap-[6px]">
-            {FRAMES.map((f, i) => (
-              <span key={i} className="r-frame">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/assets/img/chars/${f}`} alt="" decoding="async" />
-              </span>
+            {/* literal class names so Tailwind keeps the component styles */}
+            {[
+              ["r-tapeRot r-tapeRotA", "rz-tapeA r-tape r-tapeA", "rz-runA flex w-max items-center"],
+              ["r-tapeRot r-tapeRotB", "rz-tapeB r-tape r-tapeB", "rz-runB flex w-max items-center"],
+            ].map(([rot, tape, run]) => (
+              <div key={rot} className={rot}>
+                <div className={tape}>
+                  <div className={run}>
+                    {TAPE_RUN.map((t, i) => (
+                      <span key={i} className="flex items-center whitespace-nowrap">
+                        {t}
+                        <i className="r-tapeDot" />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             ))}
-          </div>
           </div>
         </div>
 
@@ -255,30 +272,30 @@ export default function RengokuHero() {
         </div>
 
         {/* ---------- band copy + CTA (above every animated layer) ---------- */}
-        <div className="flame-band flame-bandCopy absolute inset-x-0 bottom-0 z-[6] flex px-gut text-paper lg:justify-between lg:gap-8">
+        <div className="flame-band flame-bandCopy absolute inset-x-0 bottom-0 z-[6] flex px-gut text-haori lg:justify-between lg:gap-8">
           <div className="rz-bandL re-band max-w-[30ch]">
             <span className="mb-3 flex gap-1.5" aria-hidden="true">
-              <i className="h-1.5 w-1.5 rounded-full bg-paper" />
-              <i className="h-1.5 w-1.5 rounded-full bg-paper" />
-              <i className="h-1.5 w-1.5 rounded-full bg-paper" />
+              <i className="rf-dot h-1.5 w-1.5 rounded-full bg-ember" style={{ animationDelay: "0.0s" }} />
+              <i className="rf-dot h-1.5 w-1.5 rounded-full bg-flame" style={{ animationDelay: "0.25s" }} />
+              <i className="rf-dot h-1.5 w-1.5 rounded-full bg-crimson" style={{ animationDelay: "0.5s" }} />
             </span>
-            <p className="text-[clamp(13px,1vw,15px)] leading-[1.55] text-paper/85">
+            <p className="text-[clamp(13px,1vw,15px)] leading-[1.55] text-haori/80">
               India&apos;s largest student-driven hackathon. Twenty-four hours inside the Infinity Castle.
             </p>
           </div>
           <a href="#castle" data-scroll className="re-band group block text-right max-lg:text-left">
-            <span className="block text-[clamp(12px,1.05vw,15px)] font-medium uppercase tracking-[0.18em] text-paper/85">
+            <span className="block text-[clamp(12px,1.05vw,15px)] font-medium uppercase tracking-[0.18em] text-haori/80">
               {REG.title} · {REG.date}
             </span>
-            <span className="mt-1 flex items-center gap-3 font-body text-[clamp(28px,3.1vw,50px)] font-extrabold uppercase leading-[1] tracking-[-0.02em] lg:justify-end">
+            <span className="mt-1 flex items-center gap-3 font-body text-[clamp(28px,3.1vw,50px)] font-extrabold uppercase leading-[1] tracking-[-0.02em] text-ember lg:justify-end">
               <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-500 group-hover:bg-[length:100%_2px]">Enter the castle</span>
-              <span aria-hidden="true" className="grid h-[0.9em] w-[0.9em] place-items-center rounded-full border-2 border-paper/70 text-[0.5em] transition-transform duration-300 group-hover:translate-y-1">↓</span>
+              <span aria-hidden="true" className="grid h-[0.9em] w-[0.9em] place-items-center rounded-full border-2 border-ember/80 text-[0.5em] transition-transform duration-300 group-hover:translate-y-1"><span className="rf-arrow block">↓</span></span>
             </span>
           </a>
         </div>
 
         {/* ---------- corner metadata ---------- */}
-        <div className="rz-labels pointer-events-none absolute inset-x-gut top-[clamp(18px,3svh,30px)] z-[7] flex items-start justify-between text-[clamp(10.5px,0.85vw,12.5px)] font-semibold uppercase leading-[1.5] tracking-[0.14em] text-red">
+        <div className="rz-labels pointer-events-none absolute inset-x-gut top-[clamp(18px,3svh,30px)] z-[7] flex items-start justify-between text-[clamp(10.5px,0.85vw,12.5px)] font-semibold uppercase leading-[1.5] tracking-[0.14em] text-crimson">
           <div className="rz-cornerL re-label">
             <Slide><Scramble text={DATES} /></Slide>
             <Slide><Scramble text={START} /></Slide>
@@ -290,7 +307,7 @@ export default function RengokuHero() {
         </div>
 
         {/* paints the poster ivory until the entrance starts (no flash of the settled state) */}
-        <div className="re-veil r-veil pointer-events-none absolute inset-0 z-[20] bg-paper" aria-hidden="true" />
+        <div className="re-veil r-veil pointer-events-none absolute inset-0 z-[20] bg-haori" aria-hidden="true" />
       </div>
     </section>
   );

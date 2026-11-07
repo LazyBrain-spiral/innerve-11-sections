@@ -22,6 +22,12 @@ export default {
         card: "#f7f1e8",
         glow: "#ff6a4d",
         blossom: "#f2b8b2",
+        // Rengoku landing: haori white, hair gold, flame orange, flame-tip crimson, uniform brown
+        haori: "#fbf4e4",
+        ember: "#f6bd33",
+        flame: "#ea6a1c",
+        crimson: "#b8122c",
+        coat: "#2a1b16",
       },
       fontFamily: {
         display: ["Anton", "Impact", "Arial Narrow Bold", "sans-serif"],

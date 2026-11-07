@@ -273,36 +273,88 @@
       padding-top: 0;
     }
   }
-  /* film stock: sprocket rows top and bottom, duotone frames between */
-  .r-strip {
-    --hole: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='8'%3E%3Crect x='6' y='1.5' width='8' height='5' rx='1.2' fill='%23f2ebe3' fill-opacity='.8'/%3E%3C/svg%3E");
-    --h: clamp(58px, 7vw, 100px);
-    height: var(--h);
-    margin-top: calc(var(--h) / -2);
-    padding: clamp(10px, 1.1vw, 13px) 6px;
-    transform: translate3d(-100%, 0, 0);
-    background: var(--hole) repeat-x 0 1px / 20px 8px, var(--hole) repeat-x 0 calc(100% - 1px) / 20px 8px, #17120e;
-  }
-  .r-frame {
-    position: relative;
-    display: block;
-    height: 100%;
-    aspect-ratio: 3 / 2;
+  /* crossed tapes: two rotated bands carrying the event facts */
+  .r-tapeRot {
+    --t: clamp(38px, 4.2vw, 62px);
+    position: absolute;
+    left: -15vw;
+    right: -15vw;
+    top: 0;
+    height: var(--t);
+    margin-top: calc(var(--t) / -2);
     overflow: hidden;
-    background: #2a1410;
   }
-  .r-frame img {
-    width: 100%;
+  .r-tapeRotA { transform: rotate(-6deg); }
+  .r-tapeRotB { transform: translateY(calc(var(--t) * 0.9)) rotate(4deg); }
+  .r-tape {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
     height: 100%;
-    object-fit: cover;
-    object-position: 50% 14%;
-    filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-20deg) brightness(0.92) contrast(1.1);
+    font-family: Inter, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: calc(var(--t) * 0.4);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(42, 27, 22, 0.25);
   }
-  .rf-art { animation: r-breathe 6s ease-in-out infinite; }
+  .r-tapeA { background: #b8122c; color: #fbf4e4; }
+  .r-tapeB { background: #f6bd33; color: #2a1b16; }
+  .r-tapeDot {
+    width: 0.32em;
+    height: 0.32em;
+    margin: 0 0.9em;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .rf-art { animation: r-breathe 6s ease-in-out infinite; transform-origin: 50% 100%; }
+  /* headline letters coloured like his hair: gold roots burning to crimson tips */
+  .flame-letter {
+    background: linear-gradient(180deg, #f6bd33 6%, #ea6a1c 50%, #b8122c 94%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
   @keyframes r-breathe {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-5px) rotate(0.35deg); }
   }
+  /* ---- idle ambience: keeps the poster alive when nothing is scrolling ---- */
+  /* headline letters bob in a slow wave (delay set per letter inline) */
+  .rf-ch { animation: r-bob 5.2s ease-in-out infinite; }
+  @keyframes r-bob {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -0.035em, 0); }
+  }
+  /* scribbles drift and turn a hair, like heat haze */
+  .rf-scribbles { animation: r-haze 18s ease-in-out infinite alternate; transform-origin: 50% 50%; }
+  @keyframes r-haze {
+    from { transform: translate3d(-10px, 6px, 0) rotate(-0.6deg); }
+    to { transform: translate3d(12px, -8px, 0) rotate(0.6deg); }
+  }
+  /* the fire behind him breathes unevenly */
+  .rf-glow { animation: r-flicker 3.4s ease-in-out infinite; will-change: opacity; }
+  @keyframes r-flicker {
+    0%, 100% { opacity: 0.85; }
+    18% { opacity: 1; }
+    34% { opacity: 0.72; }
+    52% { opacity: 0.95; }
+    70% { opacity: 0.78; }
+    86% { opacity: 1; }
+  }
+  /* band dots pulse in sequence; the CTA arrow nudges downward */
+  .rf-dot { animation: r-pulse 2.4s ease-in-out infinite; }
+  @keyframes r-pulse {
+    0%, 60%, 100% { transform: scale(1); opacity: 0.55; }
+    25% { transform: scale(1.6); opacity: 1; }
+  }
+  .rf-arrow { animation: r-nudge 2s ease-in-out infinite; }
+  @keyframes r-nudge {
+    0%, 100% { transform: translate3d(0, -12%, 0); }
+    50% { transform: translate3d(0, 14%, 0); }
+  }
+
   /* safety net: if the entrance never runs, the veil still clears */
   .r-veil { animation: r-veil 0.4s ease-out 2.5s forwards; }
   @keyframes r-veil {
@@ -310,7 +362,7 @@
   }
   .rz-ch,
   .rz-head,
-  .rz-strip,
+  .r-tape,
   .rz-art,
   .rc-art,
   [data-depth] {
@@ -358,7 +410,7 @@
     transition-duration: 0.01ms !important;
   }
   /* the film strip only exists as a scroll sweep */
-  .r-strip,
+  .r-tapeRot,
   .r-veil {
     display: none;
   }
