@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { INNERVE } from "@/lib/data";
 import { initDriver } from "@/lib/driver";
+import { CLOUDS, type Shape } from "@/lib/heroArt";
+import RengokuHero from "@/components/RengokuHero";
 
 /* Upper Moon captions, in flythrough order (mirrors lib/castle.ts) */
 const MOONS: [string, string][] = [
@@ -16,6 +18,8 @@ const MOONS: [string, string][] = [
   ["琵琶", "The Biwa · Nakime"],
 ];
 
+const NIGHT_KANJI = ["壱", "弐", "参", "肆", "伍"];
+
 interface Gate {
   k: string;
   n: string;
@@ -25,6 +29,34 @@ interface Gate {
   at: string;
   p: number;
 }
+
+/* hand-drawn cloud edge between paper and night; `down` hangs the puffs downward */
+function CloudEdge({ down, className = "" }: { down?: boolean; className?: string }) {
+  const c = CLOUDS.divider;
+  const [x, y, w, h] = c.vb.split(" ").map(Number);
+  return (
+    <svg
+      className={`art-scope art-paper pointer-events-none block h-auto w-[120%] max-w-none ${className}`}
+      viewBox={c.vb}
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+    >
+      <g transform={down ? `translate(0 ${2 * y + h}) scale(1 -1)` : undefined}>
+        <rect x={x} y={down ? y - 40 : y + h - 22} width={w} height={62} fill="#f2ebe3" />
+        {c.shapes.map((s: Shape, i: number) => (
+          <path key={i} d={s.d} className={s.c} />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+const Eyebrow = ({ children, light }: { children: React.ReactNode; light?: boolean }) => (
+  <div className={`eyebrow mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] ${light ? "text-paper/80" : "text-ink/70"}`}>
+    <span className="h-0.5 w-7 bg-red" aria-hidden="true" />
+    {children}
+  </div>
+);
 
 export default function Site() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -58,7 +90,7 @@ export default function Site() {
     };
   }, []);
 
-  /* moon caption slide-in/out (was gsap on innerHTML swaps) */
+  /* moon caption slide-in/out */
   useEffect(() => {
     const el = capRef.current;
     if (!el) return;
@@ -69,7 +101,7 @@ export default function Site() {
     }
   }, [moon]);
 
-  /* Night gate card rise/settle (was gsap on innerHTML swaps) */
+  /* Night gate card rise/settle */
   useEffect(() => {
     const el = nightRef.current;
     if (!el) return;
@@ -104,211 +136,67 @@ export default function Site() {
       <div id="flash" aria-hidden="true" className="pointer-events-none fixed inset-0 z-[58] bg-white opacity-0" />
 
       <main id="smooth">
-        {/* ===== ARRIVAL (ivory/vermilion poster hero: layered parallax, no pin) ===== */}
-        <section id="arrival" data-tone="light" data-name="Arrival" className="arrival relative overflow-hidden bg-[#f2ebe3] text-ink">
-          <div className="arrival__stage svh relative overflow-hidden">
-            <div className="arrival__grain pointer-events-none absolute inset-0 z-[6]" aria-hidden="true" />
-            <div className="arrival__halo absolute left-[56%] top-[-2%] aspect-square w-[clamp(320px,40vw,560px)] -translate-x-1/2 rounded-full bg-[#17120e]/[.055] max-[640px]:left-1/2 max-[640px]:top-[4%] max-[640px]:w-[300px]" aria-hidden="true" />
-            <div className="arrival__ring pointer-events-none absolute left-1/2 top-[64%] aspect-square w-[86vmin] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#17120e]/[.16] max-[640px]:top-[62%] max-[640px]:w-[118vmin]" aria-hidden="true" />
-            <div className="arrival__sun absolute left-[46%] top-[5%] aspect-square w-[clamp(220px,28vw,350px)] -translate-x-1/2 max-[640px]:left-1/2 max-[640px]:top-[6%] max-[640px]:w-[210px]" aria-hidden="true">
-              <svg className="arrival__sunArt block h-full w-full" viewBox="0 0 440 440" aria-hidden="true">
-                <defs>
-                  <filter id="sunRough" x="-20%" y="-20%" width="140%" height="140%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="4" seed="11" result="n" />
-                    <feDisplacementMap in="SourceGraphic" in2="n" scale="13" />
-                  </filter>
-                  <clipPath id="sunClip"><circle cx="220" cy="220" r="198" /></clipPath>
-                  <radialGradient id="sunShade" cx="40%" cy="32%" r="75%">
-                    <stop offset="0%" stopColor="#f2ebe3" stopOpacity=".16" />
-                    <stop offset="55%" stopColor="#f2ebe3" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="220" cy="220" r="198" fill="#dc4f45" filter="url(#sunRough)" />
-                <g clipPath="url(#sunClip)">
-                  <circle cx="220" cy="220" r="198" fill="url(#sunShade)" />
-                  <g stroke="#f2ebe3" strokeWidth="2.5" opacity=".13" strokeLinecap="round">
-                    <line x1="148" y1="58" x2="148" y2="150" />
-                    <line x1="196" y1="30" x2="196" y2="88" />
-                    <line x1="238" y1="70" x2="238" y2="190" />
-                    <line x1="286" y1="42" x2="286" y2="120" />
-                    <line x1="322" y1="120" x2="322" y2="230" />
-                    <line x1="120" y1="180" x2="120" y2="260" />
-                    <line x1="180" y1="240" x2="180" y2="330" />
-                  </g>
-                  <g stroke="#a83a2c" strokeWidth="4" opacity=".16" strokeLinecap="round">
-                    <line x1="168" y1="90" x2="168" y2="210" />
-                    <line x1="262" y1="150" x2="262" y2="280" />
-                    <line x1="214" y1="260" x2="214" y2="360" />
-                    <line x1="300" y1="220" x2="300" y2="320" />
-                  </g>
-                </g>
-              </svg>
+        <span id="top" />
+        {/* ===== HERO: Rengoku landing (the previous castle poster lives on in components/Hero.tsx, unused) ===== */}
+        <RengokuHero />
+
+        {/* ===== ABOUT + TRACKS ===== (pulled up 100svh: slides over the stuck Rengoku stage like a curtain) */}
+        <section id="tracks" data-tone="light" data-name="Tracks" className="tracks paper-grain z-[5] -mt-[100svh] overflow-hidden rounded-t-[clamp(22px,3vw,44px)] pb-[clamp(110px,14vw,190px)] pt-[clamp(70px,9vw,130px)] shadow-[0_-24px_60px_rgba(0,0,0,.5)]">
+          <div className="wrap mx-auto w-[min(1320px,100%)] px-gut">
+            <div className="grid grid-cols-[1.05fr_1fr] items-end gap-x-16 gap-y-8 max-[960px]:grid-cols-1">
+              <div>
+                <Eyebrow>About Innerve</Eyebrow>
+                {/* mixed-type reveal (lib/driver.ts): sans from the left, italic serif accent from the right */}
+                <h2 className="mix-title font-display uppercase leading-[0.9] tracking-[-0.01em] text-[clamp(46px,7.4vw,118px)]">
+                  <span className="mix-a inline-block">Nine paths through the</span>{" "}
+                  <em className="mix-b inline-block font-serif text-[1.08em] normal-case italic leading-[0.8] tracking-normal">castle.</em>
+                </h2>
+              </div>
+              <div className="reveal max-w-[52ch] pb-2">
+                <p className="text-[clamp(16px,1.3vw,18px)] leading-[1.6] text-ink/80">
+                  Innerve is India&apos;s largest student-driven hackathon, organised by the OSS Club at the Army Institute of
+                  Technology, Pune. For the eleventh edition, teams get twenty-four hours to build. Choose a path, find your
+                  form, and survive the night.
+                </p>
+                <dl className="mt-7 grid grid-cols-3 border-y border-ink/20">
+                  {[
+                    ["24", "hours"],
+                    [String(INNERVE.tracks.length), "tracks"],
+                    [`₹${INNERVE.poolLacs}L+`, "prize pool"],
+                  ].map(([v, k], i) => (
+                    <div key={k} className={`py-4 ${i ? "border-l border-ink/20 pl-5" : ""}`}>
+                      <dt className="sr-only">{k}</dt>
+                      <dd className="font-display text-[clamp(30px,3vw,44px)] leading-none">{v}</dd>
+                      <dd className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-ink/55">{k}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </div>
-            <div className="arrival__birds absolute left-[57%] top-[17%] w-[130px] max-[640px]:left-[58%] max-[640px]:top-[13%] max-[640px]:w-[86px]" aria-hidden="true">
-              <svg className="arrival__birdsArt block h-auto w-full" viewBox="0 0 130 44" fill="none" stroke="#17120e" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M2 12 Q8 4 14 12 Q20 4 26 12" />
-                <path d="M46 28 Q51 21 56 28 Q61 21 66 28" />
-                <path d="M84 8 Q90 1 96 8 Q102 1 108 8" />
-                <path d="M112 30 Q115 26 118 30 Q121 26 124 30" strokeWidth="1.6" />
-              </svg>
-            </div>
-            <svg className="arrival__castle absolute bottom-0 left-[55%] h-[36%] w-[min(940px,150vw)] -translate-x-1/2 max-[640px]:left-1/2 max-[640px]:h-[26%] max-[640px]:w-[190vw]" viewBox="0 0 900 520" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-              <path d="M0 520 L0 480 Q150 444 300 454 Q430 462 520 446 Q700 426 900 474 L900 520 Z" fill="#17120e" opacity=".22" />
-              <path d="M0 520 L0 502 Q220 478 420 488 Q620 496 900 496 L900 520 Z" fill="#17120e" opacity=".45" />
-              <g fill="#17120e">
-                {/* central keep */}
-                <rect x="444" y="58" width="12" height="42" />
-                <path d="M450 44 L457 60 L443 60 Z" />
-                <path d="M398 110 Q450 78 502 110 L488 124 L412 124 Z" />
-                <rect x="416" y="124" width="68" height="46" />
-                <path d="M368 178 Q450 144 532 178 L513 193 L387 193 Z" />
-                <rect x="393" y="193" width="114" height="54" />
-                <path d="M334 256 Q450 216 566 256 L543 273 L357 273 Z" />
-                <rect x="363" y="273" width="174" height="62" />
-                <path d="M296 346 Q450 302 604 346 L576 365 L324 365 Z" />
-                <rect x="330" y="365" width="240" height="72" />
-                <rect x="300" y="437" width="300" height="46" />
-                <rect x="268" y="483" width="364" height="37" />
-                {/* left tower */}
-                <rect x="258" y="252" width="10" height="26" />
-                <path d="M238 252 Q263 236 288 252 L279 262 L247 262 Z" />
-                <path d="M204 302 Q263 274 322 302 L306 317 L220 317 Z" />
-                <rect x="230" y="317" width="66" height="120" />
-                <rect x="294" y="372" width="40" height="14" />
-                {/* right tower */}
-                <rect x="642" y="288" width="9" height="24" />
-                <path d="M624 288 Q646.5 274 669 288 L661 297 L632 297 Z" />
-                <path d="M588 332 Q647 304 706 332 L690 347 L604 347 Z" />
-                <rect x="614" y="347" width="66" height="90" />
-                <rect x="570" y="380" width="44" height="13" />
-                {/* far pavilions */}
-                <path d="M128 404 Q175 382 222 404 L208 417 L142 417 Z" />
-                <rect x="150" y="417" width="50" height="66" />
-                <path d="M722 414 Q766 394 810 414 L797 426 L735 426 Z" />
-                <rect x="742" y="426" width="48" height="57" />
-              </g>
-              {/* lit windows — ivory */}
-              <g fill="#f2ebe3">
-                <rect x="436" y="136" width="7" height="13" opacity=".85" />
-                <rect x="458" y="136" width="7" height="13" opacity=".55" />
-                <rect x="414" y="206" width="7" height="13" opacity=".7" />
-                <rect x="446" y="206" width="7" height="13" opacity=".9" />
-                <rect x="482" y="206" width="7" height="13" opacity=".5" />
-                <rect x="386" y="288" width="8" height="14" opacity=".8" />
-                <rect x="418" y="288" width="8" height="14" opacity=".55" />
-                <rect x="474" y="288" width="8" height="14" opacity=".85" />
-                <rect x="506" y="288" width="8" height="14" opacity=".6" />
-                <rect x="352" y="382" width="8" height="14" opacity=".75" />
-                <rect x="392" y="382" width="8" height="14" opacity=".5" />
-                <rect x="500" y="382" width="8" height="14" opacity=".8" />
-                <rect x="540" y="382" width="8" height="14" opacity=".55" />
-                <rect x="252" y="334" width="7" height="13" opacity=".7" />
-                <rect x="636" y="362" width="7" height="12" opacity=".65" />
-                <rect x="166" y="434" width="7" height="12" opacity=".6" />
-                <rect x="758" y="440" width="7" height="11" opacity=".55" />
-              </g>
-              {/* lit windows — vermilion glow */}
-              <g fill="#ff6a4d" className="arrival__wglow">
-                <rect x="446" y="136" width="7" height="13" />
-                <rect x="446" y="288" width="8" height="14" />
-                <rect x="432" y="382" width="8" height="14" />
-                <rect x="446" y="452" width="9" height="15" />
-                <rect x="268" y="334" width="7" height="13" />
-                <rect x="652" y="362" width="7" height="12" />
-              </g>
-            </svg>
-            <div className="arrival__mist arrival__mist--c pointer-events-none absolute bottom-[10%] left-[6%] h-[28%] w-[88%]" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--c h-full w-full" /></div>
-            <div className="arrival__mist arrival__mist--l pointer-events-none absolute bottom-[3%] left-[-12%] h-[42%] w-[72%]" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--l h-full w-full" /></div>
-            <div className="arrival__mist arrival__mist--r pointer-events-none absolute bottom-[1%] right-[-12%] h-[48%] w-[72%] max-[640px]:hidden" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--r h-full w-full" /></div>
-            <div className="arrival__branch arrival__branch--r pointer-events-none absolute right-[-2%] top-[-2%] h-[44%] w-[min(400px,46vw)] max-[640px]:right-[-6%] max-[640px]:top-[-3%] max-[640px]:w-[220px]" aria-hidden="true">
-              <svg className="arrival__branchArt block h-full w-full" viewBox="0 0 340 300" fill="none" aria-hidden="true">
-                <defs>
-                  <g id="bl">
-                    <g fill="#e59a93">
-                      <circle cx="0" cy="-4.6" r="3.6" /><circle cx="4.4" cy="-1.4" r="3.6" /><circle cx="2.7" cy="3.8" r="3.6" /><circle cx="-2.7" cy="3.8" r="3.6" /><circle cx="-4.4" cy="-1.4" r="3.6" />
-                    </g>
-                    <circle r="1.7" fill="#a83a2c" />
-                  </g>
-                  <g id="bl2">
-                    <g fill="#d97a6f">
-                      <circle cx="0" cy="-4.2" r="3.3" /><circle cx="4" cy="-1.3" r="3.3" /><circle cx="2.5" cy="3.5" r="3.3" /><circle cx="-2.5" cy="3.5" r="3.3" /><circle cx="-4" cy="-1.3" r="3.3" />
-                    </g>
-                    <circle r="1.6" fill="#7e2a20" />
-                  </g>
-                </defs>
-                <path className="bough" d="M342 8 Q300 44 272 84 Q244 124 200 148 Q168 164 128 168" stroke="#2a211b" strokeWidth="5.5" strokeLinecap="round" />
-                <path className="bough" d="M272 84 Q250 68 222 70" stroke="#2a211b" strokeWidth="3.5" strokeLinecap="round" />
-                <path className="bough" d="M310 40 Q292 24 268 22" stroke="#2a211b" strokeWidth="3" strokeLinecap="round" />
-                <path className="bough" d="M200 148 Q184 128 158 122" stroke="#2a211b" strokeWidth="3" strokeLinecap="round" />
-                <path className="bough" d="M236 128 Q222 112 198 108" stroke="#2a211b" strokeWidth="2.5" strokeLinecap="round" />
-                <use href="#bl" className="arrival__blossom" transform="translate(268 20) scale(1.1)" />
-                <use href="#bl2" className="arrival__blossom" transform="translate(224 68) scale(1.0) rotate(20)" />
-                <use href="#bl" className="arrival__blossom" transform="translate(198 106) scale(.9) rotate(-15)" />
-                <use href="#bl2" className="arrival__blossom" transform="translate(158 120) scale(1.05) rotate(30)" />
-                <use href="#bl" className="arrival__blossom" transform="translate(128 168) scale(1.25) rotate(-10)" />
-                <use href="#bl2" className="arrival__blossom" transform="translate(298 52) scale(.8) rotate(45)" />
-                <use href="#bl" className="arrival__blossom" transform="translate(246 134) scale(.85) rotate(10)" />
-                <use href="#bl2" className="arrival__blossom" transform="translate(176 160) scale(.95) rotate(-30)" />
-                <circle cx="320" cy="30" r="2.6" fill="#d97a6f" className="arrival__blossom" />
-                <circle cx="212" cy="140" r="2.4" fill="#e59a93" className="arrival__blossom" />
-              </svg>
-            </div>
-            <div className="arrival__branch arrival__branch--l pointer-events-none absolute bottom-[3%] left-[-3%] h-[32%] w-[min(320px,38vw)] max-[640px]:hidden" aria-hidden="true">
-              <svg className="arrival__branchArt block h-full w-full" viewBox="0 0 280 220" fill="none" aria-hidden="true">
-                <path className="bough" d="M4 216 Q44 164 74 130 Q108 92 158 74" stroke="#2a211b" strokeWidth="4.5" strokeLinecap="round" />
-                <path className="bough" d="M108 92 Q98 70 76 62" stroke="#2a211b" strokeWidth="3" strokeLinecap="round" />
-                <use href="#bl" className="arrival__blossom" transform="translate(158 72) scale(1.05)" />
-                <use href="#bl2" className="arrival__blossom" transform="translate(76 60) scale(.9) rotate(25)" />
-                <use href="#bl" className="arrival__blossom" transform="translate(128 84) scale(.8) rotate(-20)" />
-                <use href="#bl2" className="arrival__blossom" transform="translate(52 158) scale(.75) rotate(15)" />
-              </svg>
-            </div>
-            <div className="arrival__frame pointer-events-none absolute inset-0 z-[4]" aria-hidden="true">
-              <i className="absolute left-[3.2%] top-[4.5%] h-[74px] w-px bg-[#17120e]/30" />
-              <i className="absolute left-[3.2%] top-[4.5%] h-px w-[74px] bg-[#17120e]/30" />
-              <i className="absolute bottom-[5%] right-[3.2%] h-[74px] w-px bg-[#17120e]/30" />
-              <i className="absolute bottom-[5%] right-[3.2%] h-px w-[74px] bg-[#17120e]/30" />
-              <i className="absolute right-[3.2%] top-[4.5%] h-2 w-2 rounded-full bg-[#dc4f45]" />
-            </div>
-            <div className="arrival__rail absolute left-gut top-1/2 z-[5] hidden -translate-y-1/2 flex-col items-center gap-4 min-[960px]:flex">
-              <span className="h-2 w-2 rounded-full bg-[#dc4f45]" />
-              <span className="font-kanji text-[26px] tracking-[0.2em] [writing-mode:vertical-rl]">無限城</span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Mugen-jō</span>
-              <span className="h-14 w-px bg-ink/35" />
-              <span className="grid h-9 w-9 place-items-center bg-[#dc4f45] font-display text-sm text-[#f2ebe3]">11</span>
-            </div>
-            <div className="arrival__rail absolute right-gut top-1/2 z-[5] hidden -translate-y-1/2 flex-col items-center gap-4 min-[960px]:flex">
-              <span className="h-9 w-[3px] bg-[#dc4f45]" />
-              <span className="font-kanji text-[26px] tracking-[0.2em] [writing-mode:vertical-rl]">上弦</span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Upper Moons</span>
-              <span className="h-14 w-px bg-ink/35" />
-            </div>
-            <div className="arrival__copy absolute inset-x-0 top-[19%] z-[5] flex flex-col items-center px-gut text-center max-[640px]:top-[21%]">
-              <div className="arrival__kicker mb-3 font-kanji text-[clamp(14px,1.8vw,22px)] tracking-[0.28em] text-ink/80">開幕 · The curtain rises</div>
-              <h1 className="arrival__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(64px,11vw,160px)]">
-                <span className="mask block overflow-hidden"><span className="block">Innerve</span></span>
-                <span className="mask block overflow-hidden"><span className="block text-[#dc4f45]">11.</span></span>
-              </h1>
-              <p className="arrival__sub mt-[16px] max-w-[46ch] text-[clamp(14px,1.6vw,18px)] text-ink/75">India&apos;s largest student-driven hackathon. Six Upper Moons stand between you and dawn.</p>
-              <a href="#castle" data-scroll className="arrival__cta group mt-7 inline-flex items-center gap-3 border border-ink/55 bg-[#f2ebe3]/40 px-7 py-3.5 font-display text-[clamp(15px,1.8vw,20px)] uppercase tracking-[0.12em] text-ink backdrop-blur-[2px] transition-[background,border-color,color,transform] duration-300 hover:border-[#dc4f45] hover:bg-[#dc4f45] hover:text-[#f2ebe3]">
-                Enter the castle
-                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
-              </a>
-            </div>
-            <div className="arrival__hint pointer-events-none absolute bottom-[26px] left-1/2 z-[5] flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-ink/55">
-              <span>Scroll to descend</span>
-              <span className="arrival__hintLine block h-8 w-px bg-ink/45" aria-hidden="true" />
-            </div>
+
+            <ol id="tgrid" className="tgrid mt-[clamp(40px,6vw,76px)] grid list-none grid-cols-3 gap-px border border-ink/20 bg-ink/20 max-[960px]:grid-cols-2 max-[600px]:grid-cols-1">
+              {INNERVE.tracks.map((t, i) => (
+                <li key={t.name} className="tcard group relative flex min-h-[220px] flex-col bg-paper p-[26px_26px_24px] transition-colors duration-500 hover:bg-[#efe3d6]">
+                  <div className="flex items-start justify-between">
+                    <span lang="ja" aria-hidden="true" className="seal h-[58px] w-[58px] text-[30px] transition-[background,color] duration-500 group-hover:bg-red group-hover:text-paper">{t.kanji}</span>
+                    <span className="font-display text-sm tracking-[0.2em] text-ink/40">{String(i + 1).padStart(2, "0")}</span>
+                  </div>
+                  <h3 className="mt-auto pt-8 font-display text-[clamp(28px,2.6vw,38px)] uppercase leading-none">{t.name}</h3>
+                  <p className="mt-2.5 max-w-[34ch] text-[14.5px] leading-[1.5] text-ink/70">{t.desc}</p>
+                  <span className="absolute bottom-0 left-0 h-[3px] w-0 bg-red transition-[width] duration-500 group-hover:w-full" aria-hidden="true" />
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
-        {/* ===== INFINITY CASTLE ===== */}
-        <section id="castle" data-tone="dark" data-name="Infinity Castle" className="castle relative bg-[#0c0508]">
+        {/* ===== INFINITY CASTLE (3D) ===== */}
+        <section id="castle" data-tone="dark" data-name="Infinity Castle" className="castle relative bg-[#0c0508] text-paper">
           <div className="castle__stage svh relative overflow-hidden">
             <canvas ref={canvasRef} id="castleGL" aria-label="A 3D flythrough of the Infinity Castle" className="absolute inset-0 block h-full w-full" />
             <div className="castle__vig pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_50%_50%,transparent_40%,rgba(12,5,8,.85))]" />
             <div className="castle__copy absolute bottom-[14vh] left-gut z-[2] max-w-[680px]">
-              <div className="castle__kicker mb-2 font-kanji text-[clamp(16px,2vw,24px)] tracking-[0.2em] text-amber">無限城 · Mugen-jō</div>
+              <div className="castle__kicker mb-2 font-kanji text-[clamp(16px,2vw,24px)] tracking-[0.2em] text-glow">無限城 · Mugen-jō</div>
               <h2 className="castle__title font-display uppercase leading-[0.84] tracking-[-0.01em] text-[clamp(64px,11vw,190px)] [text-shadow:0_10px_50px_rgba(0,0,0,.6)]">
                 <span className="mask block overflow-hidden"><span className="block">Infinity</span></span>
                 <span className="mask block overflow-hidden"><span className="block">Castle.</span></span>
@@ -318,7 +206,7 @@ export default function Site() {
             <div ref={capRef} id="castleCap" className="castle__cap absolute bottom-[14vh] right-gut z-[2] text-right opacity-0 max-[640px]:bottom-[8vh]">
               {moon >= 0 && (
                 <>
-                  <b className="block font-kanji text-[clamp(30px,4vw,56px)] text-red [text-shadow:0_0_30px_rgba(200,16,46,.6)]">{MOONS[moon][0]}</b>
+                  <b className="block font-kanji text-[clamp(30px,4vw,56px)] text-red [text-shadow:0_0_30px_rgba(220,79,69,.6)]">{MOONS[moon][0]}</b>
                   <span className="text-xs font-semibold uppercase tracking-[0.3em]">{MOONS[moon][1]}</span>
                 </>
               )}
@@ -330,17 +218,17 @@ export default function Site() {
                   <b className="block font-display uppercase leading-[0.9] text-[clamp(44px,7vw,108px)] text-paper max-[640px]:text-[clamp(38px,12vw,56px)]">
                     {night.day} <em className="ml-[0.15em] text-[0.42em] not-italic text-rose">{night.yr}</em>
                   </b>
-                  <span className="castle__nw mt-2.5 block font-display text-[clamp(20px,2.4vw,34px)] uppercase tracking-[0.02em] text-blood max-[640px]:text-[18px]">{night.what}</span>
+                  <span className="castle__nw mt-2.5 block font-display text-[clamp(20px,2.4vw,34px)] uppercase tracking-[0.02em] text-glow max-[640px]:text-[18px]">{night.what}</span>
                   {night.at && <span className="castle__nt mt-1 block text-xs font-semibold uppercase tracking-[0.3em] opacity-[.85]">{night.at}</span>}
                 </>
               )}
             </div>
             <div className="castle__end pointer-events-none absolute inset-0 z-[3] flex flex-col items-center justify-center text-center opacity-0">
               <div className="castle__kicker mb-2 font-kanji text-[clamp(16px,2vw,24px)] tracking-[0.2em] text-amber">The doors open on</div>
-              <div className="castle__bounty font-display uppercase leading-[0.85] text-[clamp(70px,14vw,240px)] [text-shadow:0_0_80px_rgba(255,26,60,.7)]">The Bounty</div>
+              <div className="castle__bounty font-display uppercase leading-[0.85] text-[clamp(70px,14vw,240px)] [text-shadow:0_0_80px_rgba(255,106,77,.7)]">The Bounty</div>
             </div>
             <div className="castle__bar absolute left-gut right-gut top-[84px] z-[2] h-0.5 bg-paper/15">
-              <i id="castleBar" className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-red to-amber" />
+              <i id="castleBar" className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-red to-glow" />
               <div id="castleTicks" className="castle__ticks pointer-events-none absolute inset-0">
                 {gates.map((g) => (
                   <i key={g.n} style={{ left: `${(g.p * 100).toFixed(2)}%` }} className="absolute top-[-5px] h-3 w-0.5 -translate-x-[1px] bg-amber">
@@ -349,37 +237,43 @@ export default function Site() {
                 ))}
               </div>
             </div>
+            {/* the paper world's cloud edge hanging into the night */}
+            <div className="pointer-events-none absolute inset-x-0 top-[-2px] z-[4] flex justify-center overflow-hidden">
+              <CloudEdge down className="h-[clamp(56px,7vw,110px)]" />
+            </div>
           </div>
         </section>
 
         {/* ===== PRIZES ===== */}
-        <section id="prizes" data-tone="dark" data-name="The Bounty" className="prizes relative overflow-hidden bg-ink pb-[clamp(80px,10vw,140px)]">
-          <div className="prizes__pin svh flex flex-col items-center justify-center px-gut text-center">
-            <div className="eyebrow mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] opacity-80">
-              <span className="h-0.5 w-7 bg-red" aria-hidden="true" />Prize pool
-            </div>
-            <div className="prizes__big flex items-start font-display leading-[0.8] tracking-[-0.02em] text-[clamp(110px,30vw,460px)]">
-              <span className="rs mr-[0.05em] mt-[0.25em] text-[0.32em] text-red">₹</span>
+        <section id="prizes" data-tone="light" data-name="The Bounty" className="prizes paper-grain relative overflow-hidden pb-[clamp(80px,10vw,140px)]">
+          <div className="pointer-events-none absolute inset-x-0 top-[-2px] z-[3] flex justify-center overflow-hidden bg-[#0c0508]">
+            <CloudEdge className="h-[clamp(56px,7vw,110px)]" />
+          </div>
+          <div className="prizes__pin svh relative flex flex-col items-center justify-center px-gut text-center">
+            <div className="prizes__sun pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[min(62vw,560px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_40%_32%,#e86a5c,#dc4f45_58%,#c6433a)] opacity-[.92] max-[640px]:w-[86vw]" aria-hidden="true" />
+            <Eyebrow>Prize pool</Eyebrow>
+            <div className="prizes__big relative flex items-start font-display leading-[0.8] tracking-[-0.02em] text-ink text-[clamp(110px,26vw,400px)] [text-shadow:0.03em_0.03em_0_#f2ebe3]">
+              <span className="rs mr-[0.05em] mt-[0.25em] text-[0.32em] text-paper">₹</span>
               <span id="poolNum">0</span>
-              <span className="lacs mb-[0.2em] ml-[0.1em] self-end text-[0.18em] text-red">Lacs+</span>
+              <span className="lacs mb-[0.2em] ml-[0.1em] self-end text-[0.18em] text-paper">Lacs+</span>
             </div>
-            <p className="prizes__note mt-6 max-w-[46ch] opacity-75">Cash, goodies, certificates and a few surprises for those who survive the night.</p>
+            <p className="prizes__note relative mt-6 max-w-[46ch] text-ink/80">Cash, goodies, certificates and a few surprises for those who survive the night.</p>
           </div>
           <div className="wrap mx-auto w-[min(1320px,100%)] px-gut">
             <div id="pcards" className="pcards grid grid-cols-6 gap-4 max-[960px]:grid-cols-2 max-[640px]:grid-cols-1">
               {INNERVE.prizes.map((p, i) => (
                 <article
                   key={p.rank}
-                  className={`pcard group relative flex min-h-[300px] flex-col overflow-hidden border p-[28px_28px_26px_84px] transition-[transform,border-color] duration-[400ms] after:absolute after:top-0 after:left-[-60%] after:h-full after:w-[40%] after:skew-x-[-20deg] after:bg-[linear-gradient(100deg,transparent,rgba(255,255,255,.12),transparent)] after:transition-[left] after:duration-700 after:content-[''] hover:after:left-[130%] max-[960px]:col-span-1 max-[960px]:first:col-span-2 max-[640px]:min-h-[240px] max-[640px]:first:col-span-1 ${
+                  className={`pcard group relative flex min-h-[300px] flex-col overflow-hidden border p-[28px_28px_26px_84px] transition-[transform,border-color] duration-[400ms] max-[960px]:col-span-1 max-[960px]:first:col-span-2 max-[640px]:min-h-[240px] max-[640px]:first:col-span-1 ${
                     i === 3 || i === 4 ? "col-span-3 max-[960px]:col-span-1" : "col-span-2"
-                  } ${p.hot ? "pcard--hot border-red bg-red" : "border-paper/20 bg-ink2 hover:border-red"}`}
+                  } ${p.hot ? "pcard--hot border-red bg-red text-paper" : "border-ink/20 bg-card text-ink hover:border-red"}`}
                 >
                   <span aria-hidden="true" className={`pcard__k absolute left-[18px] top-[22px] font-brush text-5xl leading-none [writing-mode:vertical-rl] ${p.hot ? "text-ink" : "text-red"}`}>{p.kanji}</span>
                   <div className="pcard__rank text-xs font-semibold uppercase tracking-[0.3em]">{p.rank}</div>
                   <div className="pcard__amt mb-auto mt-[14px] font-display leading-none text-[clamp(56px,6vw,96px)]"><small className="mr-1 align-top text-[0.45em]">₹</small>{p.amt}</div>
                   <ul className="mt-6 list-none text-[13px] opacity-[.85]">
                     {INNERVE.prizePerks.map((x) => (
-                      <li key={x} className="border-t border-paper/20 py-2"><span className={`mr-1 align-[2px] text-[9px] ${p.hot ? "text-ink" : "text-red"}`}>◆</span>{x}</li>
+                      <li key={x} className={`border-t py-2 ${p.hot ? "border-paper/30" : "border-ink/15"}`}><span className={`mr-1 align-[2px] text-[9px] ${p.hot ? "text-ink" : "text-red"}`}>◆</span>{x}</li>
                     ))}
                   </ul>
                 </article>
@@ -388,12 +282,32 @@ export default function Site() {
           </div>
         </section>
 
-        {/* ===== VOICES ===== */}
-        <section id="voices" data-tone="light" data-name="Survivors" className="voices paper paper-grain pb-[clamp(40px,6vw,80px)] pt-[clamp(80px,10vw,150px)]">
+        {/* ===== TIMELINE ===== */}
+        <section id="timeline" data-tone="light" data-name="Timeline" className="timeline paper-grain border-t border-ink/10 pb-[clamp(80px,10vw,140px)] pt-[clamp(80px,10vw,140px)]">
           <div className="wrap mx-auto w-[min(1320px,100%)] px-gut">
-            <div className="eyebrow mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] opacity-80">
-              <span className="h-0.5 w-7 bg-red" aria-hidden="true" />Testimonials
-            </div>
+            <Eyebrow>Timeline</Eyebrow>
+            <h2 className="sec-title font-display uppercase leading-[0.9] tracking-[-0.01em] text-[clamp(46px,8vw,130px)]">Five nights to <em>dawn.</em></h2>
+            <ol id="tline" className="tline relative mt-[clamp(40px,6vw,80px)] grid list-none grid-cols-5 gap-6 max-[960px]:grid-cols-1 max-[960px]:gap-0">
+              <span className="tline__rule absolute left-0 right-0 top-[29px] h-px origin-left bg-ink/35 max-[960px]:bottom-0 max-[960px]:left-[29px] max-[960px]:right-auto max-[960px]:top-0 max-[960px]:h-auto max-[960px]:w-px" aria-hidden="true" />
+              {INNERVE.timeline.map((t, i) => (
+                <li key={t.title} className="tnode relative max-[960px]:grid max-[960px]:grid-cols-[58px_1fr] max-[960px]:gap-x-5 max-[960px]:pb-9">
+                  <span lang="ja" aria-hidden="true" className={`seal relative h-[58px] w-[58px] text-[26px] ${i === 3 ? "bg-red text-paper" : "bg-paper"}`}>{NIGHT_KANJI[i]}</span>
+                  <div className="pt-5 max-[960px]:pt-1">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-ink/55">Night {String(i + 1).padStart(2, "0")}</div>
+                    <div className="mt-1.5 font-display text-[clamp(30px,2.6vw,40px)] uppercase leading-none">{t.date}</div>
+                    <h3 className="mt-2 font-display text-[19px] uppercase tracking-[0.02em] text-red">{t.title}</h3>
+                    <p className="mt-2 text-[14px] leading-[1.5] text-ink/70">{t.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* ===== VOICES ===== */}
+        <section id="voices" data-tone="light" data-name="Survivors" className="voices paper paper-grain border-t border-ink/10 pb-[clamp(40px,6vw,80px)] pt-[clamp(80px,10vw,150px)]">
+          <div className="wrap mx-auto w-[min(1320px,100%)] px-gut">
+            <Eyebrow>Testimonials</Eyebrow>
             <h2 className="sec-title font-display uppercase leading-[0.9] tracking-[-0.01em] text-[clamp(48px,9vw,150px)]">Words from the <em>survivors.</em></h2>
             <div id="vgrid" className="vgrid mt-[clamp(32px,5vw,60px)] grid grid-cols-3 gap-5 max-[960px]:grid-cols-1">
               {INNERVE.testimonials.map((t) => (
@@ -415,9 +329,7 @@ export default function Site() {
         {/* ===== ALLIES ===== */}
         <section id="allies" data-tone="light" data-name="Allies" className="allies paper paper-grain pb-[clamp(80px,10vw,150px)] pt-[clamp(60px,8vw,110px)]">
           <div className="wrap mx-auto w-[min(1320px,100%)] px-gut">
-            <div className="eyebrow mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] opacity-80">
-              <span className="h-0.5 w-7 bg-red" aria-hidden="true" />Past sponsors
-            </div>
+            <Eyebrow>Past sponsors</Eyebrow>
             <h2 className="sec-title font-display uppercase leading-[0.9] tracking-[-0.01em] text-[clamp(48px,9vw,150px)]">Allies of the <em>corps.</em></h2>
             <div id="agrid" className="agrid mt-[clamp(32px,5vw,60px)] grid auto-rows-[150px] grid-cols-4 gap-3 max-[960px]:auto-rows-[120px] max-[960px]:grid-cols-2">
               {INNERVE.sponsors.map((s) => (
@@ -449,7 +361,7 @@ export default function Site() {
         </section>
 
         {/* ===== FOOTER ===== */}
-        <footer className="foot foot-ichimatsu relative grid grid-cols-[2fr_1fr_1fr] gap-10 border-t border-paper/15 bg-ink px-gut pb-7 pt-[70px] max-[960px]:grid-cols-2 max-[640px]:grid-cols-1">
+        <footer className="foot foot-ichimatsu relative grid grid-cols-[2fr_1fr_1fr] gap-10 bg-ink px-gut pb-7 pt-[70px] text-paper max-[960px]:grid-cols-2 max-[640px]:grid-cols-1">
           <div className="foot__brand max-[960px]:col-span-2 max-[640px]:col-span-1">
             <div className="foot__word font-display leading-[0.9] text-[clamp(48px,7vw,100px)]">INNERVE <b className="font-normal text-red">11</b></div>
             <p className="mt-3.5 max-w-[40ch] opacity-70">India&apos;s largest student-driven hackathon.<br />Organised by the OSS Club, Army Institute of Technology, Pune.</p>
@@ -464,12 +376,13 @@ export default function Site() {
             <a href="#tracks" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Tracks</a>
             <a href="#prizes" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Prizes</a>
             <a href="#timeline" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Timeline</a>
-            <a href="#faq" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">FAQ</a>
+            <a href="#voices" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Testimonials</a>
+            <a href="#allies" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Sponsors</a>
           </div>
           <div className="foot__base col-span-full flex flex-wrap justify-between gap-5 border-t border-paper/10 pt-6 text-xs opacity-60">
             <span>© 2026 Innerve · OSS Club AIT</span>
-            <span>A fan-made tribute theme. Not affiliated with Demon Slayer, Koyoharu Gotouge or Ufotable. · psst… type <b className="text-red">hinokami</b></span>
-            <a href="#top" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Back to the night ↑</a>
+            <span>A fan-made tribute theme. Not affiliated with Demon Slayer, Koyoharu Gotouge or Ufotable.</span>
+            <a href="#top" data-scroll className="block py-[3px] opacity-[.85] hover:text-red">Back to the top ↑</a>
           </div>
         </footer>
       </main>

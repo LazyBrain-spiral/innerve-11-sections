@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0b0a0c",
+  themeColor: "#f2ebe3",
 };
 
 const FONT_URL =
-  "https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Shippori+Mincho+B1:wght@800&family=Yuji+Syuku&display=swap";
+  "https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;800&family=Instrument+Serif:ital@1&family=Shippori+Mincho+B1:wght@800&family=Yuji+Syuku&display=swap";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

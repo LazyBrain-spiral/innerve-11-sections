@@ -14,7 +14,7 @@
     scroll-behavior: auto !important;
   }
   body {
-    @apply overflow-x-hidden bg-ink font-body text-base leading-[1.55] text-paper antialiased;
+    @apply overflow-x-hidden bg-paper font-body text-base leading-[1.55] text-ink antialiased;
   }
   a {
     color: inherit;
@@ -30,19 +30,23 @@
   ::selection {
     @apply bg-red text-paper;
   }
-  /* fixed cinematic vignette over the whole page */
+  :focus-visible {
+    outline: 2px solid #dc4f45;
+    outline-offset: 3px;
+  }
+  /* soft page vignette */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 59;
     pointer-events: none;
-    background: radial-gradient(130% 100% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.35));
+    background: radial-gradient(130% 100% at 50% 50%, transparent 66%, rgba(23, 18, 14, 0.16));
   }
 }
 
 @layer components {
-  /* paper sections carry a turbulence grain over the paper color */
+  /* paper sections carry a warm fibre grain over the paper colour */
   .paper-grain {
     @apply relative bg-paper text-ink;
   }
@@ -51,8 +55,9 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.2;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .28 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   .paper-grain > * {
     position: relative;
@@ -68,89 +73,255 @@
     will-change: transform;
   }
 
+  /* ================= HERO (components/Hero.tsx) ================= */
+  /* "11." — vermilion fill, ivory outline, offset ink shadow (poster print) */
+  .hero-eleven {
+    color: #dc4f45;
+    -webkit-text-stroke: 0.045em #f2ebe3;
+    paint-order: stroke fill;
+    text-shadow: 0.05em 0.05em 0 #17120e;
+  }
+  .hero-grain {
+    opacity: 0.38;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .28 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .hero-mist {
+    background: radial-gradient(50% 60% at 50% 60%, rgba(242, 235, 227, 0.95), rgba(242, 235, 227, 0.5) 55%, transparent 80%);
+    filter: blur(14px);
+  }
 
-  /* ----- ARRIVAL hero layers (ivory/vermilion poster) ----- */
-  .arrival__grain {
-    opacity: 0.25;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+  /* art colour tokens; .art-far / .art-blush / .art-front recolour a drawing */
+  .art-scope,
+  .hero svg {
+    --ink: #17120e;
+    --wall: #efe6d9;
+    --shade: #d9ccbb;
+    --stone: #d8cab6;
+    --cloud: #ece2d4;
+    --lit: #ff6a4d;
+    --red: #dc4f45;
   }
-  .arrival__sun {
-    filter: drop-shadow(0 0 60px rgba(220, 79, 69, .38));
-    animation: arrival-sunglow 7s ease-in-out infinite;
+  .hero svg.art-far {
+    --ink: #9c8c80;
+    --wall: #f0e8dd;
+    --shade: #e3d8ca;
+    --stone: #e6dccf;
+    --cloud: #f3ece3;
+    --lit: #f0a090;
+    --red: #e7988c;
   }
-  @keyframes arrival-sunglow {
-    50% { filter: drop-shadow(0 0 90px rgba(220, 79, 69, .5)); }
+  .hero svg.art-blush {
+    --cloud: #f3dcd3;
+    --ink: #8a5d52;
   }
-  .arrival__birdsArt {
-    animation: arrival-drift 9s ease-in-out infinite;
+  .hero svg.art-front {
+    --cloud: #f0e7db;
   }
-  @keyframes arrival-drift {
-    50% { transform: translate(14px, -8px); }
+  .art-scope.art-paper {
+    --cloud: #f2ebe3;
   }
-  .arrival__mistArt {
-    filter: blur(24px);
+
+  .art-roof { fill: var(--ink); }
+  .art-tile { fill: none; stroke: #4a3d34; stroke-width: 0.8; opacity: 0.9; }
+  .art-far .art-tile { stroke: #c2b5a9; }
+  .art-eave { fill: none; stroke: #f2ebe3; stroke-width: 1.1; opacity: 0.6; }
+  .art-ridge { fill: none; stroke: var(--red); stroke-width: 2.4; stroke-linecap: round; }
+  .art-wall { fill: var(--wall); stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; }
+  .art-wshade { fill: var(--shade); }
+  .art-wshadow { fill: var(--ink); opacity: 0.26; }
+  .art-post { fill: none; stroke: var(--ink); stroke-width: 0.8; opacity: 0.28; }
+  .art-win { fill: var(--ink); }
+  .art-lit {
+    fill: var(--lit);
+    filter: drop-shadow(0 0 3px rgba(255, 106, 77, 0.95));
+    animation: hero-lit 3.4s ease-in-out infinite alternate;
   }
-  .arrival__mistArt--l {
-    background: radial-gradient(58% 100% at 50% 55%, rgba(255, 255, 255, .85), rgba(255, 255, 255, .3) 55%, transparent 78%);
-    animation: arrival-mistl 13s ease-in-out infinite;
-  }
-  .arrival__mistArt--r {
-    background: radial-gradient(58% 100% at 50% 55%, rgba(255, 255, 255, .85), rgba(255, 255, 255, .3) 55%, transparent 78%);
-    animation: arrival-mistr 15s ease-in-out infinite;
-  }
-  .arrival__mistArt--c {
-    background: radial-gradient(60% 100% at 50% 50%, rgba(255, 255, 255, .42), rgba(255, 255, 255, .14) 60%, transparent 80%);
-    animation: arrival-mistc 19s ease-in-out infinite;
-  }
-  @keyframes arrival-mistl {
-    50% { transform: translateX(-26px); }
-  }
-  @keyframes arrival-mistr {
-    50% { transform: translateX(30px); }
-  }
-  @keyframes arrival-mistc {
-    50% { transform: translateX(18px); }
-  }
-  .arrival__branchArt {
+  .art-lat { fill: none; stroke: var(--wall); stroke-width: 0.7; opacity: 0.5; }
+  .art-line { fill: none; stroke: var(--ink); stroke-width: 0.9; }
+  .art-gegyo { fill: var(--red); }
+  .art-rail { fill: none; stroke: var(--ink); stroke-width: 1.1; }
+  .art-stone { fill: var(--stone); stroke: var(--ink); stroke-width: 1.2; }
+  .art-stoneln { fill: none; stroke: var(--ink); stroke-width: 0.8; opacity: 0.5; }
+  .art-strut { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+  .art-stair { fill: var(--ink); opacity: 0.85; }
+  .art-cloud { fill: var(--cloud); stroke: var(--ink); stroke-width: 1.5; stroke-opacity: 0.62; stroke-linejoin: round; }
+  .art-cloudin { fill: none; stroke: var(--ink); stroke-width: 1.05; opacity: 0.34; stroke-linecap: round; }
+  .art-curl { fill: none; stroke: var(--ink); stroke-width: 1.5; opacity: 0.62; stroke-linecap: round; }
+
+  /* ---- CSS motion: inner wrappers only (GSAP owns the outer ones) ---- */
+  .f-castle { animation: hero-float 6s ease-in-out infinite; }
+  .f-sun { animation: hero-float 4s ease-in-out infinite, hero-sunglow 7s ease-in-out infinite; }
+  .f-float-2,
+  .f-float-3,
+  .f-float-4,
+  .f-float-4b {
     transform-box: fill-box;
-    animation: arrival-sway 9s ease-in-out infinite;
+    animation: hero-float 3s ease-in-out infinite;
   }
-  .arrival__branch--r .arrival__branchArt {
-    transform-origin: top right;
-  }
-  .arrival__branch--l .arrival__branchArt {
-    transform-origin: bottom left;
-    animation-duration: 11s;
-  }
-  @keyframes arrival-sway {
-    50% { transform: rotate(1.4deg); }
-  }
-  .arrival__blossom {
+  .f-float-2 { animation-duration: 2s; }
+  .f-float-4 { animation-duration: 4s; }
+  .f-float-4b { animation-duration: 4s; animation-delay: -1.6s; }
+  .f-drift-a { animation: hero-drift 15s ease-in-out infinite; }
+  .f-drift-b { animation: hero-drift 21s ease-in-out infinite reverse; }
+  .f-drift-c { animation: hero-drift 18s ease-in-out -6s infinite; }
+  .f-drift-d { animation: hero-drift 24s ease-in-out -3s infinite reverse; }
+  .f-birds { animation: hero-birds 26s linear infinite; }
+  .bird-wing {
     transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: hero-flap 0.62s ease-in-out infinite alternate;
   }
-  .arrival__wglow {
-    filter: drop-shadow(0 0 5px rgba(255, 106, 77, .9));
+  .f-sway-r { transform-origin: 100% 0; animation: hero-sway 9s ease-in-out infinite; }
+  .f-sway-l { transform-origin: 0 100%; animation: hero-sway 11s ease-in-out infinite reverse; }
+  .hero-blossom { transform-box: fill-box; }
+  .hero-petal { animation: hero-fall 14s linear infinite; will-change: transform; }
+  .hero-petal__art { animation: hero-flutter 3s ease-in-out infinite alternate; }
+  .hero-hint { transform-origin: top; animation: hero-hint 2.2s ease-in-out infinite; }
+
+  @keyframes hero-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
   }
-  .arrival__hintLine {
-    transform-origin: top;
-    animation: arrival-hint 2.2s ease-in-out infinite;
+  @keyframes hero-drift {
+    0%, 100% { transform: translate(0, 0); }
+    30% { transform: translate(18px, -4px); }
+    65% { transform: translate(-14px, 3px); }
   }
-  @keyframes arrival-hint {
+  @keyframes hero-sunglow {
+    0%, 100% { filter: drop-shadow(0 0 40px rgba(220, 79, 69, 0.28)); }
+    50% { filter: drop-shadow(0 0 80px rgba(255, 106, 77, 0.42)); }
+  }
+  @keyframes hero-lit {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+  }
+  @keyframes hero-birds {
+    0% { transform: translate(-60vw, 18px); }
+    25% { transform: translate(-30vw, 0); }
+    50% { transform: translate(0, 14px); }
+    75% { transform: translate(30vw, -2px); }
+    100% { transform: translate(60vw, 18px); }
+  }
+  @keyframes hero-flap {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(0.35); }
+  }
+  @keyframes hero-sway {
+    0%, 100% { transform: rotate(0); }
+    50% { transform: rotate(1.3deg); }
+  }
+  @keyframes hero-fall {
+    0% { transform: translate3d(0, -55vh, 0) rotate(0); opacity: 0; }
+    8% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate3d(var(--dx), 60vh, 0) rotate(var(--rot)); opacity: 0; }
+  }
+  @keyframes hero-flutter {
+    from { transform: rotateY(0) translateX(-6px); }
+    to { transform: rotateY(65deg) translateX(6px); }
+  }
+  @keyframes hero-hint {
     0% { transform: scaleY(0); opacity: 0; }
     35% { transform: scaleY(1); opacity: 1; }
     100% { transform: scaleY(1) translateY(10px); opacity: 0; }
   }
-  /* fade the poster's bottom edge into the castle section's night */
-  .arrival__stage::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 20%;
-    z-index: 5;
-    pointer-events: none;
-    background: linear-gradient(180deg, transparent, #0c0508 96%);
+
+  /* ================= RENGOKU LANDING (components/RengokuHero.tsx) ================= */
+  /* geometry: headline across the middle, band across the bottom, figure
+     centred and straddling the ivory/red boundary */
+  .flame__stage {
+    --bandTop: 62%;
+    --fig: min(75svh, 54vw);
+    --figBottom: 2svh;
+    --headTop: 11%;
+  }
+  @media (max-width: 1023px) {
+    .flame__stage {
+      --bandTop: 58%;
+      --fig: min(52svh, 92vw * 1.58);
+      --figBottom: 196px;
+      --headTop: 13%;
+    }
+  }
+  .flame-band { top: var(--bandTop); }
+  .flame-headPos { top: var(--headTop); }
+  .flame-stripPos { top: calc(var(--bandTop) - 15%); }
+  .flame-figPos { bottom: var(--figBottom); }
+  .flame-fig { height: var(--fig); }
+  .flame-head {
+    font-size: clamp(64px, min(22vw, 34svh), 380px);
+    letter-spacing: -0.055em;
+  }
+  @media (max-width: 1023px) {
+    .flame-head { font-size: 22vw; }
+  }
+  /* band copy: description left, CTA right, vertically centred beside the figure */
+  .flame-bandCopy {
+    align-items: center;
+    padding-top: 2svh;
+  }
+  @media (max-width: 1023px) {
+    /* below the figure's feet: a stacked block at the bottom of the band */
+    .flame-bandCopy {
+      top: auto;
+      height: 196px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 14px;
+      padding-top: 0;
+    }
+  }
+  /* film stock: sprocket rows top and bottom, duotone frames between */
+  .r-strip {
+    --hole: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='8'%3E%3Crect x='6' y='1.5' width='8' height='5' rx='1.2' fill='%23f2ebe3' fill-opacity='.8'/%3E%3C/svg%3E");
+    --h: clamp(58px, 7vw, 100px);
+    height: var(--h);
+    margin-top: calc(var(--h) / -2);
+    padding: clamp(10px, 1.1vw, 13px) 6px;
+    transform: translate3d(-100%, 0, 0);
+    background: var(--hole) repeat-x 0 1px / 20px 8px, var(--hole) repeat-x 0 calc(100% - 1px) / 20px 8px, #17120e;
+  }
+  .r-frame {
+    position: relative;
+    display: block;
+    height: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: #2a1410;
+  }
+  .r-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 14%;
+    filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-20deg) brightness(0.92) contrast(1.1);
+  }
+  .rf-art { animation: r-breathe 6s ease-in-out infinite; }
+  @keyframes r-breathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  /* safety net: if the entrance never runs, the veil still clears */
+  .r-veil { animation: r-veil 0.4s ease-out 2.5s forwards; }
+  @keyframes r-veil {
+    to { opacity: 0; visibility: hidden; }
+  }
+  .rz-ch,
+  .rz-head,
+  .rz-strip,
+  .rz-art,
+  .rc-art,
+  [data-depth] {
+    will-change: transform;
+  }
+
+  /* hanko-style seal used across sections */
+  .seal {
+    @apply grid place-items-center border-2 border-red font-kanji text-red;
+    border-radius: 6px;
+    box-shadow: inset 0 0 0 2px #f2ebe3, inset 0 0 0 3px rgba(220, 79, 69, 0.5);
   }
 
   /* ichimatsu strip along the top of the footer */
@@ -161,7 +332,7 @@
     right: 0;
     top: 0;
     height: 10px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='20' height='20' fill='%230b0a0c'/%3E%3Crect width='10' height='10' fill='%231f6b4a'/%3E%3Crect x='10' y='10' width='10' height='10' fill='%231f6b4a'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='20' height='20' fill='%2317120e'/%3E%3Crect width='10' height='10' fill='%23dc4f45'/%3E%3Crect x='10' y='10' width='10' height='10' fill='%23dc4f45'/%3E%3C/svg%3E");
     background-size: 10px 10px;
   }
 }
@@ -177,11 +348,18 @@
   }
 }
 
+/* Reduced motion: no animation anywhere; every layer rests at its final,
+   fully visible position so the hero reads as a complete static poster. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation: none !important;
     transition-duration: 0.01ms !important;
+  }
+  /* the film strip only exists as a scroll sweep */
+  .r-strip,
+  .r-veil {
+    display: none;
   }
 }
