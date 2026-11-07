@@ -67,6 +67,12 @@
   letter-spacing: -0.01em;
 }
 
+/* keep "breathing style." together on its own second line */
+.ivt .sec-title em {
+  display: block;
+  white-space: nowrap;
+}
+
 /* paper sections with grain */
 .ivt .paper {
   background: var(--paper);
@@ -321,5 +327,12 @@
   .ivt .trow__art {
     width: 60%;
     opacity: 0.55;
+  }
+}
+
+/* keep "breathing style." on one line on very narrow phones */
+@media (max-width: 360px) {
+  .ivt .sec-title {
+    font-size: 44px;
   }
 }
