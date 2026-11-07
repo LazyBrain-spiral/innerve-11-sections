@@ -151,42 +151,26 @@ export function initDriver(): () => void {
   });
 
   /* ----- ARRIVAL hero: load-in + layered parallax (no pin, no scroll hijack) ----- */
-  const branchPaths = $$(".arrival__branchArt path.bough") as unknown as SVGPathElement[];
-  branchPaths.forEach((p) => {
-    const len = p.getTotalLength();
-    p.style.strokeDasharray = `${len}`;
-    p.style.strokeDashoffset = `${len}`;
-  });
   const enterTl = gsap.timeline({ defaults: { ease: "power3.out" } });
   enterTl
-    .from(".arrival__halo", { scale: 0.92, opacity: 0, duration: 1.6 }, 0)
-    .from(".arrival__ring", { scale: 0.96, opacity: 0, duration: 1.7 }, 0.05)
-    .from(".arrival__sun", { y: 60, scale: 0.85, opacity: 0, duration: 1.5 }, 0.1)
-    .from(".arrival__castle", { y: 70, opacity: 0, duration: 1.3 }, 0.25)
-    .from(".arrival__mist", { opacity: 0, y: 36, duration: 1.2, stagger: 0.12 }, 0.35)
-    .to(branchPaths, { strokeDashoffset: 0, duration: 1.3, ease: "power2.inOut", stagger: 0.08 }, 0.45)
-    .from(".arrival__blossom", { scale: 0, opacity: 0, duration: 0.5, ease: "back.out(2.2)", stagger: { each: 0.045, from: "random" } }, 1.05)
-    .from(".arrival__birds", { opacity: 0, x: -30, duration: 1.0 }, 1.05)
-    .from(".arrival__title .ch", { yPercent: 110, stagger: 0.035, duration: 0.9, ease: "power4.out" }, 0.5)
-    .from(".arrival__kicker, .arrival__sub, .arrival__cta", { opacity: 0, y: 18, duration: 0.8, stagger: 0.09 }, 0.85)
+    .from(".arrival__moon", { scale: 0.8, opacity: 0, duration: 1.6 }, 0)
+    .from(".arrival__title .ch", { yPercent: 112, stagger: 0.045, duration: 0.9, ease: "power4.out" }, 0.25)
+    .from(".arrival__muzan", { y: 120, opacity: 0, duration: 1.4 }, 0.35)
+    .from(".arrival__mist", { opacity: 0, y: 36, duration: 1.2, stagger: 0.12 }, 0.5)
+    .from(".arrival__tag, .arrival__meta", { opacity: 0, y: 16, duration: 0.8, stagger: 0.08 }, 0.85)
+    .from(".arrival__band > *", { opacity: 0, y: 26, duration: 0.8, stagger: 0.1 }, 0.95)
     .from(".arrival__rail", { opacity: 0, y: 20, duration: 0.9, stagger: 0.1 }, 1.05)
-    .from(".arrival__frame", { opacity: 0, duration: 1.1 }, 1.15)
-    .from(".arrival__hint", { opacity: 0, duration: 0.9 }, 1.3);
+    .from(".arrival__frame", { opacity: 0, duration: 1.1 }, 1.15);
   gsap.timeline({ scrollTrigger: { trigger: "#arrival", start: "top top", end: "bottom top", scrub: true } })
-    .to(".arrival__copy", { yPercent: -34, opacity: 0, ease: "none", duration: 0.5 }, 0)
-    .to(".arrival__hint", { opacity: 0, ease: "none", duration: 0.18 }, 0)
+    .to(".arrival__type", { yPercent: -26, opacity: 0, ease: "none", duration: 0.55 }, 0)
+    .to(".arrival__meta", { opacity: 0, ease: "none", duration: 0.3 }, 0)
     .to(".arrival__rail", { opacity: 0, ease: "none", duration: 0.4 }, 0)
     .to(".arrival__frame", { opacity: 0, ease: "none", duration: 0.5 }, 0)
-    .to(".arrival__mist--l", { xPercent: -46, opacity: 0, ease: "none", duration: 1 }, 0)
-    .to(".arrival__mist--r", { xPercent: 46, opacity: 0, ease: "none", duration: 1 }, 0)
-    .to(".arrival__mist--c", { yPercent: -10, opacity: 0, ease: "none", duration: 0.8 }, 0)
-    .to(".arrival__branch--r", { xPercent: 10, yPercent: -8, ease: "none", duration: 1 }, 0)
-    .to(".arrival__branch--l", { xPercent: -12, yPercent: 14, ease: "none", duration: 1 }, 0)
-    .to(".arrival__birds", { xPercent: 40, yPercent: -30, ease: "none", duration: 1 }, 0)
-    .to(".arrival__halo", { yPercent: 18, ease: "none", duration: 1 }, 0)
-    .to(".arrival__ring", { yPercent: 22, scale: 1.03, ease: "none", duration: 1 }, 0)
-    .to(".arrival__sun", { yPercent: 34, scale: 1.05, ease: "none", duration: 1 }, 0)
-    .to(".arrival__castle", { yPercent: 5, scale: 1.14, ease: "none", transformOrigin: "50% 100%", duration: 1 }, 0);
+    .to(".arrival__moon", { yPercent: 30, scale: 1.08, ease: "none", duration: 1 }, 0)
+    .to(".arrival__muzan", { yPercent: 9, ease: "none", duration: 1 }, 0)
+    .to(".arrival__band", { yPercent: 100, ease: "none", duration: 0.8 }, 0.2)
+    .to(".arrival__mist--l", { xPercent: -40, opacity: 0, ease: "none", duration: 1 }, 0)
+    .to(".arrival__mist--r", { xPercent: 40, opacity: 0, ease: "none", duration: 1 }, 0);
 
   /* ===== non-pinned triggers (created after every pin so positions include pin spacing) ===== */
   $$(".reveal").forEach((el) =>

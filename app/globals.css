@@ -69,23 +69,25 @@
   }
 
 
-  /* ----- ARRIVAL hero layers (ivory/vermilion poster) ----- */
+  /* ----- ARRIVAL hero layers (Muzan poster: ivory field, blood-red type, black band) ----- */
   .arrival__grain {
     opacity: 0.25;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
   }
-  .arrival__sun {
-    filter: drop-shadow(0 0 60px rgba(220, 79, 69, .38));
-    animation: arrival-sunglow 7s ease-in-out infinite;
+  .arrival__moon {
+    /* glow baked into the gradient - box-shadow blurs this large composite as gray slabs on mobile */
+    background: radial-gradient(circle at 42% 36%, rgba(43, 31, 35, .98) 0%, rgba(26, 19, 22, .97) 40%, rgba(18, 13, 14, .92) 50%, rgba(60, 20, 26, .55) 64%, rgba(200, 16, 46, .22) 78%, transparent 100%);
+    animation: arrival-moonpulse 7s ease-in-out infinite;
   }
-  @keyframes arrival-sunglow {
-    50% { filter: drop-shadow(0 0 90px rgba(220, 79, 69, .5)); }
+  @keyframes arrival-moonpulse {
+    50% { opacity: .86; }
   }
-  .arrival__birdsArt {
-    animation: arrival-drift 9s ease-in-out infinite;
+  .arrival__muzanArt {
+    will-change: transform;
+    animation: arrival-levitate 6.5s ease-in-out infinite;
   }
-  @keyframes arrival-drift {
-    50% { transform: translate(14px, -8px); }
+  @keyframes arrival-levitate {
+    50% { transform: translateY(-10px); }
   }
   .arrival__mistArt {
     filter: blur(24px);
@@ -98,60 +100,13 @@
     background: radial-gradient(58% 100% at 50% 55%, rgba(255, 255, 255, .85), rgba(255, 255, 255, .3) 55%, transparent 78%);
     animation: arrival-mistr 15s ease-in-out infinite;
   }
-  .arrival__mistArt--c {
-    background: radial-gradient(60% 100% at 50% 50%, rgba(255, 255, 255, .42), rgba(255, 255, 255, .14) 60%, transparent 80%);
-    animation: arrival-mistc 19s ease-in-out infinite;
-  }
   @keyframes arrival-mistl {
     50% { transform: translateX(-26px); }
   }
   @keyframes arrival-mistr {
     50% { transform: translateX(30px); }
   }
-  @keyframes arrival-mistc {
-    50% { transform: translateX(18px); }
-  }
-  .arrival__branchArt {
-    transform-box: fill-box;
-    animation: arrival-sway 9s ease-in-out infinite;
-  }
-  .arrival__branch--r .arrival__branchArt {
-    transform-origin: top right;
-  }
-  .arrival__branch--l .arrival__branchArt {
-    transform-origin: bottom left;
-    animation-duration: 11s;
-  }
-  @keyframes arrival-sway {
-    50% { transform: rotate(1.4deg); }
-  }
-  .arrival__blossom {
-    transform-box: fill-box;
-  }
-  .arrival__wglow {
-    filter: drop-shadow(0 0 5px rgba(255, 106, 77, .9));
-  }
-  .arrival__hintLine {
-    transform-origin: top;
-    animation: arrival-hint 2.2s ease-in-out infinite;
-  }
-  @keyframes arrival-hint {
-    0% { transform: scaleY(0); opacity: 0; }
-    35% { transform: scaleY(1); opacity: 1; }
-    100% { transform: scaleY(1) translateY(10px); opacity: 0; }
-  }
-
-  /* ukiyo-e clouds: lateral drift + gentle bob, staggered like the reference floats */
-  .arrival__cloudWrap--a { animation: arrival-clouda 24s ease-in-out infinite; }
-  .arrival__cloudWrap--b { animation: arrival-cloudb 17s ease-in-out infinite; }
-  .arrival__cloudWrap--c { animation: arrival-cloudc 30s ease-in-out infinite; }
-  @keyframes arrival-clouda { 50% { transform: translate(-26px, -7px); } }
-  @keyframes arrival-cloudb { 50% { transform: translate(22px, -9px); } }
-  @keyframes arrival-cloudc { 50% { transform: translate(30px, -5px); } }
-  /* the castle itself floats - it is the Infinity Castle */
-  .arrival__castleArt { will-change: transform; animation: arrival-castlefloat 6.5s ease-in-out infinite; }
-  @keyframes arrival-castlefloat { 50% { transform: translateY(-10px); } }
-  /* drifting cherry petals */
+  /* drifting blood petals */
   .arrival__petal { animation: arrival-petal 11s linear infinite; opacity: .9; }
   .arrival__petal:nth-child(2) { animation-duration: 13s; animation-delay: -3s; }
   .arrival__petal:nth-child(3) { animation-duration: 15s; animation-delay: -6s; }
