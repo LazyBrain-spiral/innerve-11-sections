@@ -140,7 +140,16 @@
 }
 
 .ivt .trow__meta {
-  font-size: 14px;
+  font-size: clamp(15px, 1.35vw, 19px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--red);
+  transition: color 0.4s, opacity 0.3s;
+}
+
+/* on the red hover background the line switches to paper so it stays legible */
+.ivt .trow.is-on .trow__meta {
+  color: var(--paper);
 }
 
 /* Track title cell: the track name and, on hover, the hashira name +
@@ -197,16 +206,6 @@
 
 .ivt .trow.is-on .trow__name {
   opacity: 0;
-}
-
-.ivt .trow__meta b {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  color: var(--red);
-  transition: color 0.4s;
 }
 
 .ivt .trow__art {
@@ -278,10 +277,6 @@
   color: var(--paper);
 }
 
-.ivt .trow.is-on .trow__meta b {
-  color: var(--paper);
-}
-
 .ivt .trow.is-on .trow__name {
   transform: translateX(14px);
 }
@@ -317,11 +312,6 @@
 
   .ivt .trow.is-on .trow__meta {
     opacity: 1;
-  }
-
-  /* the red line now lives on the left as the hashira block */
-  .ivt .trow.is-on .trow__meta b {
-    display: none;
   }
 
   .ivt .trow__hname {

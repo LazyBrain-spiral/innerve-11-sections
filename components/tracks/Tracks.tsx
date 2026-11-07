@@ -76,7 +76,7 @@ export default function Tracks() {
         <div className="wrap">
           <div className="eyebrow">Tracks</div>
           <h2 className="sec-title">
-            Choose your <em>breathing.</em>
+            Find your <em>breathing style.</em>
           </h2>
         </div>
 
@@ -112,12 +112,7 @@ export default function Tracks() {
                     </span>
                   </div>
                 </div>
-                <p className="trow__meta">
-                  <b>
-                    {track.style} · {track.hashira}
-                  </b>
-                  {track.desc}
-                </p>
+                <p className="trow__meta">{track.desc}</p>
               </div>
             </li>
           ))}
