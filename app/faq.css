@@ -72,7 +72,6 @@
 /* ===== FAQ ===== */
 .ivf .faq {
   position: relative;
-  overflow: hidden;
   padding: clamp(80px, 10vw, 150px) 0;
   background: var(--ink);
 }
@@ -80,18 +79,6 @@
 .ivf .faq .wrap {
   position: relative;
   z-index: 1;
-}
-
-/* faint wisteria branch in the empty upper-right corner */
-.ivf .faq__branch {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(34vw, 380px);
-  height: auto;
-  color: #9b7fd1;
-  opacity: 0.16;
-  pointer-events: none;
 }
 
 .ivf .faq__tabs {
@@ -196,12 +183,6 @@
 
 .ivf .qa.open .qa__a {
   grid-template-rows: 1fr;
-}
-
-@media (max-width: 640px) {
-  .ivf .faq__branch {
-    display: none;
-  }
 }
 
 @media (max-width: 420px) {
