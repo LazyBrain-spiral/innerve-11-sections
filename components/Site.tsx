@@ -115,7 +115,7 @@ export default function Site() {
 
         {/* ===== INFINITY CASTLE ===== */}
 
-        <section id="castle" data-tone="dark" data-name="Infinity Castle" className="castle relative z-[5] -mt-[100svh] overflow-hidden rounded-t-[clamp(22px,3vw,44px)] bg-[#0c0508] shadow-[0_-24px_60px_rgba(0,0,0,.5)]">
+        <section id="castle" data-tone="dark" data-name="Infinity Castle" className="castle relative z-[5] overflow-hidden rounded-t-[clamp(22px,3vw,44px)] bg-[#0c0508] shadow-[0_-24px_60px_rgba(0,0,0,.5)]">
           <div className="castle__stage svh relative overflow-hidden">
             <canvas ref={canvasRef} id="castleGL" aria-label="A 3D flythrough of the Infinity Castle" className="absolute inset-0 block h-full w-full" />
             <div className="castle__vig pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_50%_50%,transparent_40%,rgba(12,5,8,.85))]" />
