@@ -15,7 +15,7 @@ export const viewport: Viewport = {
 };
 
 const FONT_URL =
-  "https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Shippori+Mincho+B1:wght@800&family=Yuji+Syuku&display=swap";
+  "https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;800&family=Shippori+Mincho+B1:wght@800&family=Yuji+Syuku&display=swap";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -22,8 +22,30 @@ export interface Sponsor {
   size?: "xl" | "l";
 }
 
+export interface Track {
+  name: string;
+  kanji: string;
+  desc: string;
+}
+
 export const INNERVE = {
   eventStart: "2027-01-30T09:00:00+05:30",
+
+  // headline prize pool in lakhs (the counter in the prize section counts up to this)
+  poolLacs: 12,
+
+  // from the legacy static build's data.js (character art/names dropped: fan theme only)
+  tracks: [
+    { name: "Health", kanji: "蟲", desc: "Heal, detect, protect. Tech that keeps people alive." },
+    { name: "AR / VR", kanji: "霞", desc: "Bend what the eye believes. Build worlds inside the world." },
+    { name: "EduTech", kanji: "炎", desc: "Pass the fire on. Tools that make learning burn brighter." },
+    { name: "GameDev", kanji: "音", desc: "Flamboyant by design. Make something people can't put down." },
+    { name: "FinTech", kanji: "岩", desc: "Rock-solid money systems. Payments, credit, inclusion." },
+    { name: "CyberSec", kanji: "蛇", desc: "Strike unseen. Find the threat before it finds you." },
+    { name: "BlockChain", kanji: "恋", desc: "Bonds that can't be broken. Trust, chained block by block." },
+    { name: "Logistics", kanji: "風", desc: "Move faster than the wind. Supply chains, routing, mobility." },
+    { name: "Defence", kanji: "水", desc: "Dead calm under pressure. Tech that guards the nation." },
+  ] as Track[],
 
   prizes: [
     { rank: "1st Prize", kanji: "壱", amt: "125K+", hot: true },
