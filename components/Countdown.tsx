@@ -53,9 +53,12 @@ export default function Countdown() {
       <span className="block text-[clamp(10px,0.8vw,12px)] font-medium uppercase tracking-[0.18em] text-haori/70">{label}</span>
       {!p?.done && (
         <span className="mt-1 flex items-start gap-[clamp(10px,1vw,16px)] font-body font-extrabold leading-none text-ember" aria-hidden="true">
-          {units.map(([v, u], i) => (
-            <span key={u} className="flex flex-col items-center" style={{ width: `${v.length}ch`, fontSize: "clamp(20px,1.9vw,30px)" }}>
-              <span className="block w-full text-center tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>{v}</span>
+          {units.map(([v, u]) => (
+            // Column width comes from the digit glyphs themselves (tabular-nums keeps
+            // it constant as values change), so the first digit sits flush with the
+            // "Hackathon begins in" label above and each unit label centers exactly.
+            <span key={u} className="flex flex-col items-center" style={{ fontSize: "clamp(20px,1.9vw,30px)" }}>
+              <span className="block whitespace-nowrap text-center tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>{v}</span>
               <span className="mt-1.5 block whitespace-nowrap pl-[0.18em] text-center text-[9px] font-medium uppercase leading-none tracking-[0.18em] text-haori/60">{u}</span>
             </span>
           ))}
