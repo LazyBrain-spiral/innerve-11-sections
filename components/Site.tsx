@@ -105,6 +105,112 @@ export default function Site() {
       <div id="flash" aria-hidden="true" className="pointer-events-none fixed inset-0 z-[58] bg-white opacity-0" />
 
       <main id="smooth">
+        {/* ===== ARRIVAL (Muzan poster hero: ivory field, giant blood-red type, black band) ===== */}
+        <section id="arrival" data-tone="light" data-name="Arrival" className="arrival relative overflow-hidden bg-[#f2ebe3] text-ink">
+          <div className="arrival__stage svh relative overflow-hidden">
+            <div className="arrival__grain pointer-events-none absolute inset-0 z-[6]" aria-hidden="true" />
+
+            {/* blood-moon disc behind the type */}
+            <div className="arrival__moon absolute left-1/2 top-[6%] z-[1] aspect-square w-[clamp(260px,31vw,440px)] -translate-x-1/2 rounded-full max-[640px]:top-[10%] max-[640px]:w-[235px]" aria-hidden="true" />
+
+            {/* giant poster headline */}
+            <div className="arrival__type absolute inset-x-0 top-[13%] z-[2] px-gut text-center max-[640px]:top-[15%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:top-[16%]">
+              <h1 className="arrival__title font-display uppercase leading-[0.85] tracking-[0.005em] text-[#c8102e] text-[clamp(58px,20.5vw,390px)]">
+                <span className="mask block overflow-hidden pb-[0.08em] mb-[-0.08em]"><span className="block">Innerve</span></span>
+              </h1>
+              <div className="arrival__tag mx-auto mt-[0.55em] flex max-w-[min(80vw,1020px)] items-baseline justify-between text-ink">
+                <span className="font-kanji text-[clamp(13px,1.5vw,19px)] tracking-[0.24em]">鬼舞辻<span className="ml-2 font-body text-[0.7em] font-semibold uppercase tracking-[0.3em] opacity-70">Muzan</span></span>
+                <span className="font-body text-[clamp(11px,1.2vw,15px)] font-semibold lowercase tracking-[0.08em] opacity-70 max-[640px]:hidden">&rsquo;in-ner-ve</span>
+              </div>
+            </div>
+
+            {/* side mists hugging the band */}
+            <div className="arrival__mist arrival__mist--l pointer-events-none absolute bottom-[12%] left-[-12%] z-[2] h-[36%] w-[64%]" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--l h-full w-full" /></div>
+            <div className="arrival__mist arrival__mist--r pointer-events-none absolute bottom-[12%] right-[-12%] z-[2] h-[40%] w-[64%] max-[640px]:hidden" aria-hidden="true"><div className="arrival__mistArt arrival__mistArt--r h-full w-full" /></div>
+
+            {/* black band */}
+            <div className="arrival__band absolute inset-x-0 bottom-0 z-[3] flex h-[17%] min-h-[108px] items-center justify-between gap-8 bg-[#0b0a0c] px-gut text-[#efe8dc] max-[640px]:min-h-[96px] max-[640px]:justify-center">
+              <div className="max-w-[44ch] max-[640px]:hidden">
+                <span aria-hidden="true" className="mb-2.5 flex gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#c8102e]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#c8102e]/60" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#c8102e]/30" />
+                </span>
+                <p className="text-[clamp(11px,1.15vw,14px)] leading-relaxed text-[#efe8dc]/70">India&apos;s largest student-driven hackathon. Six Upper Moons stand between you and dawn.</p>
+              </div>
+              <a href="#castle" data-scroll className="group inline-flex items-center gap-[0.35em] whitespace-nowrap font-display uppercase leading-none tracking-[0.02em] text-[clamp(24px,3.4vw,54px)] [text-shadow:0_2px_22px_rgba(0,0,0,0.85)] transition-colors duration-300 hover:text-[#ff2a48]">
+                Enter the castle
+                <span aria-hidden="true" className="text-[0.72em] transition-transform duration-300 group-hover:translate-y-[0.12em]">&darr;</span>
+              </a>
+            </div>
+
+            {/* Muzan key visual, in front of type and band */}
+            <div className="arrival__muzan pointer-events-none absolute bottom-[-1%] left-1/2 z-[4] aspect-[697/1068] h-[88%] -translate-x-1/2 max-[640px]:bottom-[6%] max-[640px]:h-[60%] [@media(min-width:641px)_and_(max-width:1024px)_and_(orientation:portrait)]:h-[80%]" aria-hidden="true">
+              <div className="arrival__muzanArt relative h-full">
+                <img src="/assets/img/chars/muzan.webp" alt="" className="block h-full w-auto max-w-none" />
+                {/* white doodle glasses over the face, like the GLASSES reference */}
+                <svg className="arrival__doodle pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 697 1068" fill="none">
+                  <g transform="rotate(-6 316 181)" stroke="#f8f3ea" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" opacity="0.96">
+                    <path d="M230 182C228 158 248 140 271 141C295 142 312 161 311 185C310 209 291 227 268 226C244 225 232 206 230 182Z" />
+                    <path d="M322 172C321 148 340 130 363 131C387 132 403 151 402 175C401 199 383 217 360 216C336 215 323 196 322 172Z" />
+                    <path d="M311 175C314 166 318 166 321 173" />
+                    <path d="M230 182C212 176 198 172 184 168" />
+                    <path d="M402 172C418 167 432 163 447 160" />
+                    <path d="M242 152L234 140" />
+                    <path d="M255 145L250 132" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            {/* drifting blood-red petals */}
+            <div className="arrival__petals pointer-events-none absolute inset-0 z-[5]" aria-hidden="true">
+              <svg className="arrival__petal absolute left-[24%] top-[6%] h-[11px] w-[11px]" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#c8102e" /></svg>
+              <svg className="arrival__petal absolute left-[68%] top-[3%] h-[9px] w-[9px]" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#8e0a1f" /></svg>
+              <svg className="arrival__petal absolute left-[82%] top-[22%] h-[12px] w-[12px] max-[640px]:hidden" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#c8102e" /></svg>
+              <svg className="arrival__petal absolute left-[12%] top-[30%] h-[8px] w-[8px]" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#8e0a1f" /></svg>
+              <svg className="arrival__petal absolute left-[44%] top-[2%] h-[10px] w-[10px] max-[640px]:hidden" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#c8102e" /></svg>
+              <svg className="arrival__petal absolute left-[58%] top-[26%] h-[8px] w-[8px]" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#8e0a1f" /></svg>
+              <svg className="arrival__petal absolute left-[33%] top-[44%] h-[9px] w-[9px] max-[640px]:hidden" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#ff2a48" /></svg>
+              <svg className="arrival__petal absolute left-[90%] top-[52%] h-[10px] w-[10px] max-[640px]:hidden" viewBox="0 0 10 10"><path d="M5 0 C8 2 8 8 5 10 C2 8 2 2 5 0Z" fill="#8e0a1f" /></svg>
+            </div>
+
+            {/* corner frame */}
+            <div className="arrival__frame pointer-events-none absolute inset-0 z-[5]" aria-hidden="true">
+              <i className="absolute left-[3.2%] top-[4.5%] h-[74px] w-px bg-[#17120e]/30" />
+              <i className="absolute left-[3.2%] top-[4.5%] h-px w-[74px] bg-[#17120e]/30" />
+              <i className="absolute bottom-[19%] right-[3.2%] h-[74px] w-px bg-[#17120e]/30" />
+              <i className="absolute bottom-[19%] right-[3.2%] h-px w-[74px] bg-[#17120e]/30" />
+              <i className="absolute right-[3.2%] top-[4.5%] h-2 w-2 rounded-full bg-[#c8102e] max-[640px]:hidden" />
+            </div>
+
+            {/* corner meta */}
+            <div className="arrival__meta absolute left-gut top-[4.8%] z-[5] text-[11px] font-semibold uppercase leading-relaxed tracking-[0.22em] text-ink/75">
+              <span className="block">09:00 IST</span>
+              <span className="block">30 January 2027</span>
+            </div>
+            <div className="arrival__meta absolute right-gut top-[4.8%] z-[5] text-right text-[11px] font-semibold uppercase leading-relaxed tracking-[0.22em] text-ink/75">
+              <span className="block">Edition 11</span>
+              <span className="block">24 Hours</span>
+            </div>
+
+            {/* vertical rails */}
+            <div className="arrival__rail absolute left-gut top-1/2 z-[5] hidden -translate-y-1/2 flex-col items-center gap-4 min-[960px]:flex">
+              <span className="h-2 w-2 rounded-full bg-[#c8102e]" />
+              <span className="font-kanji text-[26px] tracking-[0.2em] [writing-mode:vertical-rl]">無限城</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">Mugen-jō</span>
+              <span className="h-14 w-px bg-ink/35" />
+              <span className="grid h-9 w-9 place-items-center bg-[#c8102e] font-display text-sm text-[#f2ebe3]">11</span>
+            </div>
+            <div className="arrival__rail absolute right-gut top-1/2 z-[5] hidden -translate-y-1/2 flex-col items-center gap-4 min-[960px]:flex">
+              <span className="h-9 w-[3px] bg-[#c8102e]" />
+              <span className="font-kanji text-[26px] tracking-[0.2em] [writing-mode:vertical-rl]">鬼舞辻</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.34em] opacity-60 [writing-mode:vertical-rl]">The Demon King</span>
+              <span className="h-14 w-px bg-ink/35" />
+            </div>
+          </div>
+        </section>
+
         {/* ===== TRACKS ===== */}
         <Tracks />
 

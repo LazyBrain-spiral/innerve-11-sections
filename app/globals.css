@@ -68,6 +68,73 @@
     will-change: transform;
   }
 
+
+  /* ----- ARRIVAL hero layers (Muzan poster: ivory field, blood-red type, black band) ----- */
+  .arrival__grain {
+    opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+  }
+  .arrival__moon {
+    /* glow baked into the gradient - box-shadow blurs this large composite as gray slabs on mobile */
+    background: radial-gradient(circle at 42% 36%, rgba(43, 31, 35, .98) 0%, rgba(26, 19, 22, .97) 40%, rgba(18, 13, 14, .92) 50%, rgba(60, 20, 26, .55) 64%, rgba(200, 16, 46, .22) 78%, transparent 100%);
+    animation: arrival-moonpulse 7s ease-in-out infinite;
+  }
+  @keyframes arrival-moonpulse {
+    50% { opacity: .86; }
+  }
+  .arrival__muzanArt {
+    will-change: transform;
+    animation: arrival-levitate 6.5s ease-in-out infinite;
+  }
+  @keyframes arrival-levitate {
+    50% { transform: translateY(-10px); }
+  }
+  .arrival__mistArt {
+    filter: blur(24px);
+  }
+  .arrival__mistArt--l {
+    background: radial-gradient(58% 100% at 50% 55%, rgba(255, 255, 255, .85), rgba(255, 255, 255, .3) 55%, transparent 78%);
+    animation: arrival-mistl 13s ease-in-out infinite;
+  }
+  .arrival__mistArt--r {
+    background: radial-gradient(58% 100% at 50% 55%, rgba(255, 255, 255, .85), rgba(255, 255, 255, .3) 55%, transparent 78%);
+    animation: arrival-mistr 15s ease-in-out infinite;
+  }
+  @keyframes arrival-mistl {
+    50% { transform: translateX(-26px); }
+  }
+  @keyframes arrival-mistr {
+    50% { transform: translateX(30px); }
+  }
+  /* drifting blood petals */
+  .arrival__petal { animation: arrival-petal 11s linear infinite; opacity: .9; }
+  .arrival__petal:nth-child(2) { animation-duration: 13s; animation-delay: -3s; }
+  .arrival__petal:nth-child(3) { animation-duration: 15s; animation-delay: -6s; }
+  .arrival__petal:nth-child(4) { animation-duration: 10s; animation-delay: -2s; }
+  .arrival__petal:nth-child(5) { animation-duration: 14s; animation-delay: -8s; }
+  .arrival__petal:nth-child(6) { animation-duration: 12s; animation-delay: -5s; }
+  .arrival__petal:nth-child(7) { animation-duration: 16s; animation-delay: -9s; }
+  .arrival__petal:nth-child(8) { animation-duration: 11s; animation-delay: -4s; }
+  @keyframes arrival-petal {
+    0% { transform: translate(0, -12px) rotate(0deg); opacity: 0; }
+    12% { opacity: .9; }
+    50% { transform: translate(-38px, 38vh) rotate(170deg); }
+    92% { opacity: .8; }
+    100% { transform: translate(-72px, 72vh) rotate(340deg); opacity: 0; }
+  }
+  /* fade the poster's bottom edge into the castle section's night */
+  .arrival__stage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 7%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, #0c0508 92%);
+  }
+
   /* ichimatsu strip along the top of the footer */
   .foot-ichimatsu::before {
     content: "";

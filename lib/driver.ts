@@ -56,7 +56,7 @@ export function initDriver(): () => void {
   const SFX = (window.SFX = window.SFX || { play() {}, start() {}, toggle: () => false, on: false, level: () => 0 });
 
   /* ---------- split text into words/chars ---------- */
-  $$(".castle__title .mask > span, .sec-title, .castle__bounty").forEach(splitChars);
+  $$(".castle__title .mask > span, .arrival__title .mask > span, .sec-title, .castle__bounty").forEach(splitChars);
 
   /* ---------- smooth anchor scrolling (both paths) ---------- */
   const bindAnchors = (lenis: Lenis | null) => {
@@ -84,6 +84,12 @@ export function initDriver(): () => void {
   }
 
   /* ================= ANIMATED PATH ================= */
+  /* All GSAP work runs inside a context so React StrictMode's double effect
+     (and dev Fast Refresh) can fully revert tweens/triggers/styles. Without
+     this, a re-run creates duplicate from-tweens that record mid-flight
+     values as their end state and freeze content invisible. */
+  const ctx = gsap.context(() => {
+
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true }); // mobile address-bar resizes were re-laying out the pinned castle mid-scroll
   const SECTIONS = $$("main > section"); // grab before pinning wraps them in spacers
@@ -144,6 +150,28 @@ export function initDriver(): () => void {
     scrollTrigger: { trigger: "#pcards", start: "top 85%" },
   });
 
+  /* ----- ARRIVAL hero: load-in + layered parallax (no pin, no scroll hijack) ----- */
+  const enterTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  enterTl
+    .from(".arrival__moon", { scale: 0.8, opacity: 0, duration: 1.6 }, 0)
+    .from(".arrival__title .ch", { yPercent: 112, stagger: 0.045, duration: 0.9, ease: "power4.out" }, 0.25)
+    .from(".arrival__muzan", { y: 120, opacity: 0, duration: 1.4 }, 0.35)
+    .from(".arrival__mist", { opacity: 0, y: 36, duration: 1.2, stagger: 0.12 }, 0.5)
+    .from(".arrival__tag, .arrival__meta", { opacity: 0, y: 16, duration: 0.8, stagger: 0.08 }, 0.85)
+    .from(".arrival__band > *", { opacity: 0, y: 26, duration: 0.8, stagger: 0.1 }, 0.95)
+    .from(".arrival__rail", { opacity: 0, y: 20, duration: 0.9, stagger: 0.1 }, 1.05)
+    .from(".arrival__frame", { opacity: 0, duration: 1.1 }, 1.15);
+  gsap.timeline({ scrollTrigger: { trigger: "#arrival", start: "top top", end: "bottom top", scrub: true } })
+    .to(".arrival__type", { yPercent: -26, opacity: 0, ease: "none", duration: 0.55 }, 0)
+    .to(".arrival__meta", { opacity: 0, ease: "none", duration: 0.3 }, 0)
+    .to(".arrival__rail", { opacity: 0, ease: "none", duration: 0.4 }, 0)
+    .to(".arrival__frame", { opacity: 0, ease: "none", duration: 0.5 }, 0)
+    .to(".arrival__moon", { yPercent: 30, scale: 1.08, ease: "none", duration: 1 }, 0)
+    .to(".arrival__muzan", { yPercent: 9, ease: "none", duration: 1 }, 0)
+    .to(".arrival__band", { yPercent: 100, ease: "none", duration: 0.8 }, 0.2)
+    .to(".arrival__mist--l", { xPercent: -40, opacity: 0, ease: "none", duration: 1 }, 0)
+    .to(".arrival__mist--r", { xPercent: 40, opacity: 0, ease: "none", duration: 1 }, 0);
+
   /* ===== non-pinned triggers (created after every pin so positions include pin spacing) ===== */
   $$(".reveal").forEach((el) =>
     gsap.from(el, { y: 30, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
@@ -187,6 +215,14 @@ export function initDriver(): () => void {
   });
   document.body.dataset.tone = "dark";
 
+  /* fail-visible watchdog: if a slow first compile / stalled GPU init froze the
+     ticker mid-entrance, settle non-scroll tweens and re-measure triggers */
+  const watchdog = window.setTimeout(() => {
+    enterTl.progress(1); // settle entrance only - never touch scroll-driven timelines
+    ScrollTrigger.refresh();
+  }, 4000);
+  cleanups.push(() => window.clearTimeout(watchdog));
+
   const onLoad = () => ScrollTrigger.refresh();
   window.addEventListener("load", onLoad);
   cleanups.push(() => window.removeEventListener("load", onLoad));
@@ -194,5 +230,10 @@ export function initDriver(): () => void {
 
   cleanups.push(() => ScrollTrigger.getAll().forEach((st) => st.kill()));
 
-  return () => cleanups.forEach((fn) => fn());
+  });
+
+  return () => {
+    ctx.revert(); // kills + reverts every tween, trigger and inline style made above
+    cleanups.forEach((fn) => fn());
+  };
 }
