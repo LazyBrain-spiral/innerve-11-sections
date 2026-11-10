@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { INNERVE } from "@/lib/data";
 import { initDriver } from "@/lib/driver";
 import Tracks from "@/components/tracks/Tracks";
+import Faq from "@/components/faq/Faq";
 import RengokuHero from "@/components/RengokuHero";
 
 /* Upper Moon captions, in flythrough order (mirrors lib/castle.ts) */
@@ -258,6 +259,9 @@ export default function Site() {
             </div>
           </div>
         </section>
+
+        {/* ===== FAQ ===== */}
+        <Faq />
 
         {/* ===== FOOTER ===== */}
         <footer className="foot foot-ichimatsu relative grid grid-cols-[2fr_1fr_1fr] gap-10 border-t border-paper/15 bg-ink px-gut pb-7 pt-[70px] max-[960px]:grid-cols-2 max-[640px]:grid-cols-1">
