@@ -107,11 +107,11 @@
     /* below the figure's feet: a stacked block at the bottom of the band */
     .flame-bandCopy {
       top: auto;
-      height: 196px;
+      height: 214px;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      gap: 14px;
+      gap: 8px;
       padding-top: 0;
     }
   }

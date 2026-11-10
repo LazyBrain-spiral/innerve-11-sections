@@ -275,7 +275,7 @@ export default function RengokuHero() {
         {/* ---------- band copy + CTA (above every animated layer) ---------- */}
         <div className="flame-band flame-bandCopy absolute inset-x-0 bottom-0 z-[6] flex px-gut text-haori lg:justify-between lg:gap-8">
           <div className="rz-bandL re-band max-w-[30ch]">
-            <span className="mb-3 flex gap-1.5" aria-hidden="true">
+            <span className="mb-3 flex gap-1.5 max-lg:hidden" aria-hidden="true">
               <i className="rf-dot h-1.5 w-1.5 rounded-full bg-ember" style={{ animationDelay: "0.0s" }} />
               <i className="rf-dot h-1.5 w-1.5 rounded-full bg-flame" style={{ animationDelay: "0.25s" }} />
               <i className="rf-dot h-1.5 w-1.5 rounded-full bg-crimson" style={{ animationDelay: "0.5s" }} />

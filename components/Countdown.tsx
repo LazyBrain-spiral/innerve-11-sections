@@ -49,14 +49,14 @@ export default function Countdown() {
   const sr = p && !p.done ? `${label} ${p.d} days ${p.h} hours ${p.m} minutes` : label;
 
   return (
-    <div className="mt-4 min-h-[3.4em]" role="timer" aria-label={sr}>
+    <div className="mt-3 min-h-[64px] lg:mt-4" role="timer" aria-label={sr}>
       <span className="block text-[clamp(10px,0.8vw,12px)] font-medium uppercase tracking-[0.18em] text-haori/70">{label}</span>
       {!p?.done && (
         <span className="mt-1 flex items-start gap-[clamp(10px,1vw,16px)] font-body font-extrabold leading-none text-ember" aria-hidden="true">
           {units.map(([v, u], i) => (
-            <span key={u} className="flex flex-col">
-              <span className="inline-block text-[clamp(20px,1.9vw,30px)] tabular-nums" style={{ width: `${v.length}ch`, fontVariantNumeric: "tabular-nums" }}>{v}</span>
-              <span className="mt-1 text-[9px] font-medium tracking-[0.18em] text-haori/60">{u}</span>
+            <span key={u} className="flex flex-col items-center" style={{ width: `${v.length}ch`, fontSize: "clamp(20px,1.9vw,30px)" }}>
+              <span className="block w-full text-center tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>{v}</span>
+              <span className="mt-1.5 block whitespace-nowrap pl-[0.18em] text-center text-[9px] font-medium uppercase leading-none tracking-[0.18em] text-haori/60">{u}</span>
             </span>
           ))}
         </span>
