@@ -47,19 +47,19 @@ export const faq: Record<FaqCategory, FaqItem[]> = {
   ],
   "Stay & Travel": [
     {
-      q: "Where can participants find accommodation during the hackathon?",
+      q: "Where can I stay during the hackathon?",
       a: "Lodging is available at the AIT Campus itself. Mess and stay will be provided to all participants.",
     },
     {
-      q: "How do we reach the venue?",
+      q: "How do I get to the venue?",
       a: "Location is available below. For any further assistance please contact the OSS Club.",
     },
     {
-      q: "Will there be any travel reimbursements provided?",
+      q: "Will travel costs be reimbursed?",
       a: "Travel reimbursements will not be provided to participants. Participants are advised to plan their travel accordingly.",
     },
     {
-      q: "What to bring during in-person reporting at the venue?",
+      q: "What should I bring to check-in?",
       a: "Carry your documents and devices. Stay on the lookout for further updates.",
     },
   ],
