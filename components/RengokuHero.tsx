@@ -30,6 +30,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { INNERVE } from "@/lib/data";
 import { scramble } from "@/lib/scramble";
+import Countdown from "./Countdown";
 
 const WORD = "INNERVE".split("");
 const MID = (WORD.length - 1) / 2;
@@ -282,6 +283,7 @@ export default function RengokuHero() {
             <p className="text-[clamp(13px,1vw,15px)] leading-[1.55] text-haori/80">
               India&apos;s largest student-driven hackathon. Twenty-four hours inside the Infinity Castle.
             </p>
+            <Countdown />
           </div>
           <a href="#castle" data-scroll className="re-band group block text-right max-lg:text-left">
             <span className="block text-[clamp(12px,1.05vw,15px)] font-medium uppercase tracking-[0.18em] text-haori/80">
